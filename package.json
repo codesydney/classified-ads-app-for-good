@@ -4,6 +4,8 @@
   "description": "![image](https://github.com/codesydney/ustaa-directory/assets/7553347/698efa06-fe60-4fe4-b8b6-688751814cc6)",
   "main": "index.js",
   "scripts": {
+    "prettier:check": "prettier --check \"./**/*.{js,ts,jsx,tsx,json}\"",
+    "prettier:write": "prettier --write \"./**/*.{js,ts,jsx,tsx,json}\"",
     "dev:client": "cd client && npm run dev",
     "dev:server": "cd server && npm run dev",
     "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\""
@@ -12,7 +14,8 @@
   "author": "CodeSydney",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "prettier": "^3.2.5"
   },
   "workspaces": [
     "client",
