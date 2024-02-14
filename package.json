@@ -1,0 +1,21 @@
+{
+  "name": "ustaa-directory",
+  "version": "1.0.0",
+  "description": "![image](https://github.com/codesydney/ustaa-directory/assets/7553347/698efa06-fe60-4fe4-b8b6-688751814cc6)",
+  "main": "index.js",
+  "scripts": {
+    "dev:client": "cd client && npm run dev",
+    "dev:server": "cd server && npm run dev",
+    "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\""
+  },
+  "keywords": [],
+  "author": "CodeSydney",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "workspaces": [
+    "client",
+    "server"
+  ]
+}
