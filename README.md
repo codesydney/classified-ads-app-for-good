@@ -17,5 +17,11 @@
 * PR approval (at least 1 approval)
 * Use of PR submission template
 
+# Issues Register
+* https://github.com/codesydney/ustaa-directory/issues
+
+# Kanban Board
+* https://github.com/orgs/codesydney/projects/18
+
 # Hosting 
 * TCS
