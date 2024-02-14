@@ -23,5 +23,37 @@
 # Kanban Board
 * https://github.com/orgs/codesydney/projects/18
 
-# Hosting 
+# Hosting
 * TCS
+
+## Requirements
+- Node 20.11.0 LTS
+- NPM 10.x
+
+## Installation
+From the **root** directory, run the following command:
+
+```bash
+$ npm install
+```
+
+## How to run
+### Local
+To run the app in development mode locally, run the below command on the **root** directory:
+
+```bash
+$ npm run dev
+```
+This will run both the frontend and backend concurrently. Frontend will be running on `http://localhost:5173` and backend will be running on `http://localhost:3000`.
+
+To run individually, you can run the following commands:
+
+Client app
+```bash
+$ npm run dev:client
+```
+
+Server app
+```bash
+$ npm run dev:server
+```
