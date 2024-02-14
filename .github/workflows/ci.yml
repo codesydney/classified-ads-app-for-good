@@ -17,7 +17,7 @@ jobs:
       - name: Run build
         run: npm run build
 
-  prettier:
+  prettier-check:
     needs: build
     runs-on: ubuntu-latest
     steps:
