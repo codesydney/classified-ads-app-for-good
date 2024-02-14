@@ -27,7 +27,7 @@
 * TCS
 
 ## Requirements
-- Node 20.11.0 LTS
+- Node 18.19.1 LTS
 - NPM 10.x
 
 ## Installation
