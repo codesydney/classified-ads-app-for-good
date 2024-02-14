@@ -9,6 +9,9 @@
 * @nathanksou | Nathan Sou
 * @promie | Promie Yutasane
 
+# Tech Stack
+* MERN
+
 # Team Consensus
 * Monorepo
 * PR approval (at least 1 approval)
