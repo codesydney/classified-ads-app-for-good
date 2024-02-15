@@ -24,7 +24,7 @@
 * https://github.com/orgs/codesydney/projects/18
 
 # UXUI Design
-[Link to Figma](https://www.figma.com/file/DyT6QcKPcTSnDlm4tKMhWW/USTAA-Directory?type=design&node-id=0-1&mode=design&t=SDr6JpXOMT8gbvj7-0)
+* [Link to Figma](https://www.figma.com/file/DyT6QcKPcTSnDlm4tKMhWW/USTAA-Directory?type=design&node-id=0-1&mode=design&t=SDr6JpXOMT8gbvj7-0)
 
 # Hosting
 * TCS
