@@ -6,7 +6,9 @@
   "scripts": {
     "build": "babel src -d dist",
     "dev": "nodemon src/index.js",
-    "test": "jest --verbose -c jest.config.js"
+    "test": "jest",
+    "test:integration": "jest --testPathPattern=.int.test.js",
+    "test:unit": "jest --testPathPattern=.unit.test.js"
   },
   "keywords": [],
   "author": "",
