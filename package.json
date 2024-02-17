@@ -1,5 +1,5 @@
 {
-  "name": "ustaa-directory",
+  "name": "cs-directory",
   "version": "1.0.0",
   "description": "![image](https://github.com/codesydney/ustaa-directory/assets/7553347/698efa06-fe60-4fe4-b8b6-688751814cc6)",
   "main": "index.js",
@@ -8,6 +8,10 @@
     "dev:server": "cd server && npm run dev",
     "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
     "build": "cd client && npm run build && cd ../server && npm run build",
+    "client:test": "cd client && npm run test",
+    "server:test": "cd server && npm run test",
+    "server:test:integration": "cd server && npm run test:integration",
+    "server:test:unit": "cd server && npm run test:unit",
     "clean": "find . -name node_modules -type d -prune -exec rm -rf '{}' +",
     "prettier:check": "prettier --check \"./**/*.{js,ts,jsx,tsx,json}\"",
     "prettier:write": "prettier --write \"./**/*.{js,ts,jsx,tsx,json}\""
