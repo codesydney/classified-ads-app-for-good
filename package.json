@@ -8,6 +8,7 @@
     "dev:server": "cd server && npm run dev",
     "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
     "build": "cd client && npm run build && cd ../server && npm run build",
+    "client:test": "cd client && npm run test",
     "server:test": "cd server && npm run test",
     "server:test:integration": "cd server && npm run test:integration",
     "server:test:unit": "cd server && npm run test:unit",
