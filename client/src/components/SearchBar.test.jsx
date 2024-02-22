@@ -8,15 +8,15 @@ describe('SearchBar', () => {
   })
 
   test('should handle change and keydown which calls handleSearch prop', () => {
-    const spy = jest.fn();
-    render(<SearchBar handleSearch={spy}/>)
+    const spy = jest.fn()
+    render(<SearchBar handleSearch={spy} />)
     const searchBar = screen.getByLabelText('Search')
-    fireEvent.change(searchBar, { target: { value: "a" } })
+    fireEvent.change(searchBar, { target: { value: 'a' } })
 
-    fireEvent.keyDown(searchBar, { key: "a" })
+    fireEvent.keyDown(searchBar, { key: 'a' })
     expect(spy).not.toHaveBeenCalled()
 
-    fireEvent.keyDown(searchBar, { key: "Enter" })
-    expect(spy).toHaveBeenCalledWith("a")
+    fireEvent.keyDown(searchBar, { key: 'Enter' })
+    expect(spy).toHaveBeenCalledWith('a')
   })
 })
