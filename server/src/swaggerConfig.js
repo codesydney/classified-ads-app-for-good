@@ -6,7 +6,7 @@ const swaggerOptions = {
     info: {
       title: 'Express API Documentation',
       version: '1.0.0',
-      description: 'API documentation',
+      description: 'API documentation for Classified Ads App For Good',
     },
     servers: [
       {
