@@ -11,12 +11,9 @@ app.use(cors())
 
 app.use('/api/v1/health', HealthRoute)
 
-app.use('/', swaggerUi.serve, async (req, res) => {
-  if (req.path === '/') {
-    return swaggerUi.setup(swaggerSpecs)(req, res)
-  } else {
-    return res.next()
-  }
-})
+// Serve Swagger UI only in development environment
+if (process.env.NODE_ENV === 'development') {
+  app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpecs))
+}
 
 module.exports = app
