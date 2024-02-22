@@ -8,7 +8,7 @@ const SearchBar = ({ handleSearch }) => {
     setValue(e.target.value)
   }
 
-  const keyPress = e => {
+  const handleKeyDown = e => {
     if (e.key === 'Enter') {
       handleSearch(value)
     }
@@ -23,7 +23,7 @@ const SearchBar = ({ handleSearch }) => {
         variant="outlined"
         value={value}
         onChange={handleChange}
-        onKeyDown={keyPress}
+        onKeyDown={handleKeyDown}
       />
     </Container>
   )
