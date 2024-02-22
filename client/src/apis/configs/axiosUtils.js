@@ -1,4 +1,4 @@
-export const defineCancelApiObject = (apiObject) => {
+export const defineCancelApiObject = apiObject => {
   // an object that will contain a cancellation handler
   // associated to each API property name in the apiObject API object
   const cancelApiObject = {}
