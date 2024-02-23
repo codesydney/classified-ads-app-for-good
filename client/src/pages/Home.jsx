@@ -14,11 +14,6 @@ const Home = () => {
     <div>
       <h1>Home</h1>
       <SearchBar handleSearch={handleSearch} />
-      <ul>
-        {users.map((user, i) => (
-          <li key={i}>{user.name ? user.name : null}</li>
-        ))}
-      </ul>
     </div>
   )
 }

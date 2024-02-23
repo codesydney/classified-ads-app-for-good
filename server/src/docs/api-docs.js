@@ -15,9 +15,9 @@
  *                 status:
  *                   type: string
  *                   example: OK
- * 
+ *
  * @swagger
- * /users
+ * /users:
  *   get:
  *     summary: Get all users
  *     description: Returns all users
@@ -32,9 +32,9 @@
  *                 status:
  *                   type: object
  *                   example: OK
- * 
+ *
  * @swagger
- * /users/search
+ * /users/search:
  *   get:
  *     summary: Search for users
  *     description: Returns all users that match a query string
