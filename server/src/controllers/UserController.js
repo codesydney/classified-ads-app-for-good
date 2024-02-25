@@ -1,6 +1,7 @@
 const UserService = require('../services/UserService')
 const { validationResult } = require('express-validator')
 const { signupValidation } = require('../utils/validationMiddlewares')
+const { createToken } = require('../utils/handleJwt')
 
 // Signup controller
 exports.signup = [
@@ -28,7 +29,10 @@ exports.signup = [
       // create new user;
       const newUser = await UserService.createUser(email, password)
 
-      return res.status(201).json({ message: 'User created', user: newUser })
+      // create token for user
+      const token = createToken({ id: newUser._id })
+
+      return res.status(201).json({ message: 'User created', token })
     } catch (error) {
       console.error(error)
       return res.status(500).json({ message: 'Internal server error' })
