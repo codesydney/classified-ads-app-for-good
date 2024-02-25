@@ -1,6 +1,9 @@
 const sgMail = require('@sendgrid/mail')
-sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+require('dotenv').config()
+const sendGridApiKey = process.env.SENDGRID_API_KEY
+sgMail.setApiKey(sendGridApiKey)
 
+// Template for reset email
 function emailFormat(text) {
   return `
     <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f4f4f4;">
@@ -11,6 +14,7 @@ function emailFormat(text) {
   `
 }
 
+// Send reset password email
 async function sendResetEmail(email, token) {
   const message = {
     to: email,

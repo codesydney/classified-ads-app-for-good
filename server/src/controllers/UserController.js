@@ -1,10 +1,14 @@
 const UserService = require('../services/UserService')
+const PasswordResetService = require('../services/PasswordResetService')
 const { validationResult } = require('express-validator')
 const {
   signupValidation,
   signinValidation,
+  emailValidation,
 } = require('../utils/validationMiddlewares')
 const { createToken } = require('../utils/handleJwt')
+const { generateResetToken } = require('../utils/resetTokens')
+const { sendResetEmail } = require('../utils/mail')
 
 // Signup controller
 exports.signup = [
@@ -79,6 +83,50 @@ exports.signin = [
 
       // return token
       return res.status(200).json({ message: 'User signed in', token })
+    } catch (error) {
+      console.error(error)
+      return res.status(500).json({ message: 'Internal server error' })
+    }
+  },
+]
+
+// Request reset password controller (send reset email)
+
+exports.requestResetPassword = [
+  emailValidation,
+  async (req, res) => {
+    try {
+      // Get validation errors from request body
+      const result = validationResult(req)
+
+      // If there are validation errors, return 422 response
+      if (!result.isEmpty()) {
+        return res.status(422).json({ errors: result.array() })
+      }
+
+      const { email } = req.body
+      // Check there is an account associated with email
+      const user = await UserService.findUserByEmail(email)
+
+      // If no user with this email exists, send response with 200 status (security measure)
+      if (!user) {
+        return res.status(200).json({ message: 'Reset email sent' })
+      }
+
+      // create reset token for the user
+      const { token, hashedToken } = await generateResetToken()
+
+      // save token to the db, with expiry date
+      await PasswordResetService.generatePasswordResetToken(
+        user._id,
+        hashedToken,
+      )
+
+      // send reset email
+      await sendResetEmail(email, token)
+
+      // return 200 response
+      return res.status(200).json({ message: 'Reset email sent' })
     } catch (error) {
       console.error(error)
       return res.status(500).json({ message: 'Internal server error' })

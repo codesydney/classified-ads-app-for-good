@@ -8,7 +8,7 @@ const UserRoutes = require('./routes/userRoutes')
 const app = express()
 
 app.use(express.json())
-app.use(cors())
+app.use(cors({ credentials: true }))
 
 app.use('/api/v1/health', HealthRoute)
 app.use('/api/v1/users', UserRoutes)

@@ -25,3 +25,11 @@ exports.signupValidation = [
     return true
   }),
 ]
+
+exports.emailValidation = [
+  body('email')
+    .trim()
+    .toLowerCase()
+    .isEmail()
+    .withMessage('Invalid email format'),
+]
