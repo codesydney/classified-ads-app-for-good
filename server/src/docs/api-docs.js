@@ -17,7 +17,7 @@
  *                   example: OK
  *
  * @swagger
- * /users:
+ * /api/v1/users:
  *   get:
  *     summary: Get all users
  *     description: Returns all users
