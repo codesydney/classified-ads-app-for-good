@@ -14,3 +14,10 @@ exports.createUser = async (email, password) => {
   const savedUser = await newUser.save()
   return savedUser
 }
+
+exports.findUserByEmailWithPassword = async email => {
+  const user = await User.findOne({
+    email,
+  }).select('+password')
+  return user
+}
