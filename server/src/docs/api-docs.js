@@ -30,7 +30,11 @@
  *               type: object
  *               properties:
  *                 status:
- *                   type: object
+ *                   type: string
  *                   example: OK
+ *                 data:
+ *                   type: array
+ *                   users:
+ *                     type: object
  *
  */
