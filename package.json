@@ -26,5 +26,8 @@
   "workspaces": [
     "client",
     "server"
-  ]
+  ],
+  "dependencies": {
+    "express-validator": "^7.0.1"
+  }
 }
