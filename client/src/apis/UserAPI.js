@@ -1,39 +1,26 @@
 import { api } from './configs/axiosConfig'
 import { defineCancelApiObject } from './configs/axiosUtils'
 
-const usersURL = '/users'
+const usersURLVersion = '/v1'
+const usersURLRoute = '/users'
+const usersURL = usersURLVersion + usersURLRoute
 
-const getAll = async (cancel = false) => {
+const getAll = async (q, cancel = false) => {
+  const params = q ? { q } : undefined
+  const signal = cancel
+    ? cancelApiObject[this.getAll.name].handleRequestCancellation().signal
+    : undefined
+
   try {
-    const response = await api.get(usersURL, {
-      signal: cancel
-        ? cancelApiObject[this.getAll.name].handleRequestCancellation().signal
-        : undefined,
-    })
+    const response = await api.get(usersURL, { params, signal })
     return response.data.users
   } catch (error) {
-    console.error('Error fetching all users:', error)
-  }
-}
-
-const search = async (q, cancel = false) => {
-  const params = { q }
-  try {
-    const response = await api.get(usersURL + '/search', {
-      params,
-      signal: cancel
-        ? cancelApiObject[this.search.name].handleRequestCancellation().signal
-        : undefined,
-    })
-    return response.data.users
-  } catch (error) {
-    console.error('Error searching users:', error)
+    console.error('Error fetching users:', error)
   }
 }
 
 export const UserAPI = {
   getAll,
-  search,
 }
 
 // defining the cancel API object for UserAPI

@@ -11,7 +11,7 @@ app.use(express.json())
 app.use(cors())
 
 app.use('/api/v1/health', HealthRoute)
-app.use('/users', UserRoute)
+app.use('/api/v1/users', UserRoute)
 
 // Serve Swagger UI only in development environment
 if (process.env.NODE_ENV === 'development') {

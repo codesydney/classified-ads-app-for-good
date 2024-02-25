@@ -23,7 +23,7 @@
  *     description: Returns all users
  *     responses:
  *       200:
- *         description: Successful return
+ *         description: Successful return of all users
  *         content:
  *           application/json:
  *             schema:
@@ -33,20 +33,4 @@
  *                   type: object
  *                   example: OK
  *
- * @swagger
- * /users/search:
- *   get:
- *     summary: Search for users
- *     description: Returns all users that match a query string
- *     responses:
- *       200:
- *         description: Successful return
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: object
- *                   example: OK
  */

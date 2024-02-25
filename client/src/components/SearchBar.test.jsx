@@ -1,4 +1,5 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import SearchBar from './SearchBar'
 
 describe('SearchBar', () => {
@@ -7,16 +8,16 @@ describe('SearchBar', () => {
     expect(screen.getByLabelText('Search')).toBeInTheDocument()
   })
 
-  test('should handle change and keydown which calls handleSearch prop', () => {
+  test('should handle change and keydown which calls handleSearch prop', async () => {
+    const user = userEvent.setup()
     const spy = jest.fn()
     render(<SearchBar handleSearch={spy} />)
     const searchBar = screen.getByLabelText('Search')
-    fireEvent.change(searchBar, { target: { value: 'a' } })
 
-    fireEvent.keyDown(searchBar, { key: 'a' })
+    await user.type(searchBar, 'lawyer')
     expect(spy).not.toHaveBeenCalled()
 
-    fireEvent.keyDown(searchBar, { key: 'Enter' })
-    expect(spy).toHaveBeenCalledWith('a')
+    await user.keyboard('{Enter}')
+    expect(spy).toHaveBeenCalledWith('lawyer')
   })
 })

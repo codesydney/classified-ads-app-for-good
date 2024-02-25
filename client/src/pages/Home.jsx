@@ -6,7 +6,7 @@ const Home = () => {
   const [users, setUsers] = useState([])
 
   const handleSearch = async query => {
-    const results = query ? await UserAPI.search(query) : await UserAPI.getAll()
+    const results = await UserAPI.getAll(query)
     setUsers(results)
   }
 
