@@ -15,8 +15,8 @@ app.use('/api/v1/users', UserRoute)
 app.use(notFound)
 app.use(errorHandler)
 // Serve Swagger UI only in development environment
-// if (process.env.NODE_ENV === 'development') {
-//   app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpecs))
-// }
+if (process.env.NODE_ENV === 'development') {
+  app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpecs))
+}
 
 module.exports = app
