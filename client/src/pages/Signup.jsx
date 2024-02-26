@@ -15,7 +15,7 @@ const Signup = () => {
       <h1>Sign Up</h1>
       <SignUpForm />
       <p>
-        Already have an account? Sign in <Link to="/signup">Here</Link>
+        Already have an account? Sign in <Link to="/signin">Here</Link>
       </p>
     </Container>
   )

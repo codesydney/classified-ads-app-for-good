@@ -25,9 +25,16 @@ const signIn = async formData => {
   return response
 }
 
+const signUp = async formData => {
+  const signUpURL = usersURL + '/signup'
+  const response = await api.post(signUpURL, formData)
+  return response
+}
+
 export const UserAPI = {
   getAll,
   signIn,
+  signUp,
 }
 
 // defining the cancel API object for UserAPI
