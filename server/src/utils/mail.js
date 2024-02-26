@@ -23,7 +23,7 @@ async function sendResetEmail(email, token) {
     html: emailFormat(`
       <h3>Password Reset</h3>
       <p>Click the link below to reset your password</p>
-      <a href="${process.env.CLIENT_URL}/reset-password/${token}">Reset Password</a>
+      <a href="${process.env.CLIENT_URL}/reset-password?token=${token}">Reset Password</a>
     `),
   }
   try {
