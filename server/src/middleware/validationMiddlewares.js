@@ -33,3 +33,15 @@ exports.emailValidation = [
     .isEmail()
     .withMessage('Invalid email format'),
 ]
+
+exports.handleValidationResult = (req, res, next) => {
+  // Get validation errors from request body
+  const result = validationResult(req)
+
+  // If there are validation errors, return 422 response
+  if (!result.isEmpty()) {
+    return res.status(422).json({ errors: result.array() })
+  }
+
+  next()
+}

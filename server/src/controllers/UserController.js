@@ -1,10 +1,10 @@
 const UserService = require('../services/UserService')
 const PasswordResetService = require('../services/PasswordResetService')
-const { validationResult } = require('express-validator')
 const {
   signupValidation,
   signinValidation,
   emailValidation,
+  handleValidationResult,
 } = require('../middleware/validationMiddlewares')
 const { createToken } = require('../utils/handleJwt')
 const { generateResetToken, compareToken } = require('../utils/resetTokens')
@@ -13,16 +13,9 @@ const { sendResetEmail } = require('../utils/mail')
 // Signup controller
 exports.signup = [
   signupValidation,
+  handleValidationResult,
   async (req, res, next) => {
     try {
-      // Get validation errors from request body
-      const result = validationResult(req)
-
-      // If there are validation errors, return 422 response
-      if (!result.isEmpty()) {
-        return res.status(422).json({ errors: result.array() })
-      }
-
       const { email, password } = req.body
 
       // Check email not in use already.
@@ -52,16 +45,9 @@ exports.signup = [
 // Signin controller
 exports.signin = [
   signinValidation,
+  handleValidationResult,
   async (req, res, next) => {
     try {
-      // Get validation errors from request body
-      const result = validationResult(req)
-
-      // If there are validation errors, return 422 response
-      if (!result.isEmpty()) {
-        return res.status(422).json({ errors: result.array() })
-      }
-
       const { email, password } = req.body
 
       // find user by email;
@@ -97,16 +83,9 @@ exports.signin = [
 // Request reset password controller (send reset email)
 exports.requestResetPassword = [
   emailValidation,
+  handleValidationResult,
   async (req, res, next) => {
     try {
-      // Get validation errors from request body
-      const result = validationResult(req)
-
-      // If there are validation errors, return 422 response
-      if (!result.isEmpty()) {
-        return res.status(422).json({ errors: result.array() })
-      }
-
       const { email } = req.body
       // Check there is an account associated with email
       const user = await UserService.findUserByEmail(email)
@@ -139,15 +118,9 @@ exports.requestResetPassword = [
 // Reset Password controller (change password)
 exports.resetPassword = [
   signupValidation,
+  handleValidationResult,
   async (req, res, next) => {
     try {
-      const result = validationResult(req)
-
-      // If there are validation errors, return 422 response
-      if (!result.isEmpty()) {
-        return res.status(422).json({ errors: result.array() })
-      }
-
       const { email, password } = req.body
       const { token } = req.query
 
