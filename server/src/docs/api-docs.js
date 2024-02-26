@@ -15,4 +15,26 @@
  *                 status:
  *                   type: string
  *                   example: OK
+ *
+ * @swagger
+ * /api/v1/users:
+ *   get:
+ *     summary: Get all users
+ *     description: Returns all users
+ *     responses:
+ *       200:
+ *         description: Successful return of all users
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: OK
+ *                 data:
+ *                   type: array
+ *                   users:
+ *                     type: object
+ *
  */
