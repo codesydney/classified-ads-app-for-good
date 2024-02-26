@@ -50,4 +50,10 @@ export const validationFunctions = {
       password: validationFunctions.password(password),
     }
   },
+  requestReset: formData => {
+    const { email } = formData
+    return {
+      email: validationFunctions.email(email),
+    }
+  },
 }

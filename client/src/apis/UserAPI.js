@@ -31,10 +31,17 @@ const signUp = async formData => {
   return response
 }
 
+const requestReset = async formData => {
+  const requestResetURL = usersURL + '/request-reset-password'
+  const response = await api.post(requestResetURL, formData)
+  return response
+}
+
 export const UserAPI = {
   getAll,
   signIn,
   signUp,
+  requestReset,
 }
 
 // defining the cancel API object for UserAPI

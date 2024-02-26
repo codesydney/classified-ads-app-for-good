@@ -14,6 +14,7 @@ const useAuthForm = (initialData = {}, formName) => {
   const [inputErrors, setInputErrors] = useState(initialData)
   const [isLoading, setIsLoading] = useState(false)
   const [serverError, setServerError] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
   const fieldRefs = useFieldRefs(initialData)
 
   // handle change event listener on input element
@@ -94,6 +95,8 @@ const useAuthForm = (initialData = {}, formName) => {
     setIsLoading,
     serverError,
     setServerError,
+    successMessage,
+    setSuccessMessage,
     handleChange,
     handleBlurValidation,
     isSubmitValidationSuccess,

@@ -1,10 +1,9 @@
 import { Container, TextField, Stack, Button } from '@mui/material'
 import useAuthForm from '../hooks/useAuthForm'
 import { UserAPI } from '../apis/UserAPI'
-import { Link } from 'react-router-dom'
 
-const SignInForm = () => {
-  const initialFormData = { email: '', password: '' }
+const RequestPasswordResetForm = () => {
+  const initialFormData = { email: '' }
   const {
     formData,
     inputErrors,
@@ -13,23 +12,26 @@ const SignInForm = () => {
     setIsLoading,
     serverError,
     setServerError,
+    successMessage,
+    setSuccessMessage,
     handleChange,
     handleBlurValidation,
     isSubmitValidationSuccess,
     handleServerErrors,
-  } = useAuthForm(initialFormData, 'signIn')
+  } = useAuthForm(initialFormData, 'requestReset')
 
   const handleSubmit = async event => {
     event.preventDefault()
     setServerError('')
     if (!isSubmitValidationSuccess()) return
     setIsLoading(true)
+    console.log('ready to role')
+
     try {
-      const response = await UserAPI.signIn(formData)
-      const token = response.data.token
-      sessionStorage.setItem('jwt', token)
-      // redirect to home?
-      console.log('success', response)
+      const response = await UserAPI.requestReset(formData)
+      setSuccessMessage(
+        'Success! We have sent you an email with instructions to reset your password.',
+      )
       setIsLoading(false)
     } catch (error) {
       handleServerErrors(error)
@@ -37,6 +39,7 @@ const SignInForm = () => {
     }
   }
 
+  if (successMessage) return <p>{successMessage}</p>
   return (
     <Container maxWidth="sm">
       <form onSubmit={handleSubmit}>
@@ -54,27 +57,13 @@ const SignInForm = () => {
             error={!!inputErrors.email}
             helperText={inputErrors.email}
           />
-          <TextField
-            id="password"
-            label="Password"
-            variant="outlined"
-            name="password"
-            type="password"
-            value={formData.password}
-            onChange={handleChange}
-            onBlur={handleBlurValidation}
-            inputRef={fieldRefs.password}
-            error={!!inputErrors.password}
-            helperText={inputErrors.password}
-          />
-          <Link to="/request-reset-password">Forgot Password?</Link>
           <Button
             variant="contained"
             size="large"
             type="submit"
             disabled={isLoading}
           >
-            Sign In
+            Request New Password.
           </Button>
         </Stack>
       </form>
@@ -82,4 +71,4 @@ const SignInForm = () => {
   )
 }
 
-export default SignInForm
+export default RequestPasswordResetForm
