@@ -5,7 +5,7 @@ const {
   signupValidation,
   signinValidation,
   emailValidation,
-} = require('../utils/validationMiddlewares')
+} = require('../middleware/validationMiddlewares')
 const { createToken } = require('../utils/handleJwt')
 const { generateResetToken, compareToken } = require('../utils/resetTokens')
 const { sendResetEmail } = require('../utils/mail')
@@ -13,7 +13,7 @@ const { sendResetEmail } = require('../utils/mail')
 // Signup controller
 exports.signup = [
   signupValidation,
-  async (req, res) => {
+  async (req, res, next) => {
     try {
       // Get validation errors from request body
       const result = validationResult(req)
@@ -30,7 +30,9 @@ exports.signup = [
 
       // If email already in use, return 409 response (conflict)
       if (existingUser) {
-        return res.status(409).json({ message: 'Email already in use' })
+        const error = new Error('Email already in use')
+        error.statusCode = 409
+        throw error
       }
 
       // create new user;
@@ -42,8 +44,7 @@ exports.signup = [
       // return 201 response with token
       return res.status(201).json({ message: 'User created', token })
     } catch (error) {
-      console.error(error)
-      return res.status(500).json({ message: 'Internal server error' })
+      next(error)
     }
   },
 ]
@@ -51,7 +52,7 @@ exports.signup = [
 // Signin controller
 exports.signin = [
   signinValidation,
-  async (req, res) => {
+  async (req, res, next) => {
     try {
       // Get validation errors from request body
       const result = validationResult(req)
@@ -68,14 +69,18 @@ exports.signin = [
 
       // If no user with this email exists, return 404 response
       if (!user) {
-        return res.status(401).json({ message: 'Invalid credentials' })
+        const error = new Error('Invalid credentials')
+        error.statusCode = 401
+        throw error
       }
 
       // Validate user password
       const passwordCorrect = await user.verifyPassword(password)
       // If password does not match, return 401 response
       if (!passwordCorrect) {
-        return res.status(401).json({ message: 'Invalid credentials' })
+        const error = new Error('Invalid credentials')
+        error.statusCode = 401
+        throw error
       }
 
       // create token for user
@@ -84,8 +89,7 @@ exports.signin = [
       // return token
       return res.status(200).json({ message: 'User signed in', token })
     } catch (error) {
-      console.error(error)
-      return res.status(500).json({ message: 'Internal server error' })
+      next(error)
     }
   },
 ]
@@ -93,7 +97,7 @@ exports.signin = [
 // Request reset password controller (send reset email)
 exports.requestResetPassword = [
   emailValidation,
-  async (req, res) => {
+  async (req, res, next) => {
     try {
       // Get validation errors from request body
       const result = validationResult(req)
@@ -127,8 +131,7 @@ exports.requestResetPassword = [
       // return 200 response
       return res.status(200).json({ message: 'Reset email sent' })
     } catch (error) {
-      console.error(error)
-      return res.status(500).json({ message: 'Internal server error' })
+      next(error)
     }
   },
 ]
@@ -136,7 +139,7 @@ exports.requestResetPassword = [
 // Reset Password controller (change password)
 exports.resetPassword = [
   signupValidation,
-  async (req, res) => {
+  async (req, res, next) => {
     try {
       const result = validationResult(req)
 
@@ -152,14 +155,18 @@ exports.resetPassword = [
       const user = await UserService.findUserByEmail(email)
 
       if (!user) {
-        return res.status(404).json({ message: 'Could not find resource' })
+        const error = new Error('Could not find resource.')
+        error.statusCode = 404
+        throw error
       }
 
       // Find token correlating to user requesting reset.
       const storedToken = await PasswordResetService.findTokenByUserId(user._id)
 
       if (!storedToken) {
-        return res.status(404).json({ message: 'Could not find resource' })
+        const error = new Error('Could not find resource.')
+        error.statusCode = 404
+        throw error
       }
 
       // compare token provided with token stored
@@ -169,7 +176,9 @@ exports.resetPassword = [
       await PasswordResetService.findTokenAndDelete(user._id)
 
       if (!isMatch) {
-        return res.status(400).json({ message: 'Invalid Token' })
+        const error = new Error('Invalid Token')
+        error.statusCode = 400
+        throw error
       }
 
       // update the users password
@@ -178,8 +187,7 @@ exports.resetPassword = [
 
       return res.status(200).json({ message: 'Password successfully changed' })
     } catch (error) {
-      console.error(error)
-      return res.status(500).json({ message: 'Internal server error' })
+      next(error)
     }
   },
 ]
