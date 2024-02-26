@@ -7,7 +7,7 @@ const {
   emailValidation,
 } = require('../utils/validationMiddlewares')
 const { createToken } = require('../utils/handleJwt')
-const { generateResetToken } = require('../utils/resetTokens')
+const { generateResetToken, compareToken } = require('../utils/resetTokens')
 const { sendResetEmail } = require('../utils/mail')
 
 // Signup controller
@@ -66,7 +66,7 @@ exports.signin = [
       // find user by email;
       const user = await UserService.findUserByEmailWithPassword(email)
 
-      // If no user with this email exists, return 401 response
+      // If no user with this email exists, return 404 response
       if (!user) {
         return res.status(401).json({ message: 'Invalid credentials' })
       }
@@ -91,7 +91,6 @@ exports.signin = [
 ]
 
 // Request reset password controller (send reset email)
-
 exports.requestResetPassword = [
   emailValidation,
   async (req, res) => {
@@ -127,6 +126,57 @@ exports.requestResetPassword = [
 
       // return 200 response
       return res.status(200).json({ message: 'Reset email sent' })
+    } catch (error) {
+      console.error(error)
+      return res.status(500).json({ message: 'Internal server error' })
+    }
+  },
+]
+
+// Reset Password controller (change password)
+exports.resetPassword = [
+  signupValidation,
+  async (req, res) => {
+    try {
+      const result = validationResult(req)
+
+      // If there are validation errors, return 422 response
+      if (!result.isEmpty()) {
+        return res.status(422).json({ errors: result.array() })
+      }
+
+      const { email, password } = req.body
+      const { token } = req.query
+
+      // Find user requesting reset
+      const user = await UserService.findUserByEmail(email)
+
+      if (!user) {
+        return res.status(404).json({ message: 'Could not find resource' })
+      }
+
+      // Find token correlating to user requesting reset.
+      const storedToken = await PasswordResetService.findTokenByUserId(user._id)
+
+      if (!storedToken) {
+        return res.status(404).json({ message: 'Could not find resource' })
+      }
+
+      // compare token provided with token stored
+      const isMatch = await compareToken(token, storedToken.token)
+
+      // Token has been found, is single use: delete.
+      await PasswordResetService.findTokenAndDelete(user._id)
+
+      if (!isMatch) {
+        return res.status(400).json({ message: 'Invalid Token' })
+      }
+
+      // update the users password
+      user.password = password
+      await user.save()
+
+      return res.status(200).json({ message: 'Password successfully changed' })
     } catch (error) {
       console.error(error)
       return res.status(500).json({ message: 'Internal server error' })

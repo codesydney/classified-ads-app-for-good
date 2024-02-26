@@ -11,11 +11,11 @@ const PasswordResetTokenSchema = new Schema({
     type: String,
     required: true,
   },
-  // expires in 1 hour
+  // expires in 15 minutes
   createdAt: {
     type: Date,
     default: Date.now,
-    expires: 3600,
+    expires: 900,
   },
 })
 

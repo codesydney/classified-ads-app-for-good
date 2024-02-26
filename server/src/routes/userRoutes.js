@@ -8,4 +8,5 @@ router.post('/signin', userController.signin)
 
 router.post('/request-reset-password', userController.requestResetPassword)
 
+router.post('/reset-password', userController.resetPassword)
 module.exports = router

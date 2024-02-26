@@ -19,3 +19,12 @@ exports.generatePasswordResetToken = async (id, hashedToken) => {
   const savedToken = await resetToken.save()
   return savedToken
 }
+
+exports.findTokenByUserId = async id => {
+  const token = await PasswordResetToken.findOne({ user: id })
+  return token
+}
+
+exports.findTokenAndDelete = async id => {
+  await PasswordResetToken.findOneAndDelete({ user: id })
+}
