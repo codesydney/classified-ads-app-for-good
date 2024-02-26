@@ -1,10 +1,10 @@
 const mongoose = require('mongoose')
 require('dotenv').config()
 
-const mongoURI = 'mongodb://localhost:27017/caafg'
-// process.env.NODE_ENV === 'test'
-//   ? process.env.TEST_MONGO_URI || 'mongodb://localhost:27017/integration'
-//   : process.env.MONGO_URI || 'mongodb://localhost:27017/caafg'
+const mongoURI =
+  process.env.NODE_ENV === 'test'
+    ? process.env.TEST_MONGO_URI || 'mongodb://localhost:27017/integration'
+    : process.env.MONGO_URI || 'mongodb://localhost:27017/caafg'
 
 const Mongoose = () => {
   const initialiseMongoConnection = () => {
