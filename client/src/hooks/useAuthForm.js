@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import { validationFunctions } from '../utils/authFormValidation'
 
+// Create ref for each input element return object of references {fieldName: useRef(null)}
 const useFieldRefs = fields => {
   const fieldRefs = {}
   Object.keys(fields).forEach(fieldName => {
@@ -9,6 +10,7 @@ const useFieldRefs = fields => {
   return fieldRefs
 }
 
+// hook to handle state (form data, form errors, loading, refs etc) for all auth forms
 const useAuthForm = (initialData = {}, formName) => {
   const [formData, setFormData] = useState(initialData)
   const [inputErrors, setInputErrors] = useState(initialData)
@@ -26,7 +28,10 @@ const useAuthForm = (initialData = {}, formName) => {
   // Validate input field on blur event
   const handleBlurValidation = event => {
     const { name, value } = event.target
+
+    // if input field empty, remove validation errors
     if (!value) return setInputErrors({ ...inputErrors, [name]: '' })
+
     setInputErrors({ ...inputErrors, [name]: validationFunctions[name](value) })
   }
 
@@ -43,16 +48,19 @@ const useAuthForm = (initialData = {}, formName) => {
     // Set input errors;
     setInputErrors(newValidationErrors)
 
-    // Focus the first occurance of an error and return out of function
+    // Focus the first occurance of an error and return false (validation failed)
     if (firstErrorField && fieldRefs[firstErrorField].current) {
       fieldRefs['email'].current.focus()
       fieldRefs[firstErrorField].current.focus()
       return false
     }
 
+    // validation success
     return true
   }
 
+  // express validation returns errors array with path (fieldName) and msg (validation error)
+  // Format into object with same shape as inputErrors
   const formatServerValidationErrors = errors => {
     const formattedErrors = {}
     errors.forEach(error => {
@@ -67,23 +75,13 @@ const useAuthForm = (initialData = {}, formName) => {
     if (error.response && error.response.status === 422) {
       // set inline input validation errors
       formatServerValidationErrors(error.response.data.errors)
-    } else if (error.response && error.response.status === 401) {
+    } else if (error.response && error.response.status !== 500) {
       // set form error (invalid credentials)
-      setServerError(`${error.response.data.error}`)
-    } else if (error.response && error.response.status === 409) {
-      // set form error (Conflict error)
       setServerError(`${error.response.data.error}`)
     } else {
       // handle unexpected error. (network error etc)
       setServerError(`${error.message}. Try again later.`)
     }
-  }
-
-  const resetForm = () => {
-    setFormData(initialData)
-    setInputErrors(initialData)
-    setIsLoading(false)
-    setServerError('')
   }
 
   return {

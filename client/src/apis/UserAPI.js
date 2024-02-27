@@ -37,11 +37,18 @@ const requestReset = async formData => {
   return response
 }
 
+const resetPassword = async (formData, token) => {
+  const resetPasswordURL = usersURL + `/reset-password?token=${token}`
+  const response = await api.post(resetPasswordURL, formData)
+  return response
+}
+
 export const UserAPI = {
   getAll,
   signIn,
   signUp,
   requestReset,
+  resetPassword,
 }
 
 // defining the cancel API object for UserAPI

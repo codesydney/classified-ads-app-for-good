@@ -25,7 +25,6 @@ const RequestPasswordResetForm = () => {
     setServerError('')
     if (!isSubmitValidationSuccess()) return
     setIsLoading(true)
-    console.log('ready to role')
 
     try {
       const response = await UserAPI.requestReset(formData)
@@ -40,6 +39,7 @@ const RequestPasswordResetForm = () => {
   }
 
   if (successMessage) return <p>{successMessage}</p>
+
   return (
     <Container maxWidth="sm">
       <form onSubmit={handleSubmit}>

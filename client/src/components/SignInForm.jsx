@@ -22,16 +22,21 @@ const SignInForm = () => {
   const handleSubmit = async event => {
     event.preventDefault()
     setServerError('')
+
+    // run submit validation
     if (!isSubmitValidationSuccess()) return
+
     setIsLoading(true)
     try {
       const response = await UserAPI.signIn(formData)
+      // set jwt token to session storage
       const token = response.data.token
       sessionStorage.setItem('jwt', token)
       // redirect to home?
       console.log('success', response)
       setIsLoading(false)
     } catch (error) {
+      // handle request errors
       handleServerErrors(error)
       setIsLoading(false)
     }

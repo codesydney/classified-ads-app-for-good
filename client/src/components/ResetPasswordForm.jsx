@@ -1,8 +1,9 @@
 import { Container, TextField, Stack, Button } from '@mui/material'
 import { UserAPI } from '../apis/UserAPI'
 import useAuthForm from '../hooks/useAuthForm'
+import { Link, useSearchParams } from 'react-router-dom'
 
-const SignUpForm = () => {
+const ResetPasswordForm = () => {
   const initialData = { email: '', password: '', passwordConfirm: '' }
   const {
     formData,
@@ -12,35 +13,49 @@ const SignUpForm = () => {
     setIsLoading,
     serverError,
     setServerError,
+    successMessage,
+    setSuccessMessage,
     handleChange,
     handleBlurValidation,
     isSubmitValidationSuccess,
     handleServerErrors,
   } = useAuthForm(initialData, 'signUp')
+  const [searchParams] = useSearchParams()
 
   const handleSubmit = async event => {
     event.preventDefault()
     setServerError('')
-
-    // run submit validation
     if (!isSubmitValidationSuccess()) return
-
     setIsLoading(true)
 
-    try {
-      const response = await UserAPI.signUp(formData)
-
-      // set jwt in session storage.
-      const token = response.data.token
-      sessionStorage.setItem('jwt', token)
+    // pull token from query params
+    // If no token is present - set error and exit function
+    const token = searchParams.get('token')
+    if (!token) {
+      setServerError('Invalid token. Please request another email.')
       setIsLoading(false)
-      // Redirect to home?
-      console.log('success', response)
+      return
+    }
+
+    try {
+      const response = await UserAPI.resetPassword(formData, token)
+      setSuccessMessage('Success! You can now sign in using your new password.')
+
+      // redirect to home?
+      setIsLoading(false)
     } catch (error) {
-      // handle request errors
       handleServerErrors(error)
       setIsLoading(false)
     }
+  }
+
+  // Display success message instead of form on password reset successful.
+  if (successMessage) {
+    return (
+      <div>
+        {successMessage} <Link to="/signin">Sign in here</Link>
+      </div>
+    )
   }
 
   return (
@@ -63,7 +78,7 @@ const SignUpForm = () => {
           />
           <TextField
             id="password"
-            label="Password"
+            label="New Password"
             variant="outlined"
             name="password"
             type="password"
@@ -76,7 +91,7 @@ const SignUpForm = () => {
           />
           <TextField
             id="passwordConfirm"
-            label="Confirm Password"
+            label="Confirm New Password"
             variant="outlined"
             name="passwordConfirm"
             type="password"
@@ -93,7 +108,7 @@ const SignUpForm = () => {
             type="submit"
             disabled={isLoading}
           >
-            Sign up
+            Reset Password
           </Button>
         </Stack>
       </form>
@@ -101,4 +116,4 @@ const SignUpForm = () => {
   )
 }
 
-export default SignUpForm
+export default ResetPasswordForm
