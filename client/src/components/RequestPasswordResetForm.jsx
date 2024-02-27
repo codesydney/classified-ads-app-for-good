@@ -8,12 +8,8 @@ const RequestPasswordResetForm = () => {
     formData,
     inputErrors,
     fieldRefs,
-    isLoading,
-    setIsLoading,
-    serverError,
-    setServerError,
-    successMessage,
-    setSuccessMessage,
+    formStatus,
+    setFormStatus,
     handleChange,
     handleBlurValidation,
     isSubmitValidationSuccess,
@@ -22,28 +18,29 @@ const RequestPasswordResetForm = () => {
 
   const handleSubmit = async event => {
     event.preventDefault()
-    setServerError('')
-    if (!isSubmitValidationSuccess()) return
-    setIsLoading(true)
 
+    if (!isSubmitValidationSuccess()) return
+
+    setFormStatus({ ...formStatus, loading: true })
     try {
       const response = await UserAPI.requestReset(formData)
-      setSuccessMessage(
-        'Success! We have sent you an email with instructions to reset your password.',
-      )
-      setIsLoading(false)
+      setFormStatus({
+        ...formStatus,
+        successMessage:
+          'Success! We have sent you an email with instructions to reset your password.',
+        loading: true,
+      })
     } catch (error) {
       handleServerErrors(error)
-      setIsLoading(false)
     }
   }
 
-  if (successMessage) return <p>{successMessage}</p>
+  if (formStatus.successMessage) return <p>{formStatus.successMessage}</p>
 
   return (
     <Container maxWidth="sm">
       <form onSubmit={handleSubmit}>
-        {serverError && <p>{serverError}</p>}
+        {formStatus.error && <p>{formStatus.error}</p>}
         <Stack spacing={2}>
           <TextField
             id="email"
@@ -61,7 +58,7 @@ const RequestPasswordResetForm = () => {
             variant="contained"
             size="large"
             type="submit"
-            disabled={isLoading}
+            disabled={formStatus.loading}
           >
             Request New Password.
           </Button>

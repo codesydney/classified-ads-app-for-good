@@ -9,10 +9,8 @@ const SignInForm = () => {
     formData,
     inputErrors,
     fieldRefs,
-    isLoading,
-    setIsLoading,
-    serverError,
-    setServerError,
+    formStatus,
+    setFormStatus,
     handleChange,
     handleBlurValidation,
     isSubmitValidationSuccess,
@@ -21,31 +19,30 @@ const SignInForm = () => {
 
   const handleSubmit = async event => {
     event.preventDefault()
-    setServerError('')
 
     // run submit validation
     if (!isSubmitValidationSuccess()) return
 
-    setIsLoading(true)
+    setFormStatus({ ...formStatus, loading: true })
     try {
       const response = await UserAPI.signIn(formData)
       // set jwt token to session storage
       const token = response.data.token
       sessionStorage.setItem('jwt', token)
-      // redirect to home?
+
+      setFormStatus({ ...formStatus, loading: false })
       console.log('success', response)
-      setIsLoading(false)
+      // redirect to home?
     } catch (error) {
       // handle request errors
       handleServerErrors(error)
-      setIsLoading(false)
     }
   }
 
   return (
     <Container maxWidth="sm">
       <form onSubmit={handleSubmit}>
-        {serverError && <p>{serverError}</p>}
+        {formStatus.error && <p>{formStatus.error}</p>}
         <Stack spacing={2}>
           <TextField
             id="email"
@@ -77,7 +74,7 @@ const SignInForm = () => {
             variant="contained"
             size="large"
             type="submit"
-            disabled={isLoading}
+            disabled={formStatus.loading}
           >
             Sign In
           </Button>

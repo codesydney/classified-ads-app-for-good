@@ -14,6 +14,11 @@ const useFieldRefs = fields => {
 const useAuthForm = (initialData = {}, formName) => {
   const [formData, setFormData] = useState(initialData)
   const [inputErrors, setInputErrors] = useState(initialData)
+  const [formStatus, setFormStatus] = useState({
+    loading: false,
+    error: '',
+    successMessage: '',
+  })
   const [isLoading, setIsLoading] = useState(false)
   const [serverError, setServerError] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
@@ -77,10 +82,20 @@ const useAuthForm = (initialData = {}, formName) => {
       formatServerValidationErrors(error.response.data.errors)
     } else if (error.response && error.response.status !== 500) {
       // set form error (invalid credentials)
-      setServerError(`${error.response.data.error}`)
+      setFormStatus({
+        ...formStatus,
+        error: error.response.data.error || 'Error occured.',
+        loading: false,
+      })
+      // setServerError(`${error.response.data.error}`)
     } else {
       // handle unexpected error. (network error etc)
-      setServerError(`${error.message}. Try again later.`)
+      // setServerError(`${error.message}. Try again later.`)
+      setFormStatus({
+        ...formStatus,
+        error: error.message || 'Error occured.',
+        loading: false,
+      })
     }
   }
 
@@ -89,6 +104,8 @@ const useAuthForm = (initialData = {}, formName) => {
     inputErrors,
     setInputErrors,
     fieldRefs,
+    formStatus,
+    setFormStatus,
     isLoading,
     setIsLoading,
     serverError,

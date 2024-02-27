@@ -8,10 +8,8 @@ const SignUpForm = () => {
     formData,
     inputErrors,
     fieldRefs,
-    isLoading,
-    setIsLoading,
-    serverError,
-    setServerError,
+    formStatus,
+    setFormStatus,
     handleChange,
     handleBlurValidation,
     isSubmitValidationSuccess,
@@ -20,12 +18,11 @@ const SignUpForm = () => {
 
   const handleSubmit = async event => {
     event.preventDefault()
-    setServerError('')
 
     // run submit validation
     if (!isSubmitValidationSuccess()) return
 
-    setIsLoading(true)
+    setFormStatus({ ...formStatus, loading: true })
 
     try {
       const response = await UserAPI.signUp(formData)
@@ -33,20 +30,19 @@ const SignUpForm = () => {
       // set jwt in session storage.
       const token = response.data.token
       sessionStorage.setItem('jwt', token)
-      setIsLoading(false)
-      // Redirect to home?
+
+      setFormStatus({ ...formStatus, loading: false })
       console.log('success', response)
+      // Redirect to home?
     } catch (error) {
-      // handle request errors
       handleServerErrors(error)
-      setIsLoading(false)
     }
   }
 
   return (
     <Container maxWidth="sm">
       <form onSubmit={handleSubmit}>
-        {serverError && <p>{serverError}</p>}
+        {formStatus.error && <p>{formStatus.error}</p>}
         <Stack spacing={3}>
           <TextField
             size="medium"
@@ -91,7 +87,7 @@ const SignUpForm = () => {
             variant="contained"
             size="large"
             type="submit"
-            disabled={isLoading}
+            disabled={formStatus.loading}
           >
             Sign up
           </Button>

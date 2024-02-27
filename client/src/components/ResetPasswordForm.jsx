@@ -9,12 +9,8 @@ const ResetPasswordForm = () => {
     formData,
     inputErrors,
     fieldRefs,
-    isLoading,
-    setIsLoading,
-    serverError,
-    setServerError,
-    successMessage,
-    setSuccessMessage,
+    formStatus,
+    setFormStatus,
     handleChange,
     handleBlurValidation,
     isSubmitValidationSuccess,
@@ -24,36 +20,38 @@ const ResetPasswordForm = () => {
 
   const handleSubmit = async event => {
     event.preventDefault()
-    setServerError('')
+
     if (!isSubmitValidationSuccess()) return
-    setIsLoading(true)
 
     // pull token from query params
     // If no token is present - set error and exit function
     const token = searchParams.get('token')
     if (!token) {
-      setServerError('Invalid token. Please request another email.')
-      setIsLoading(false)
+      setFormStatus({
+        ...formStatus,
+        error: 'Invalid token. Please request another email.',
+      })
       return
     }
 
+    setFormStatus({ ...formStatus, loading: true })
     try {
       const response = await UserAPI.resetPassword(formData, token)
-      setSuccessMessage('Success! You can now sign in using your new password.')
-
-      // redirect to home?
-      setIsLoading(false)
+      setFormStatus({
+        ...formStatus,
+        successMessage: 'Success! You can now sign in using your new password.',
+        loading: false,
+      })
     } catch (error) {
       handleServerErrors(error)
-      setIsLoading(false)
     }
   }
 
   // Display success message instead of form on password reset successful.
-  if (successMessage) {
+  if (formStatus.successMessage) {
     return (
       <div>
-        {successMessage} <Link to="/signin">Sign in here</Link>
+        {formStatus.successMessage} <Link to="/signin">Sign in here</Link>
       </div>
     )
   }
@@ -61,7 +59,7 @@ const ResetPasswordForm = () => {
   return (
     <Container maxWidth="sm">
       <form onSubmit={handleSubmit}>
-        {serverError && <p>{serverError}</p>}
+        {formStatus.error && <p>{formStatus.error}</p>}
         <Stack spacing={3}>
           <TextField
             size="medium"
@@ -106,7 +104,7 @@ const ResetPasswordForm = () => {
             variant="contained"
             size="large"
             type="submit"
-            disabled={isLoading}
+            disabled={formStatus.loading}
           >
             Reset Password
           </Button>
