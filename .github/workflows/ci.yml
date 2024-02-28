@@ -63,6 +63,14 @@ jobs:
         run: npm ci
       - name: Run server integration tests
         run: npm run server:test:integration
+        env:
+          NODE_ENV: ${{ secrets.NODE_ENV }}
+          PORT: ${{ secrets.PORT }}
+          MONGO_URI: ${{ secrets.MONGO_URI }}
+          TEST_MONGO_URI: ${{ secrets.TEST_MONGO_URI }}
+          SENDGRID_EMAIL: ${{ secrets.SENDGRID_EMAIL }}
+          CLIENT_URL: ${{ secrets.CLIENT_URL }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
   server-test-unit:
     needs: prettier-check
