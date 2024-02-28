@@ -12,11 +12,13 @@ app.use(cors({ credentials: true }))
 
 app.use('/api/v1/health', HealthRoute)
 app.use('/api/v1/users', UserRoute)
-app.use(notFound)
-app.use(errorHandler)
+
 // Serve Swagger UI only in development environment
 if (process.env.NODE_ENV === 'development') {
   app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpecs))
 }
+
+app.use(notFound)
+app.use(errorHandler)
 
 module.exports = app

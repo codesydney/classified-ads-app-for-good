@@ -27,7 +27,11 @@ const Mongoose = () => {
     })
   }
 
-  return { initialiseMongoConnection }
+  const closeMongoConnection = () => {
+    return mongoose.disconnect()
+  }
+
+  return { initialiseMongoConnection, closeMongoConnection }
 }
 
 module.exports = Mongoose

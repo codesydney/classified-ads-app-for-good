@@ -40,7 +40,7 @@ exports.handleValidationResult = (req, res, next) => {
 
   // If there are validation errors, return 422 response
   if (!result.isEmpty()) {
-    return res.status(422).json({ errors: result.array() })
+    return res.status(422).json({ error: result.array(), status: 'ERROR' })
   }
 
   next()

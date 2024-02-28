@@ -7,7 +7,7 @@ const {
   handleValidationResult,
 } = require('../middleware/validationMiddlewares')
 const { createToken } = require('../utils/handleJwt')
-const { generateResetToken, compareToken } = require('../utils/resetTokens')
+const passwordResetTokenUtils = require('../utils/resetTokens')
 const { sendResetEmail } = require('../utils/mail')
 
 // Signup controller
@@ -35,7 +35,9 @@ exports.signup = [
       const token = createToken({ id: newUser._id })
 
       // return 201 response with token
-      return res.status(201).json({ message: 'User created', token })
+      return res
+        .status(201)
+        .json({ message: 'User created', token, status: 'OK' })
     } catch (error) {
       next(error)
     }
@@ -73,7 +75,9 @@ exports.signin = [
       const token = createToken({ id: user._id })
 
       // return token
-      return res.status(200).json({ message: 'User signed in', token })
+      return res
+        .status(200)
+        .json({ message: 'User signed in', token, status: 'OK' })
     } catch (error) {
       next(error)
     }
@@ -92,11 +96,14 @@ exports.requestResetPassword = [
 
       // If no user with this email exists, send response with 200 status (security measure)
       if (!user) {
-        return res.status(200).json({ message: 'Reset email sent' })
+        return res
+          .status(200)
+          .json({ message: 'Reset email sent', status: 'OK' })
       }
 
       // create reset token for the user
-      const { token, hashedToken } = await generateResetToken()
+      const { token, hashedToken } =
+        await passwordResetTokenUtils.generateResetToken()
 
       // save token to the db, with expiry date
       await PasswordResetService.generatePasswordResetToken(
@@ -108,7 +115,7 @@ exports.requestResetPassword = [
       await sendResetEmail(email, token)
 
       // return 200 response
-      return res.status(200).json({ message: 'Reset email sent' })
+      return res.status(200).json({ message: 'Reset email sent', status: 'OK' })
     } catch (error) {
       next(error)
     }
@@ -128,7 +135,7 @@ exports.resetPassword = [
       const user = await UserService.findUserByEmail(email)
 
       if (!user) {
-        const error = new Error('Could not find resource.')
+        const error = new Error('Not found.')
         error.statusCode = 404
         throw error
       }
@@ -143,7 +150,10 @@ exports.resetPassword = [
       }
 
       // compare token provided with token stored
-      const isMatch = await compareToken(token, storedToken.token)
+      const isMatch = await passwordResetTokenUtils.compareToken(
+        token,
+        storedToken.token,
+      )
 
       // Token has been found, is single use: delete.
       await PasswordResetService.findTokenAndDelete(user._id)
@@ -158,7 +168,9 @@ exports.resetPassword = [
       user.password = password
       await user.save()
 
-      return res.status(200).json({ message: 'Password successfully changed' })
+      return res
+        .status(200)
+        .json({ message: 'Password successfully changed', status: 'OK' })
     } catch (error) {
       next(error)
     }
