@@ -1,37 +1,22 @@
 const path = require('path')
-const webpack = require('webpack')
+const { IgnorePlugin } = require('webpack')
 
 module.exports = {
   mode: 'production',
   entry: './src/index.js',
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.join(__dirname, 'dist'),
+    publicPath: '/',
     filename: 'bundle.js',
   },
   target: 'node',
-  externals: [/node_modules/],
   plugins: [
-    new webpack.IgnorePlugin({
-      resourceRegExp: /^(node-gyp|npm|bson-ext|snappy\/package.json)$/,
+    new IgnorePlugin({
+      resourceRegExp:
+        /^(kerberos|@mongodb-js\/zstd|@aws-sdk\/credential-providers|gcp-metadata|snappy|socks|aws4|mongodb-client-encryption)$/,
     }),
   ],
-  module: {
-    rules: [
-      {
-        test: /\.html$/,
-        use: 'null-loader',
-      },
-    ],
-  },
-  resolve: {
-    fallback: {
-      fs: false,
-      path: false,
-      os: false,
-      'mock-aws-s3': false,
-      'aws-sdk': false,
-      nock: false,
-    },
-  },
-  ignoreWarnings: [warning => /Can't resolve/.test(warning.message)],
+  ignoreWarnings: [
+    /Critical dependency: the request of a dependency is an expression/,
+  ],
 }
