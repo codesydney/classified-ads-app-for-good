@@ -11,7 +11,7 @@ const Mongoose = () => {
     return new Promise((resolve, reject) => {
       mongoose
         .connect(mongoURI)
-        .then(() => console.log('Connected to MongoDB...'))
+        .then(() => console.log('Connected to MongoDB...', mongoURI))
         .then(() => resolve(mongoose))
         .catch(err => {
           console.error('Connection error:', err)
@@ -27,7 +27,11 @@ const Mongoose = () => {
     })
   }
 
-  return { initialiseMongoConnection }
+  const closeMongoConnection = () => {
+    return mongoose.disconnect()
+  }
+
+  return { initialiseMongoConnection, closeMongoConnection }
 }
 
 module.exports = Mongoose

@@ -1,7 +1,8 @@
 import { Container } from '@mui/material'
-import SignInForm from '../components/SignInForm'
+import RequestPasswordResetForm from '../components/RequestPasswordResetForm'
 import { Link } from 'react-router-dom'
-const Signin = () => {
+
+const RequestPasswordReset = () => {
   return (
     <Container
       sx={{
@@ -11,13 +12,13 @@ const Signin = () => {
         marginTop: 10,
       }}
     >
-      <h1>Sign In</h1>
-      <SignInForm />
+      <h1>Request Password Reset</h1>
+      <RequestPasswordResetForm />
       <p>
-        Don't have an account? Sign up <Link to="/signup">Here</Link>
+        Sign in <Link to="/signin">Here</Link>
       </p>
     </Container>
   )
 }
 
-export default Signin
+export default RequestPasswordReset
