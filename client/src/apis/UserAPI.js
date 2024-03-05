@@ -1,9 +1,7 @@
 import { api } from './configs/axiosConfig'
 import { defineCancelApiObject } from './configs/axiosUtils'
 
-const usersURLVersion = '/v1'
-const usersURLRoute = '/users'
-const usersURL = usersURLVersion + usersURLRoute
+const usersURL = '/users'
 
 const getAll = async (q, cancel = false) => {
   const params = q ? { q } : undefined

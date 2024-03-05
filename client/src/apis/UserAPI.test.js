@@ -1,7 +1,7 @@
 import { api } from './configs/axiosConfig'
 import { UserAPI } from './UserAPI'
 
-const expectedUsersURL = '/v1/users'
+const expectedUsersURL = '/users'
 
 describe('UserAPI', () => {
   test('should return response if UserAPI.getAll is successful with no query', async () => {
