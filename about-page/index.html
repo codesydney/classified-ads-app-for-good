@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About UST Alumni</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link your external stylesheet if you have one -->
+    <style>
+        /* Reset default margin and padding for the body */
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Sticky white tab bar with box shadow at the bottom */
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: white;
+            position: sticky;
+            bottom: 0; /* Set to bottom instead of top */
+            z-index: 100; /* Ensure the tab bar appears above content */
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle box shadow */
+            display: flex;
+            justify-content: space-around; /* Spread items equally */
+        }
+
+        li {
+            /* float: left; Remove this line */
+            flex: 1; /* Equal distribution of space */
+        }
+
+        li a {
+            display: block;
+            color: black;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover {
+            background-color: #f1f1f1; /* Optional: Add a hover background color */
+        }
+
+        /* Add space above the tab bar */
+        body {
+            padding-bottom: 50px; /* Adjust the padding value based on the tab bar height */
+        }
+
+        /* Add your custom styles here */
+        img {
+            display: block;
+            max-width: 100%; /* Optional: Set a maximum width for the images */
+            margin: 20px auto; /* Adjusted spacing: 20px top and bottom, centered horizontally */
+        }
+    </style>
+</head>
+<body>
+    <img src="images/ust.jpg" alt="UST Alumni Australia Logo">
+
+    <h1>About UST Alumni</h1>
+
+    <h2>Lorem ipsum...</h2>
+
+    <img src="images/president.jpg" alt="UST Alumni President" style="margin-top: 30px; margin-bottom: 30px;">
+
+    <img src="images/secretary.jpg" alt="UST Alumni Secretary" style="margin-top: 30px; margin-bottom: 30px;">
+    
+    <img src="images/treasurer.jpg" alt="UST Alumni Treasurer" style="margin-top: 30px; margin-bottom: 30px;">
+
+    <img src="images/pro.jpg" alt="UST Alumni PRO" style="margin-top: 30px; margin-bottom: 30px;">
+
+    <img src="images/auditor.jpg" alt="UST Alumni Auditor" style="margin-top: 30px; margin-bottom: 30px;">
+
+    <img src="images/vp.jpg" alt="UST Alumni VP (NSW)" style="margin-top: 30px; margin-bottom: 30px;">
+
+    <img src="images/vp2.jpg" alt="UST Alumni VP (ACT)" style="margin-top: 30px; margin-bottom: 30px;">
+
+    <img src="images/vp3.jpg" alt="UST Alumni VP (QLD)" style="margin-top: 30px; margin-bottom: 30px;">
+
+    <img src="images/vp4.jpg" alt="UST Alumni VP (WA)" style="margin-top: 30px; margin-bottom: 30px;">
+
+    <img src="images/coordinator.jpg" alt="UST Alumni VP (Coordinator)" style="margin-top: 30px; margin-bottom: 30px;">
+
+    <img src="images/adviser.jpg" alt="UST Alumni VP (Adviser)" style="margin-top: 30px; margin-bottom: 30px;">
+
+    <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#search">Search</a></li>
+        <li class="plus"><a href="#add">+</a></li>
+        <li><a href="#messages">Messages</a></li>
+        <li><a href="#profile">Profile</a></li>
+    </ul>
+</body>
+</html>
