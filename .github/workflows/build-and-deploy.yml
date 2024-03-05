@@ -86,3 +86,17 @@ jobs:
         run: npm ci
       - name: Run server unit tests
         run: npm run server:test:unit
+
+  csc-deploy:
+    needs: [ client-test, server-test-integration, server-test-unit ]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to cloud server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.CLOUD_HOST }}
+          username: classifieds
+          key: ${{ secrets.CLOUD_KEY }}
+          port: 22
+          script: cd staging && ./deploy

@@ -1,6 +1,10 @@
 import axios from 'axios'
 
-const baseURL = 'http://localhost:3000/api'
+const baseURL =
+  import.meta.env.MODE === 'development'
+    ? 'http://localhost:3000/api/v1'
+    : '/api/v1'
+
 export const api = axios.create({ baseURL })
 
 // defining a custom error handler for all APIs
