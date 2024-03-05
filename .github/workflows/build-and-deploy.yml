@@ -87,7 +87,7 @@ jobs:
       - name: Run server unit tests
         run: npm run server:test:unit
 
-  deploy:
+  csc-deploy:
     needs: [ client-test, server-test-integration, server-test-unit ]
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
