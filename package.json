@@ -26,5 +26,8 @@
   "workspaces": [
     "client",
     "server"
-  ]
+  ],
+  "dependencies": {
+    "pino-pretty": "^10.3.1"
+  }
 }

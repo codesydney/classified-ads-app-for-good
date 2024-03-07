@@ -1,16 +1,42 @@
 const express = require('express')
 const UserController = require('../controllers/UserController')
+const {
+  signupValidation,
+  signinValidation,
+  emailValidation,
+  handleValidationResult,
+} = require('../middleware/validationMiddlewares')
 
 const router = express.Router()
 
 router.get('/', UserController.getUsers)
 
-router.post('/signup', UserController.signup)
+router.post(
+  '/signup',
+  signupValidation,
+  handleValidationResult,
+  UserController.signup,
+)
 
-router.post('/signin', UserController.signin)
+router.post(
+  '/signin',
+  signinValidation,
+  handleValidationResult,
+  UserController.signin,
+)
 
-router.post('/request-reset-password', UserController.requestResetPassword)
+router.post(
+  '/request-reset-password',
+  emailValidation,
+  handleValidationResult,
+  UserController.requestResetPassword,
+)
 
-router.post('/reset-password', UserController.resetPassword)
+router.post(
+  '/reset-password',
+  signupValidation,
+  handleValidationResult,
+  UserController.resetPassword,
+)
 
 module.exports = router
