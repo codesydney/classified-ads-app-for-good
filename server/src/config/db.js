@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const logger = require('../utils/logger')
 require('dotenv').config()
 
 const mongoURI =
@@ -11,17 +12,17 @@ const Mongoose = () => {
     return new Promise((resolve, reject) => {
       mongoose
         .connect(mongoURI)
-        .then(() => console.log('Connected to MongoDB...', mongoURI))
+        .then(() => logger.info('Connected to MongoDB...'))
         .then(() => resolve(mongoose))
         .catch(err => {
-          console.error('Connection error:', err)
+          logger.error('Connection error:', err)
           reject(err)
         })
 
       const db = mongoose.connection
 
       db.on('error', err => {
-        console.error('Connection error:', err)
+        logger.error('Connection error:', err)
         reject(err)
       })
     })
