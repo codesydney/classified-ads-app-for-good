@@ -1,33 +1,29 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import './Navbar.css'
-import Logo from '../assets/logo.png'
+import Logo from '../assets/logo.jpeg' // Make sure the path to your logo is correct
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <nav style={{ borderBottom: 'solid 1px #000' }}>
-      <div style={{ display: 'flex' }}>
-        <div style={{ flex: 1 }}>
-          <img
-            src={Logo}
-            alt="logo"
-            style={{ width: '150px', height: '150px' }}
-          />
-        </div>
-
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <div>About</div>
-          <div>Contact</div>
-          <div>Login</div>
-          <div>Register</div>
-        </div>
+    <nav className="navbar">
+      <Link to="/">
+        <img src={Logo} alt="logo" className="navbar-logo" />
+      </Link>
+      <div className="navbar-menu">
+        <Link to="/about" className="navbar-link">
+          About
+        </Link>
+        <Link to="/contact" className="navbar-link">
+          Contact
+        </Link>
+        <Link to="/signin">
+          <button className="navbar-button login">Login</button>
+        </Link>
+        <Link to="/signup">
+          <button className="navbar-button register">Register</button>
+        </Link>
       </div>
     </nav>
   )
