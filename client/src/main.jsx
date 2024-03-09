@@ -2,10 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import Router from './router/Router.jsx'
 import './index.css'
-import '@fontsource/roboto/300.css'
-import '@fontsource/roboto/400.css'
-import '@fontsource/roboto/500.css'
-import '@fontsource/roboto/700.css'
+import '@fontsource/comfortaa/300.css'
+import '@fontsource/comfortaa/400.css'
+import '@fontsource/comfortaa/500.css'
+import '@fontsource/comfortaa/700.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
