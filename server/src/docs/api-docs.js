@@ -1,7 +1,19 @@
 /**
  * @swagger
+ * tags:
+ *   - name: Health
+ *     description: API Health Check
+ *   - name: Users
+ *     description: User Management
+ *   - name: Auth
+ *     description: Authentication
+ */
+
+/**
+ * @swagger
  * /api/v1/health:
  *   get:
+ *     tags: [Health]
  *     summary: Check API health
  *     description: Returns the health status of the API
  *     responses:
@@ -15,10 +27,13 @@
  *                 status:
  *                   type: string
  *                   example: OK
- *
+ */
+
+/**
  * @swagger
  * /api/v1/users:
  *   get:
+ *     tags: [Users]
  *     summary: Get all users
  *     description: Returns all users
  *     responses:
@@ -34,7 +49,22 @@
  *                   example: OK
  *                 data:
  *                   type: array
- *                   users:
- *                     type: object
- *
+ *                   items:
+ *                     $ref: '#/components/schemas/User'
+ */
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *           example: John Doe
+ *         email:
+ *           type: string
+ *           format: email
+ *           example: john.doe@example.com
  */
