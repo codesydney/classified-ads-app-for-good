@@ -115,3 +115,79 @@
  *       409:
  *         description: Email already in use
  */
+/**
+ * @swagger
+ * /api/v1/users/signin:
+ *   post:
+ *     tags: [Auth]
+ *     summary: User signin
+ *     description: Allows user to sign in with email and password.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *               password:
+ *                 type: string
+ *                 format: password
+ *     responses:
+ *       200:
+ *         description: User signed in successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: User signed in
+ *                 token:
+ *                   type: string
+ *                 status:
+ *                   type: string
+ *                   example: OK
+ *       401:
+ *         description: Invalid credentials
+ */
+
+/**
+ * @swagger
+ * /api/v1/users/request-reset-password:
+ *   post:
+ *     tags: [Auth]
+ *     summary: Request password reset
+ *     description: Sends an email to the user with password reset instructions.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *     responses:
+ *       200:
+ *         description: Reset email sent (status code always 200 for security reasons)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Reset email sent
+ *                 status:
+ *
+ */
