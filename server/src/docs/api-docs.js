@@ -68,3 +68,50 @@
  *           format: email
  *           example: john.doe@example.com
  */
+
+/**
+ * @swagger
+ * /api/v1/users/signup:
+ *   post:
+ *     tags: [Auth]
+ *     summary: User signup
+ *     description: Allows a new user to create an account.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *               - passwordConfirm
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *               password:
+ *                 type: string
+ *                 format: password
+ *               passwordConfirm:
+ *                 type: string
+ *                 format: password
+ *     responses:
+ *       201:
+ *         description: User created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: User created
+ *                 token:
+ *                   type: string
+ *                 status:
+ *                   type: string
+ *                   example: OK
+ *       409:
+ *         description: Email already in use
+ */
