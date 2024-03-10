@@ -191,3 +191,52 @@
  *                 status:
  *
  */
+
+/**
+ * @swagger
+ * /api/v1/users/reset-password:
+ *   post:
+ *     tags: [Auth]
+ *     summary: Reset password
+ *     description: Allows user to reset their password using a token received by email.
+ *     parameters:
+ *       - in: query
+ *         name: token
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *               password:
+ *                 type: string
+ *                 format: password
+ *     responses:
+ *       200:
+ *         description: Password successfully changed
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Password successfully changed
+ *                 status:
+ *                   type: string
+ *                   example: OK
+ *       400:
+ *         description: Invalid Token
+ *       404:
+ *         description: Not found
+ */
