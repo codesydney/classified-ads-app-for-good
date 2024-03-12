@@ -10,12 +10,15 @@
     "build": "webpack --config webpack.config.js",
     "test": "jest",
     "test:integration": "cross-env NODE_ENV=test jest --testPathPattern=.int.test.js",
-    "test:unit": "jest --testPathPattern=.unit.test.js"
+    "test:unit": "jest --testPathPattern=.unit.test.js",
+    "db:seed": "NUM_USERS=100 node src/migration/userMigration.js",
+    "db:removeautomated": "node src/migration/removeAutomatedUsers.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@sendgrid/mail": "^8.1.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
