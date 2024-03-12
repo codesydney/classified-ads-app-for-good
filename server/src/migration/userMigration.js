@@ -6,6 +6,7 @@ const logger = require('../utils/logger')
 require('dotenv').config()
 
 const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/caafg'
+const numUsers = parseInt(process.env.NUM_USERS) || 10
 
 mongoose
   .connect(mongoURI)
@@ -85,6 +86,7 @@ const generateUser = async () => ({
     serviceLogo: faker.image.avatar(),
     serviceUrl: faker.image.avatar(),
   },
+  isAutomated: true,
 })
 
 // Function to insert a batch of users into the database
@@ -105,4 +107,4 @@ const insertUsers = async numberOfUsers => {
   }
 }
 
-insertUsers(1)
+insertUsers(numUsers)

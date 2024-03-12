@@ -105,6 +105,10 @@ const UserSchema = new Schema({
       },
     },
   },
+  isAutomated: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 UserSchema.pre('save', function (next) {
