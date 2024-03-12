@@ -10,7 +10,8 @@
     "build": "webpack --config webpack.config.js",
     "test": "jest",
     "test:integration": "cross-env NODE_ENV=test jest --testPathPattern=.int.test.js",
-    "test:unit": "jest --testPathPattern=.unit.test.js"
+    "test:unit": "jest --testPathPattern=.unit.test.js",
+    "db:seed": "node src/migration/userMigration.js"
   },
   "keywords": [],
   "author": "",
