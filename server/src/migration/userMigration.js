@@ -15,26 +15,75 @@ mongoose
 const db = mongoose.connection
 db.on('error', err => logger.error('Connection error:', err))
 
+const serviceNames = [
+  'Accounting Pro',
+  'Software Solutions',
+  'Tech Support Hub',
+  'Legal Consultancy',
+  'Marketing Experts',
+  'Financial Planning',
+  'Engineering Innovations',
+  'Creative Design Studio',
+  'IT Network Services',
+  'Real Estate Advisors',
+  'Educational Resources',
+  'Medical Health Services',
+  'Hospitality Management',
+  'Environmental Services',
+  'Security & Surveillance',
+  'Construction & Development',
+  'Logistics & Transportation',
+  'Human Resources Consulting',
+  'Event Planning Professionals',
+  'Fitness & Wellness Coaching',
+]
+
+const educationCourses = [
+  'Software Engineering',
+  'Computer Science',
+  'Information Technology',
+  'Electrical Engineering',
+  'Business Administration',
+  'Marketing',
+  'Accounting',
+  'Law',
+  'Mechanical Engineering',
+  'Civil Engineering',
+]
+
+const universities = [
+  'UNSW',
+  'University of Sydney',
+  'Monash University',
+  'University of Melbourne',
+  'Australian National University',
+  'University of Queensland',
+  'University of Western Australia',
+  'University of Adelaide',
+  'University of Technology Sydney',
+  'Macquarie University',
+]
+
 // Function to generate a random user with the password 'hello123'
 const generateUser = async () => ({
-  email: 'promie.yutasane@gmail.com',
+  email: faker.internet.email(),
   password: await bcrypt.hash('hello123', await bcrypt.genSalt(10)),
-  fullName: 'Promie',
-  phone: '0423702138',
-  suburb: 'Arncliffe',
-  postcode: '2205',
-  facebookName: 'pyut8988',
+  fullName: faker.person.fullName(),
+  phone: '0411222333',
+  suburb: faker.location.city(),
+  postcode: faker.location.zipCode('####'),
+  facebookName: faker.internet.userName(),
   story: 'love it',
-  alumniProfilePicture: 'url here',
+  alumniProfilePicture: faker.image.avatar(),
   education: {
-    course: 'software engineering',
-    college: 'unsw',
-    yearGraduated: '2020',
+    course: faker.helpers.arrayElement(educationCourses),
+    college: faker.helpers.arrayElement(universities),
+    yearGraduated: faker.date.between({ from: 2000, to: 2020 }),
   },
   service: {
-    serviceName: 'consulting',
-    serviceLogo: 'image url',
-    serviceUrl: 'https://www.npmjs.com/package/@faker-js/faker',
+    serviceName: faker.helpers.arrayElement(serviceNames),
+    serviceLogo: faker.image.avatar(),
+    serviceUrl: faker.image.avatar(),
   },
 })
 
