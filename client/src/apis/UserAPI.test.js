@@ -4,22 +4,36 @@ import { UserAPI } from './UserAPI'
 const expectedUsersURL = '/users'
 
 describe('UserAPI', () => {
-  test('should return response if UserAPI.getAll is successful with no query', async () => {
-    const getAllResponse = { data: { users: [{ name: 'John Doe' }] } }
-    const spy = jest.spyOn(api, 'get').mockReturnValue(getAllResponse)
-    expect(await UserAPI.getAll()).toEqual([{ name: 'John Doe' }])
+  afterEach(() => {
+    jest.restoreAllMocks()
+  })
+
+  test('should return response if UserAPI.getAll is successful with no parameters', async () => {
+    const getAllResponse = {
+      data: { users: [{ name: 'John Doe' }], meta: { page: 1, totalPages: 1 } },
+    }
+    const spy = jest.spyOn(api, 'get').mockResolvedValue(getAllResponse)
+    const response = await UserAPI.getAll({})
+    expect(response).toEqual(getAllResponse.data)
     expect(spy).toHaveBeenCalledWith(expectedUsersURL, {
-      params: undefined,
+      params: {
+        search: '',
+        page: 1,
+      },
       signal: undefined,
     })
   })
 
-  test('should return response if UserAPI.getAll is successful with a query', async () => {
-    const getAllResponse = { data: { users: [{ name: 'John Doe' }] } }
-    const spy = jest.spyOn(api, 'get').mockReturnValue(getAllResponse)
-    expect(await UserAPI.getAll('lawyer')).toEqual([{ name: 'John Doe' }])
+  test('should return response if UserAPI.getAll is successful with a search query', async () => {
+    const searchQuery = 'lawyer'
+    const getAllResponse = {
+      data: { users: [{ name: 'John Doe' }], meta: { page: 1, totalPages: 1 } },
+    }
+    const spy = jest.spyOn(api, 'get').mockResolvedValue(getAllResponse)
+    const response = await UserAPI.getAll({ search: searchQuery })
+    expect(response).toEqual(getAllResponse.data)
     expect(spy).toHaveBeenCalledWith(expectedUsersURL, {
-      params: { q: 'lawyer' },
+      params: { search: searchQuery, page: 1 },
       signal: undefined,
     })
   })

@@ -127,9 +127,26 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
     .json({ message: 'Password successfully changed', status: 'OK' })
 })
 
-exports.getUsers = (req, res, _next) => {
-  return res.status(200).json({
-    status: 'OK',
-    users: [{ name: 'Joe Smith' }],
-  })
+exports.getUsers = async (req, res) => {
+  const { search, page, limit } = req.query
+
+  try {
+    const result = await UserService.getUsers({
+      searchQuery: search,
+      page: page,
+      limit: limit,
+    })
+
+    res.status(200).json({
+      status: 'OK',
+      users: result.data,
+      meta: result.meta,
+    })
+  } catch (error) {
+    res.status(500).json({
+      status: 'Error',
+      message: 'Failed to retrieve users',
+      error: error.message,
+    })
+  }
 }
