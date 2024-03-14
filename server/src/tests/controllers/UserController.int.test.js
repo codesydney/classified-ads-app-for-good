@@ -522,47 +522,117 @@ describe('UserController', () => {
       expect(passwordResetTokenUtils.compareToken).not.toHaveBeenCalled()
       expect(PasswordResetService.findTokenAndDelete).not.toHaveBeenCalled()
     })
+
+    it('should respond with status 400 if token is invalid, (compare token function returns false)', async () => {
+      const validUserData = {
+        email: 'test@example.com',
+        password: 'testpassword',
+      }
+
+      const validUserResetData = {
+        email: 'test@example.com',
+        password: 'testpassword1',
+        passwordConfirm: 'testpassword1',
+      }
+
+      const user = await User.create(validUserData)
+      PasswordResetService.findTokenByUserId.mockResolvedValue({
+        user: user._id,
+        token: 'hashed token',
+      })
+      PasswordResetService.findTokenAndDelete.mockResolvedValue(true)
+      passwordResetTokenUtils.compareToken.mockResolvedValue(false)
+
+      const response = await request(app)
+        .post('/api/v1/users/reset-password?token=validtoken')
+        .send(validUserResetData)
+
+      expect(response.status).toBe(400)
+      expect(response.body).toEqual({
+        error: 'Invalid Token',
+        status: 'ERROR',
+      })
+
+      expect(PasswordResetService.findTokenByUserId).toHaveBeenCalledWith(
+        user._id,
+      )
+      expect(passwordResetTokenUtils.compareToken).toHaveBeenCalledWith(
+        'validtoken',
+        'hashed token',
+      )
+      expect(PasswordResetService.findTokenAndDelete).toHaveBeenCalledWith(
+        user._id,
+      )
+    })
   })
 
-  it('should respond with status 400 if token is invalid, (compare token function returns false)', async () => {
-    const validUserData = {
-      email: 'test@example.com',
-      password: 'testpassword',
-    }
-
-    const validUserResetData = {
-      email: 'test@example.com',
-      password: 'testpassword1',
-      passwordConfirm: 'testpassword1',
-    }
-
-    const user = await User.create(validUserData)
-    PasswordResetService.findTokenByUserId.mockResolvedValue({
-      user: user._id,
-      token: 'hashed token',
-    })
-    PasswordResetService.findTokenAndDelete.mockResolvedValue(true)
-    passwordResetTokenUtils.compareToken.mockResolvedValue(false)
-
-    const response = await request(app)
-      .post('/api/v1/users/reset-password?token=validtoken')
-      .send(validUserResetData)
-
-    expect(response.status).toBe(400)
-    expect(response.body).toEqual({
-      error: 'Invalid Token',
-      status: 'ERROR',
+  // GET USERS ENDPOINT
+  describe('GET /api/v1/users', () => {
+    afterAll(async () => {
+      await User.deleteMany({})
     })
 
-    expect(PasswordResetService.findTokenByUserId).toHaveBeenCalledWith(
-      user._id,
-    )
-    expect(passwordResetTokenUtils.compareToken).toHaveBeenCalledWith(
-      'validtoken',
-      'hashed token',
-    )
-    expect(PasswordResetService.findTokenAndDelete).toHaveBeenCalledWith(
-      user._id,
-    )
+    beforeEach(async () => {
+      await User.create([
+        {
+          email: 'user1@example.com',
+          password: 'password1',
+          fullName: 'John Doe',
+          service: { serviceName: 'Service1' },
+        },
+        {
+          email: 'user2@example.com',
+          password: 'password2',
+          fullName: 'Jane Doe',
+          service: { serviceName: 'Service2' },
+        },
+        {
+          email: 'user3@example.com',
+          password: 'password3',
+          fullName: 'Jim Beam',
+          service: { serviceName: 'Service3' },
+        },
+      ])
+    })
+
+    it('should return the first page of users with default pagination', async () => {
+      const response = await request(app).get('/api/v1/users')
+
+      expect(response.status).toBe(200)
+      expect(response.body.status).toBe('OK')
+      expect(response.body.users.length).toBeLessThanOrEqual(10)
+      expect(response.body.meta).toBeDefined()
+      expect(response.body.meta.page).toEqual(1)
+      expect(response.body.meta.totalPages).toBeGreaterThanOrEqual(1)
+    })
+
+    it('should return the second page of users with specified limit', async () => {
+      const response = await request(app).get('/api/v1/users?page=2&limit=1')
+
+      expect(response.status).toBe(200)
+      expect(response.body.status).toBe('OK')
+      expect(response.body.users.length).toBeLessThanOrEqual(1)
+      expect(response.body.meta).toBeDefined()
+      expect(response.body.meta.page).toEqual(2)
+    })
+
+    it('should return users matching the search query', async () => {
+      const response = await request(app).get('/api/v1/users?search=John')
+
+      expect(response.status).toBe(200)
+      expect(response.body.status).toBe('OK')
+      expect(response.body.users.length).toBeGreaterThan(0)
+      expect(response.body.users[0].fullName).toContain('John')
+    })
+
+    it('should handle no matching users for a search query', async () => {
+      const response = await request(app).get(
+        '/api/v1/users?search=nonexistentuser',
+      )
+
+      expect(response.status).toBe(200)
+      expect(response.body.status).toBe('OK')
+      expect(response.body.users.length).toBe(0)
+    })
   })
 })
