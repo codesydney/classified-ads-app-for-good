@@ -21,3 +21,42 @@ exports.findUserByEmailWithPassword = async email => {
   }).select('+password')
   return user
 }
+
+exports.getUsers = async ({ searchQuery = '', page = 1, limit = 10 }) => {
+  const matchCriteria = searchQuery
+    ? {
+        $text: {
+          $search: searchQuery,
+        },
+      }
+    : {}
+
+  let skip = (page - 1) * limit
+  limit = parseInt(limit)
+
+  try {
+    const query = User.find(matchCriteria).skip(skip).limit(limit)
+
+    // Only apply text score sorting if performing a text search
+    if (searchQuery) {
+      query.sort({ score: { $meta: 'textScore' } })
+    }
+
+    const users = await query
+    const total = await User.countDocuments(matchCriteria)
+    const totalPages = Math.ceil(total / limit)
+
+    return {
+      data: users,
+      meta: {
+        total,
+        page: Number(page),
+        totalPages,
+        hasNextPage: page < totalPages,
+        hasPrevPage: page > 1,
+      },
+    }
+  } catch (error) {
+    throw error
+  }
+}
