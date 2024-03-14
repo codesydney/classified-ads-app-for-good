@@ -135,4 +135,11 @@ UserSchema.methods.verifyPassword = function (candidatePassword) {
   })
 }
 
+// Adding text index for smart search
+UserSchema.index({
+  fullName: 'text',
+  'service.serviceName': 'text',
+  email: 'text',
+})
+
 module.exports = mongoose.model('User', UserSchema)
