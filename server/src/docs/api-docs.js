@@ -34,11 +34,32 @@
  * /api/v1/users:
  *   get:
  *     tags: [Users]
- *     summary: Get all users
- *     description: Returns all users
+ *     summary: Get users with optional search, pagination, and limits
+ *     description: Returns users with support for optional search by full name, service name, and email, as well as pagination and limit parameters.
+ *     parameters:
+ *       - in: query
+ *         name: search
+ *         required: false
+ *         description: Search term for full name, service name, or email
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: page
+ *         required: false
+ *         description: Page number for pagination (default is 1)
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *       - in: query
+ *         name: limit
+ *         required: false
+ *         description: Number of users per page (default is 10)
+ *         schema:
+ *           type: integer
+ *           default: 10
  *     responses:
  *       200:
- *         description: Successful return of all users
+ *         description: Successful return of users
  *         content:
  *           application/json:
  *             schema:
@@ -47,10 +68,90 @@
  *                 status:
  *                   type: string
  *                   example: OK
- *                 data:
+ *                 users:
  *                   type: array
  *                   items:
  *                     $ref: '#/components/schemas/User'
+ *                 meta:
+ *                   type: object
+ *                   properties:
+ *                     total:
+ *                       type: integer
+ *                       example: 100
+ *                     page:
+ *                       type: integer
+ *                       example: 1
+ *                     totalPages:
+ *                       type: integer
+ *                       example: 10
+ *                     hasNextPage:
+ *                       type: boolean
+ *                       example: true
+ *                     hasPrevPage:
+ *                       type: boolean
+ *                       example: false
+ *       400:
+ *         description: Bad request
+ *       500:
+ *         description: Internal server error
+ */
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       properties:
+ *         fullName:
+ *           type: string
+ *           example: John Doe
+ *         email:
+ *           type: string
+ *           format: email
+ *           example: john.doe@example.com
+ *         phone:
+ *           type: string
+ *           example: '+61423123123'
+ *         suburb:
+ *           type: string
+ *           example: 'Springfield'
+ *         postcode:
+ *           type: string
+ *           example: '1234'
+ *         facebookName:
+ *           type: string
+ *           example: 'JohnDoe'
+ *         story:
+ *           type: string
+ *           example: 'Once upon a time...'
+ *         education:
+ *           type: object
+ *           properties:
+ *             course:
+ *               type: string
+ *               example: 'Computer Science'
+ *             college:
+ *               type: string
+ *               example: 'Springfield University'
+ *             yearGraduated:
+ *               type: integer
+ *               example: 2022
+ *         service:
+ *           type: object
+ *           properties:
+ *             serviceName:
+ *               type: string
+ *               example: 'Web Development'
+ *             serviceLogo:
+ *               type: string
+ *               example: 'logo.png'
+ *             serviceUrl:
+ *               type: string
+ *               example: 'https://example.com'
+ *         isAutomated:
+ *           type: boolean
+ *           example: false
  */
 
 /**
