@@ -1,4 +1,3 @@
-import { Container, TextField } from '@mui/material'
 import { useState } from 'react'
 
 const SearchBar = ({ handleSearch }) => {
@@ -15,17 +14,17 @@ const SearchBar = ({ handleSearch }) => {
   }
 
   return (
-    <Container maxWidth="sm">
-      <TextField
+    <div className="w-full max-w-sm mx-auto my-8">
+      <input
         id="search-bar"
-        label="Search"
         type="search"
-        variant="outlined"
+        placeholder="Search"
+        className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
         value={value}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
       />
-    </Container>
+    </div>
   )
 }
 
