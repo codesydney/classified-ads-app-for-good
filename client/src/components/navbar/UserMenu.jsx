@@ -46,6 +46,7 @@ const UserMenu = ({ currentUser }) => {
             transition
             cursor-pointer
           "
+          onClick={() => navigate('/contact')}
         >
           Contact
         </div>
