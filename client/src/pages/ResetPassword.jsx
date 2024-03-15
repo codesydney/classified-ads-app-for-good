@@ -1,19 +1,11 @@
-import { Container } from '@mui/material'
 import ResetPasswordForm from '../components/ResetPasswordForm'
 
 const ResetPassword = () => {
   return (
-    <Container
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        marginTop: 10,
-      }}
-    >
-      <h1>Reset Password</h1>
+    <div className="flex flex-col items-center mt-10 w-full max-w-md mx-auto">
+      <h1 className="text-2xl font-bold mb-6">Reset Password</h1>
       <ResetPasswordForm />
-    </Container>
+    </div>
   )
 }
 

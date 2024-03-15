@@ -1,22 +1,18 @@
-import { Container } from '@mui/material'
 import SignInForm from '../components/SignInForm'
 import { Link } from 'react-router-dom'
+
 const Signin = () => {
   return (
-    <Container
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        marginTop: 10,
-      }}
-    >
-      <h1>Sign In</h1>
+    <div className="flex flex-col items-center mt-10 w-full max-w-md mx-auto">
+      <h1 className="text-2xl font-bold mb-4">Sign In</h1>
       <SignInForm />
-      <p>
-        Don't have an account? Sign up <Link to="/signup">Here</Link>
+      <p className="mt-4">
+        Don't have an account? Sign up{' '}
+        <Link to="/signup" className="text-primary hover:text-primary-dark">
+          Here
+        </Link>
       </p>
-    </Container>
+    </div>
   )
 }
 

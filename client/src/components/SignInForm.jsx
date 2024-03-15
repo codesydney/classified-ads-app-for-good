@@ -86,7 +86,7 @@ const SignInForm = () => {
         <button
           type="submit"
           disabled={formStatus.loading}
-          className={`w-full py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 ${formStatus.loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+          className={`w-full py-2 px-4 bg-primary text-white rounded hover:bg-primary ${formStatus.loading ? 'opacity-50 cursor-not-allowed' : ''}`}
         >
           Sign In
         </button>
