@@ -1,29 +1,17 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import './Navbar.css'
-import Logo from '../assets/logo.jpeg'
+import Logo from './Logo'
 
 const Navbar = () => {
   return (
-    <nav className="navbar">
-      <Link to="/">
-        <img src={Logo} alt="logo" className="navbar-logo" />
-      </Link>
-      <div className="navbar-menu">
-        <Link to="/about" className="navbar-link">
-          About
-        </Link>
-        <Link to="/contact" className="navbar-link">
-          Contact
-        </Link>
-        <Link to="/signin">
-          <button className="navbar-button login">Login</button>
-        </Link>
-        <Link to="/signup">
-          <button className="navbar-button register">Register</button>
-        </Link>
+    <div className="max-w-[2520px] mx-auto xl:pg-20 md:px-10 sm:px-2 px-4 border-b-[1px] md:hidden">
+      <div className="flex flex-row items-center justify-between gap-2 md:gap-0">
+        <div className="p-[10px]">
+          <Logo height={165} width={165} />
+        </div>
+        <div>
+          <UserMenu />
+        </div>
       </div>
-    </nav>
+    </div>
   )
 }
 
