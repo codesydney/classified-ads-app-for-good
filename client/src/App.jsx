@@ -5,7 +5,11 @@ function App() {
   return (
     <>
       <Navbar />
-      <Outlet />
+
+      <div className="mt-[150px]">
+        <Outlet />
+      </div>
+
       <div>This is the footer</div>
     </>
   )
