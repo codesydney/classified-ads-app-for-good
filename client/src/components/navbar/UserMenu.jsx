@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { AiOutlineMenu } from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom'
 import Avatar from '../Avatar.jsx'
@@ -6,6 +6,7 @@ import MenuItem from './MenuItem.jsx'
 
 const UserMenu = ({ currentUser }) => {
   const [isOpen, setIsOpen] = useState(false)
+  const menuRef = useRef()
 
   const navigate = useNavigate()
 
@@ -13,8 +14,29 @@ const UserMenu = ({ currentUser }) => {
     setIsOpen(value => !value)
   }, [])
 
+  const handleCloseMenu = useCallback(event => {
+    if (menuRef.current && !menuRef.current.contains(event.target)) {
+      setIsOpen(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleCloseMenu)
+    return () => {
+      document.removeEventListener('mousedown', handleCloseMenu)
+    }
+  }, [handleCloseMenu])
+
+  const handleNavigate = useCallback(
+    path => {
+      navigate(path)
+      setIsOpen(false)
+    },
+    [navigate],
+  )
+
   return (
-    <div className="relative">
+    <div className="relative" ref={menuRef}>
       <div className="flex flex-row items-center gap-3">
         <div
           className="
@@ -92,14 +114,20 @@ const UserMenu = ({ currentUser }) => {
           <div className="flex flex-col cursor-pointer">
             {currentUser ? (
               <>
-                <MenuItem label="Profile" onClick={() => () => {}} />
+                <MenuItem label="Profile" onClick={() => handleNavigate('/')} />
                 <hr />
-                <MenuItem label="Logout" onClick={() => {}} />
+                <MenuItem label="Logout" onClick={() => handleNavigate('/')} />
               </>
             ) : (
               <>
-                <MenuItem label="Login" onClick={() => navigate('/signin')} />
-                <MenuItem label="Sign up" onClick={() => navigate('/signup')} />
+                <MenuItem
+                  label="Login"
+                  onClick={() => handleNavigate('/signin')}
+                />
+                <MenuItem
+                  label="Sign up"
+                  onClick={() => handleNavigate('/signup')}
+                />
               </>
             )}
           </div>
