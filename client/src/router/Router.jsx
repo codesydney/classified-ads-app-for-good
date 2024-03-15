@@ -3,7 +3,7 @@ import App from '../App'
 import Home from '../pages/Home'
 import About from '../pages/About'
 import Contact from '../pages/Contact'
-import Signin from '../pages/Signin'
+import Login from '../pages/Login.jsx'
 import Signup from '../pages/Signup'
 import RequestPasswordReset from '../pages/RequestPasswordReset'
 import ErrorPage from '../pages/Error'
@@ -29,8 +29,8 @@ const Router = () => {
           element: <Contact />,
         },
         {
-          path: '/signin',
-          element: <Signin />,
+          path: '/login',
+          element: <Login />,
         },
         {
           path: '/signup',
