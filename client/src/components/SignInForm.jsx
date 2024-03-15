@@ -1,4 +1,3 @@
-import { Container, TextField, Stack, Button } from '@mui/material'
 import useAuthForm from '../hooks/useAuthForm'
 import { UserAPI } from '../apis/UserAPI'
 import { Link } from 'react-router-dom'
@@ -20,13 +19,11 @@ const SignInForm = () => {
   const handleSubmit = async event => {
     event.preventDefault()
 
-    // run submit validation
     if (!isSubmitValidationSuccess()) return
 
     setFormStatus({ ...formStatus, loading: true })
     try {
       const response = await UserAPI.signIn(formData)
-      // set jwt token to session storage
       const token = response.data.token
       sessionStorage.setItem('jwt', token)
 
@@ -34,53 +31,67 @@ const SignInForm = () => {
       console.log('success', response)
       // redirect to home?
     } catch (error) {
-      // handle request errors
       handleServerErrors(error)
     }
   }
 
   return (
-    <Container maxWidth="sm">
-      <form onSubmit={handleSubmit}>
-        {formStatus.error && <p>{formStatus.error}</p>}
-        <Stack spacing={2}>
-          <TextField
+    <div className="container mx-auto max-w-sm mt-10">
+      <form onSubmit={handleSubmit} className="space-y-4">
+        {formStatus.error && <p className="text-red-500">{formStatus.error}</p>}
+        <div className="flex flex-col space-y-2">
+          <label htmlFor="email" className="text-gray-700">
+            Email
+          </label>
+          <input
             id="email"
-            label="Email"
-            variant="outlined"
+            type="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
             onBlur={handleBlurValidation}
-            inputRef={fieldRefs.email}
-            error={!!inputErrors.email}
-            helperText={inputErrors.email}
+            ref={fieldRefs.email}
+            className={`input ${inputErrors.email ? 'border-red-500' : 'border-gray-300'} focus:ring-blue-500 focus:border-blue-500`}
+            placeholder="Enter your email"
           />
-          <TextField
+          {inputErrors.email && (
+            <p className="text-red-500 text-sm">{inputErrors.email}</p>
+          )}
+        </div>
+        <div className="flex flex-col space-y-2">
+          <label htmlFor="password" className="text-gray-700">
+            Password
+          </label>
+          <input
             id="password"
-            label="Password"
-            variant="outlined"
-            name="password"
             type="password"
+            name="password"
             value={formData.password}
             onChange={handleChange}
             onBlur={handleBlurValidation}
-            inputRef={fieldRefs.password}
-            error={!!inputErrors.password}
-            helperText={inputErrors.password}
+            ref={fieldRefs.password}
+            className={`input ${inputErrors.password ? 'border-red-500' : 'border-gray-300'} focus:ring-blue-500 focus:border-blue-500`}
+            placeholder="Enter your password"
           />
-          <Link to="/request-reset-password">Forgot Password?</Link>
-          <Button
-            variant="contained"
-            size="large"
-            type="submit"
-            disabled={formStatus.loading}
-          >
-            Sign In
-          </Button>
-        </Stack>
+          {inputErrors.password && (
+            <p className="text-red-500 text-sm">{inputErrors.password}</p>
+          )}
+        </div>
+        <Link
+          to="/request-reset-password"
+          className="text-blue-500 hover:underline"
+        >
+          Forgot Password?
+        </Link>
+        <button
+          type="submit"
+          disabled={formStatus.loading}
+          className={`w-full py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 ${formStatus.loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+        >
+          Sign In
+        </button>
       </form>
-    </Container>
+    </div>
   )
 }
 
