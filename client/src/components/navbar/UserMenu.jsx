@@ -115,17 +115,38 @@ const UserMenu = ({ currentUser }) => {
             {currentUser ? (
               <>
                 <MenuItem label="Profile" onClick={() => handleNavigate('/')} />
+                <div className="md:hidden">
+                  <MenuItem
+                    label="About"
+                    onClick={() => handleNavigate('/about')}
+                  />
+                  <MenuItem
+                    label="Contact"
+                    onClick={() => handleNavigate('/contact')}
+                  />
+                </div>
+
                 <hr />
                 <MenuItem label="Logout" onClick={() => handleNavigate('/')} />
               </>
             ) : (
               <>
+                <div className="md:hidden">
+                  <MenuItem
+                    label="About"
+                    onClick={() => handleNavigate('/about')}
+                  />
+                  <MenuItem
+                    label="Contact"
+                    onClick={() => handleNavigate('/contact')}
+                  />
+                </div>
                 <MenuItem
                   label="Login"
-                  onClick={() => handleNavigate('/signin')}
+                  onClick={() => handleNavigate('/login')}
                 />
                 <MenuItem
-                  label="Sign up"
+                  label="Sign Up"
                   onClick={() => handleNavigate('/signup')}
                 />
               </>

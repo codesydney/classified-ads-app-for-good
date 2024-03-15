@@ -3,6 +3,9 @@ import Logo from './Logo.jsx'
 import UserMenu from './UserMenu.jsx'
 
 const Navbar = () => {
+  // This will determine if the user is logged in or not
+  const currentUser = null
+
   return (
     <div className="fixed top-0 w-full bg-white z-10 shadow-sm mb-[150px]">
       <div
@@ -24,7 +27,7 @@ const Navbar = () => {
           "
           >
             <Logo />
-            <UserMenu currentUser={null} />
+            <UserMenu currentUser={currentUser} />
           </div>
         </Container>
       </div>
