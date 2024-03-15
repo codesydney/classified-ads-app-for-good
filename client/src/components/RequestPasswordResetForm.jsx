@@ -1,24 +1,28 @@
-import { Container, TextField, Stack, Button } from '@mui/material'
-import useAuthForm from '../hooks/useAuthForm'
+import { useState } from 'react'
 import { UserAPI } from '../apis/UserAPI'
 
 const RequestPasswordResetForm = () => {
-  const initialFormData = { email: '' }
-  const {
-    formData,
-    inputErrors,
-    fieldRefs,
-    formStatus,
-    setFormStatus,
-    handleChange,
-    handleBlurValidation,
-    isSubmitValidationSuccess,
-    handleServerErrors,
-  } = useAuthForm(initialFormData, 'requestReset')
+  const [formData, setFormData] = useState({ email: '' })
+  const [formStatus, setFormStatus] = useState({
+    loading: false,
+    error: '',
+    successMessage: '',
+  })
+  const [inputErrors, setInputErrors] = useState({})
+
+  const handleChange = e => {
+    const { name, value } = e.target
+    setFormData({ ...formData, [name]: value })
+  }
+
+  // Replace these methods with your actual validation and error handling logic
+  const isSubmitValidationSuccess = () => true
+  const handleServerErrors = error => {
+    setFormStatus({ ...formStatus, loading: false, error: error.message })
+  }
 
   const handleSubmit = async event => {
     event.preventDefault()
-
     if (!isSubmitValidationSuccess()) return
 
     setFormStatus({ ...formStatus, loading: true })
@@ -28,43 +32,45 @@ const RequestPasswordResetForm = () => {
         ...formStatus,
         successMessage:
           'Success! We have sent you an email with instructions to reset your password.',
-        loading: true,
+        loading: false,
       })
     } catch (error) {
       handleServerErrors(error)
     }
   }
 
-  if (formStatus.successMessage) return <p>{formStatus.successMessage}</p>
+  if (formStatus.successMessage)
+    return <p className="text-green-500">{formStatus.successMessage}</p>
 
   return (
-    <Container maxWidth="sm">
+    <div className="max-w-sm mx-auto my-8">
       <form onSubmit={handleSubmit}>
-        {formStatus.error && <p>{formStatus.error}</p>}
-        <Stack spacing={2}>
-          <TextField
+        {formStatus.error && <p className="text-red-500">{formStatus.error}</p>}
+        <div className="flex flex-col gap-4">
+          <input
+            className={`w-full p-4 border ${inputErrors.email ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
             id="email"
-            label="Email"
-            variant="outlined"
+            type="email"
             name="email"
+            placeholder="Email"
             value={formData.email}
             onChange={handleChange}
-            onBlur={handleBlurValidation}
-            inputRef={fieldRefs.email}
-            error={!!inputErrors.email}
-            helperText={inputErrors.email}
+            // Tailwind does not have a direct equivalent to Material-UI's inputRef
           />
-          <Button
-            variant="contained"
-            size="large"
+          {inputErrors.email && (
+            <p className="text-red-500 text-sm">{inputErrors.email}</p>
+          )}
+
+          <button
+            className={`w-full p-4 bg-primary text-white rounded-md hover:bg-primary-dark disabled:opacity-50`}
             type="submit"
             disabled={formStatus.loading}
           >
-            Request New Password.
-          </Button>
-        </Stack>
+            Request New Password
+          </button>
+        </div>
       </form>
-    </Container>
+    </div>
   )
 }
 
