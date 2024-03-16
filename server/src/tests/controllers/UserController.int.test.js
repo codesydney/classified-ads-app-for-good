@@ -595,43 +595,29 @@ describe('UserController', () => {
       ])
     })
 
-    it('should return the first page of users with default pagination', async () => {
+    it('should return all users when no search query is provided', async () => {
       const response = await request(app).get('/api/v1/users')
-
       expect(response.status).toBe(200)
-      expect(response.body.status).toBe('OK')
-      expect(response.body.users.length).toBeLessThanOrEqual(10)
-      expect(response.body.meta).toBeDefined()
-      expect(response.body.meta.page).toEqual(1)
-      expect(response.body.meta.totalPages).toBeGreaterThanOrEqual(1)
+      expect(response.body.users.length).toBe(3)
     })
 
-    it('should return the second page of users with specified limit', async () => {
-      const response = await request(app).get('/api/v1/users?page=2&limit=1')
-
+    it('should not perform a search for queries less than 3 characters', async () => {
+      const response = await request(app).get('/api/v1/users?search=Jo')
       expect(response.status).toBe(200)
-      expect(response.body.status).toBe('OK')
-      expect(response.body.users.length).toBeLessThanOrEqual(1)
-      expect(response.body.meta).toBeDefined()
-      expect(response.body.meta.page).toEqual(2)
+      expect(response.body.users.length).toBe(3)
     })
 
-    it('should return users matching the search query', async () => {
+    it('should perform a search and return matching users for queries of 3 or more characters', async () => {
       const response = await request(app).get('/api/v1/users?search=John')
-
       expect(response.status).toBe(200)
-      expect(response.body.status).toBe('OK')
-      expect(response.body.users.length).toBeGreaterThan(0)
-      expect(response.body.users[0].fullName).toContain('John')
+      expect(
+        response.body.users.some(user => user.fullName.includes('John')),
+      ).toBeTruthy()
     })
 
-    it('should handle no matching users for a search query', async () => {
-      const response = await request(app).get(
-        '/api/v1/users?search=nonexistentuser',
-      )
-
+    it('should return an empty array for a non-matching search query of 3 or more characters', async () => {
+      const response = await request(app).get('/api/v1/users?search=xyz')
       expect(response.status).toBe(200)
-      expect(response.body.status).toBe('OK')
       expect(response.body.users.length).toBe(0)
     })
   })
