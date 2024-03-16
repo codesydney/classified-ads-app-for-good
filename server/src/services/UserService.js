@@ -23,26 +23,22 @@ exports.findUserByEmailWithPassword = async email => {
 }
 
 exports.getUsers = async ({ searchQuery = '', page = 1, limit = 10 }) => {
-  const matchCriteria = searchQuery
-    ? {
-        $text: {
-          $search: searchQuery,
-        },
-      }
-    : {}
+  let matchCriteria = {}
+  if (searchQuery.length >= 3) {
+    matchCriteria = {
+      $or: [
+        { fullName: { $regex: searchQuery, $options: 'i' } },
+        { email: { $regex: searchQuery, $options: 'i' } },
+        { 'service.serviceName': { $regex: searchQuery, $options: 'i' } },
+      ],
+    }
+  }
 
   let skip = (page - 1) * limit
   limit = parseInt(limit)
 
   try {
-    const query = User.find(matchCriteria).skip(skip).limit(limit)
-
-    // Only apply text score sorting if performing a text search
-    if (searchQuery) {
-      query.sort({ score: { $meta: 'textScore' } })
-    }
-
-    const users = await query
+    const users = await User.find(matchCriteria).skip(skip).limit(limit)
     const total = await User.countDocuments(matchCriteria)
     const totalPages = Math.ceil(total / limit)
 
