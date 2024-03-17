@@ -8,7 +8,7 @@ const Signup = () => {
       <SignUpForm />
       <p className="mt-4">
         Already have an account?{' '}
-        <Link to="/signin" className="text-primary hover:text-primary-dark">
+        <Link to="/login" className="text-primary hover:text-primary-dark">
           Here
         </Link>
       </p>
