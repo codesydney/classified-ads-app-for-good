@@ -14,9 +14,13 @@ const Signup = () => {
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black to-transparent opacity-50"></div>
       </div>
 
-      <div className="flex flex-col items-center mt-10 w-full max-w-md mx-auto flex-grow lg:max-w-xl xl:max-w-2xl">
-        <h1 className="text-2xl font-semibold mb-4">Sign Up</h1>
-        <SignUpForm />
+      <div className="flex flex-col items-center justify-center mt-10 w-full max-w-md mx-auto flex-grow lg:max-w-xl xl:max-w-2xl">
+        <h1 className="text-[30px] font-bold mb-4">Sign Up</h1>
+
+        <div className="w-full px-[130px]">
+          <SignUpForm />
+        </div>
+
         <p className="mt-4">
           Already have an account?{' '}
           <Link to="/login" className="text-primary hover:text-primary-dark">

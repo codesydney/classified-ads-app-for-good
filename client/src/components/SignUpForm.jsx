@@ -27,45 +27,86 @@ const SignUpForm = () => {
   }
 
   return (
-    <div className="max-w-sm mx-auto my-8">
+    <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex flex-col gap-6">
-          <input
-            {...register('email')}
-            className={`w-full px-4 py-2 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
-            type="email"
-            placeholder="Email"
-          />
-          {errors.email && (
-            <p className="text-red-500 text-sm mt-[-15px]">
-              {errors.email.message}
-            </p>
-          )}
+        <div className="flex flex-col gap-[8px]">
+          <label className="form-control w-full">
+            <div className="label">
+              <span className="label-text text-[15px] font-semibold">
+                Email <span className="text-red-500">*</span>
+              </span>
+            </div>
+            <input
+              type="email"
+              {...register('email')}
+              className={`input input-bordered w-full ${
+                errors.email
+                  ? 'border-red-500 focus:outline-red-500'
+                  : 'border-gray-300 focus:outline-primary'
+              } focus:outline-primary`}
+            />
 
-          <input
-            {...register('password')}
-            className={`w-full px-4 py-2 border ${errors.password ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
-            type="password"
-            placeholder="Password"
-          />
-          {errors.password && (
-            <p className="text-red-500 text-sm">{errors.password.message}</p>
-          )}
+            {errors.email && (
+              <div className="label">
+                <span className="label-text-alt text-red-500">
+                  {errors.email.message}
+                </span>
+              </div>
+            )}
+          </label>
 
-          <input
-            {...register('confirmPassword')}
-            className={`w-full px-4 py-2 border ${errors.confirmPassword ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
-            type="password"
-            placeholder="Confirm Password"
-          />
-          {errors.confirmPassword && (
-            <p className="text-red-500 text-sm">
-              {errors.confirmPassword.message}
-            </p>
-          )}
+          <label className="form-control w-full">
+            <div className="label">
+              <span className="label-text text-[15px] font-semibold">
+                Password <span className="text-red-500">*</span>
+              </span>
+            </div>
+            <input
+              type="password"
+              {...register('password')}
+              className={`input input-bordered w-full ${
+                errors.password
+                  ? 'border-red-500 focus:outline-red-500'
+                  : 'border-gray-300 focus:outline-primary'
+              } focus:outline-primary`}
+            />
+
+            {errors.password && (
+              <div className="label">
+                <span className="label-text-alt text-red-500">
+                  {errors.password.message}
+                </span>
+              </div>
+            )}
+          </label>
+
+          <label className="form-control w-full">
+            <div className="label">
+              <span className="label-text text-[15px] font-semibold">
+                Confirm Password <span className="text-red-500">*</span>
+              </span>
+            </div>
+            <input
+              type="password"
+              {...register('confirmPassword')}
+              className={`input input-bordered w-full ${
+                errors.confirmPassword
+                  ? 'border-red-500 focus:outline-red-500'
+                  : 'border-gray-300 focus:outline-primary'
+              } focus:outline-primary`}
+            />
+
+            {errors.confirmPassword && (
+              <div className="label">
+                <span className="label-text-alt text-red-500">
+                  {errors.confirmPassword.message}
+                </span>
+              </div>
+            )}
+          </label>
 
           <button
-            className="w-full py-2 bg-primary text-white rounded-md hover:bg-primary-dark disabled:opacity-50"
+            className="w-full py-2 bg-primary text-white rounded-md hover:bg-primary-dark disabled:opacity-50 mt-[15px]"
             type="submit"
           >
             Sign Up
