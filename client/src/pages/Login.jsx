@@ -1,4 +1,4 @@
-import SignInForm from '../components/SignInForm'
+import LoginForm from '../components/LoginForm.jsx'
 import { Link } from 'react-router-dom'
 import LoginHeroPic from '../assets/ust-login.jpeg'
 
@@ -18,7 +18,7 @@ const Login = () => {
         <h1 className="text-[30px] font-bold mb-4">Login</h1>
 
         <div className="w-full px-4 sm:px-8 md:px-16 lg:px-32 xl:px-40">
-          <SignInForm />
+          <LoginForm />
         </div>
 
         <p className="mt-4">

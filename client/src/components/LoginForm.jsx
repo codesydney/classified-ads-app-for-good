@@ -5,7 +5,7 @@ import { UserAPI } from '../apis/UserAPI'
 import { toast } from 'react-hot-toast'
 import { loginSchema } from '../schema/login.js'
 
-const SignInForm = () => {
+const LoginForm = () => {
   const {
     register,
     handleSubmit,
@@ -104,4 +104,4 @@ const SignInForm = () => {
   )
 }
 
-export default SignInForm
+export default LoginForm
