@@ -15,7 +15,6 @@ const RequestPasswordResetForm = () => {
     setFormData({ ...formData, [name]: value })
   }
 
-  // Replace these methods with your actual validation and error handling logic
   const isSubmitValidationSuccess = () => true
   const handleServerErrors = error => {
     setFormStatus({ ...formStatus, loading: false, error: error.message })
@@ -55,7 +54,6 @@ const RequestPasswordResetForm = () => {
             placeholder="Email"
             value={formData.email}
             onChange={handleChange}
-            // Tailwind does not have a direct equivalent to Material-UI's inputRef
           />
           {inputErrors.email && (
             <p className="text-red-500 text-sm">{inputErrors.email}</p>

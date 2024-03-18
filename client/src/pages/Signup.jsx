@@ -1,12 +1,13 @@
 import SignUpForm from '../components/SignUpForm'
 import { Link } from 'react-router-dom'
+import SignUpHeroPic from '../assets/ust-sign-up.jpeg'
 
 const Signup = () => {
   return (
     <div className="flex w-full">
       <div className="hidden md:block relative h-[950px]">
         <img
-          src="https://images.unsplash.com/photo-1590231204765-12b10cedb4fa?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          src={SignUpHeroPic}
           alt="nature"
           className="object-cover w-full h-full"
         />
