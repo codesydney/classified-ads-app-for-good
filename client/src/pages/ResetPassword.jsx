@@ -1,5 +1,5 @@
 import ResetPasswordForm from '../components/ResetPasswordForm'
-import ResetPasswordHeroPic from '../assets/ust-password-reset.avif'
+import ResetPasswordHeroPic from '../assets/ust-password-reset.jpeg'
 
 const ResetPassword = () => {
   return (
