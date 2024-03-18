@@ -91,18 +91,18 @@ const ResetPasswordForm = () => {
           </div>
           <input
             type="password"
-            {...register('confirmPassword')}
+            {...register('passwordConfirm')}
             className={`input input-bordered w-full ${
-              errors.confirmPassword
+              errors.passwordConfirm
                 ? 'border-red-500 focus:outline-red-500'
                 : 'border-gray-300 focus:outline-primary'
             } focus:outline-primary`}
           />
 
-          {errors.confirmPassword && (
+          {errors.passwordConfirm && (
             <div className="label">
               <span className="label-text-alt text-red-500">
-                {errors.confirmPassword.message}
+                {errors.passwordConfirm.message}
               </span>
             </div>
           )}
