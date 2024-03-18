@@ -1,13 +1,16 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Link } from 'react-router-dom'
-import { UserAPI } from '../apis/UserAPI'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
+import { UserAPI } from '../apis/UserAPI'
 import { loginSchema } from '../schema'
 
 const LoginForm = () => {
   const [errorMessage, setErrorMessage] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+
+  const navigate = useNavigate()
 
   const {
     register,
@@ -22,10 +25,15 @@ const LoginForm = () => {
       const response = await UserAPI.signIn(formData)
       const token = response.data.token
       localStorage.setItem('jwt', token)
-      toast.success('Success! You are now signed in.', {
-        position: 'top-right',
-      })
-      setErrorMessage('')
+
+      setTimeout(() => {
+        setErrorMessage('')
+        toast.success('Success! You are now signed in.', {
+          position: 'top-right',
+        })
+
+        navigate('/')
+      }, 3000)
     } catch (error) {
       setErrorMessage(error.response.data.error)
     }
@@ -53,7 +61,7 @@ const LoginForm = () => {
         </div>
       )}
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-[8px]">
           <label className="form-control w-full">
             <div className="label">
@@ -106,20 +114,24 @@ const LoginForm = () => {
           </label>
         </div>
 
-        <div>
+        <div className="mt-[15px]">
           <Link
             to="/request-reset-password"
-            className="text-primary hover:underline mt-[1px]"
+            className="text-primary hover:underline "
           >
             Forgot Password?
           </Link>
         </div>
 
         <button
+          className="btn btn-squre w-full py-2 bg-primary hover:bg-primary text-white mt-[15px]"
           type="submit"
-          className="w-full py-2 px-4 bg-primary text-white rounded hover:bg-primary-dark"
         >
-          Login
+          {isLoading ? (
+            <span className="loading loading-spinner"></span>
+          ) : (
+            'Login'
+          )}
         </button>
       </form>
     </>

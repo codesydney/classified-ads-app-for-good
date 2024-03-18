@@ -1,12 +1,16 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
 import { UserAPI } from '../apis/UserAPI'
 import { signUpSchema } from '../schema'
 
 const SignUpForm = () => {
   const [errorMessage, setErrorMessage] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+
+  const navigate = useNavigate()
 
   const {
     register,
@@ -18,15 +22,24 @@ const SignUpForm = () => {
 
   const onSubmit = async formData => {
     try {
+      setIsLoading(true)
+
       const response = await UserAPI.signUp(formData)
       const token = response.data.token
       localStorage.setItem('jwt', token)
-      toast.success('Success! You are now signed up.', {
-        position: 'top-right',
-      })
-      setErrorMessage('')
+
+      setTimeout(() => {
+        setErrorMessage('')
+        setIsLoading(false)
+
+        navigate('/login')
+        toast.success('Sign up is successful, you can now login.', {
+          position: 'top-right',
+        })
+      }, 3000)
     } catch (error) {
       setErrorMessage(error.response.data.error)
+      setIsLoading(false)
     }
   }
 
@@ -130,10 +143,14 @@ const SignUpForm = () => {
           </label>
 
           <button
-            className="w-full py-2 bg-primary text-white rounded-md hover:bg-primary-dark disabled:opacity-50 mt-[15px]"
+            className="btn btn-squre w-full py-2 bg-primary hover:bg-primary text-white mt-[15px]"
             type="submit"
           >
-            Sign Up
+            {isLoading ? (
+              <span className="loading loading-spinner"></span>
+            ) : (
+              'Sign Up'
+            )}
           </button>
         </div>
       </form>

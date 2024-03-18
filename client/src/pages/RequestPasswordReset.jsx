@@ -21,9 +21,9 @@ const RequestPasswordReset = () => {
         </div>
 
         <p className="mt-4">
-          Sign in{' '}
+          Login{' '}
           <Link to="/login" className="text-primary">
-            Here
+            here
           </Link>
         </p>
       </div>
