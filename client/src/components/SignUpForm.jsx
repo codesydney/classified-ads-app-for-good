@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { UserAPI } from '../apis/UserAPI'
+import { toast } from 'react-hot-toast'
 
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
@@ -15,10 +16,8 @@ const SignUpForm = () => {
     setFormData({ ...formData, [name]: value })
   }
 
-  // Replace this with your actual validation logic
   const isSubmitValidationSuccess = () => true
 
-  // Replace this with your actual error handling logic
   const handleServerErrors = error => {
     setFormStatus({ ...formStatus, loading: false, error: error.message })
   }
@@ -35,7 +34,9 @@ const SignUpForm = () => {
       sessionStorage.setItem('jwt', token)
       setFormStatus({ ...formStatus, loading: false })
       console.log('success', response)
-      // Redirect logic here
+      toast.success('Success! You are now signed up.', {
+        position: 'top-right',
+      })
     } catch (error) {
       handleServerErrors(error)
     }

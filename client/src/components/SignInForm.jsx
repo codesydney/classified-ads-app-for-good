@@ -29,6 +29,7 @@ const SignInForm = () => {
 
       setFormStatus({ ...formStatus, loading: false })
       console.log('success', response)
+
       // redirect to home?
     } catch (error) {
       handleServerErrors(error)
