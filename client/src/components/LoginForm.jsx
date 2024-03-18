@@ -1,15 +1,14 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { UserAPI } from '../apis/UserAPI'
-import { useSearchParams, useNavigate } from 'react-router-dom'
-import { resetPasswordSchema } from '../schema'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
+import { UserAPI } from '../apis/UserAPI'
+import { loginSchema } from '../schema'
 
-const ResetPasswordForm = () => {
+const LoginForm = () => {
   const [errorMessage, setErrorMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [searchParams] = useSearchParams()
 
   const navigate = useNavigate()
 
@@ -18,32 +17,25 @@ const ResetPasswordForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(resetPasswordSchema),
+    resolver: yupResolver(loginSchema),
   })
 
   const onSubmit = async formData => {
-    const token = searchParams.get('token')
-    if (!token) {
-      console.log('no token')
-      // @TODO handle the token scenario
-      return
-    }
-
     try {
       setIsLoading(true)
-      await UserAPI.resetPassword(formData, token)
+
+      const response = await UserAPI.signIn(formData)
+      const token = response.data.token
+      localStorage.setItem('jwt', token)
 
       setTimeout(() => {
         setErrorMessage('')
         setIsLoading(false)
 
-        navigate('/login')
-        toast.success(
-          'Your password has been reset. You can now login with the new credentials.',
-          {
-            position: 'top-right',
-          },
-        )
+        navigate('/')
+        toast.success('Success! You are now signed in.', {
+          position: 'top-right',
+        })
       }, 3000)
     } catch (error) {
       setErrorMessage(error.response.data.error)
@@ -124,46 +116,30 @@ const ResetPasswordForm = () => {
               </div>
             )}
           </label>
-
-          <label className="form-control w-full">
-            <div className="label">
-              <span className="label-text text-[15px] font-semibold">
-                Confirm Password <span className="text-red-500">*</span>
-              </span>
-            </div>
-            <input
-              type="password"
-              {...register('passwordConfirm')}
-              className={`input input-bordered w-full ${
-                errors.passwordConfirm
-                  ? 'border-red-500 focus:outline-red-500'
-                  : 'border-gray-300 focus:outline-primary'
-              } focus:outline-primary`}
-            />
-
-            {errors.passwordConfirm && (
-              <div className="label">
-                <span className="label-text-alt text-red-500">
-                  {errors.passwordConfirm.message}
-                </span>
-              </div>
-            )}
-          </label>
-
-          <button
-            className="btn btn-squre w-full py-2 bg-primary hover:bg-primary text-white mt-[15px]"
-            type="submit"
-          >
-            {isLoading ? (
-              <span className="loading loading-spinner"></span>
-            ) : (
-              'Reset'
-            )}
-          </button>
         </div>
+
+        <div className="mt-[15px]">
+          <Link
+            to="/request-reset-password"
+            className="text-primary hover:underline "
+          >
+            Forgot Password?
+          </Link>
+        </div>
+
+        <button
+          className="btn btn-squre w-full py-2 bg-primary hover:bg-primary text-white mt-[15px]"
+          type="submit"
+        >
+          {isLoading ? (
+            <span className="loading loading-spinner"></span>
+          ) : (
+            'Login'
+          )}
+        </button>
       </form>
     </>
   )
 }
 
-export default ResetPasswordForm
+export default LoginForm

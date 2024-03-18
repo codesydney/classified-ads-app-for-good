@@ -1,76 +1,106 @@
 import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-hot-toast'
 import { UserAPI } from '../apis/UserAPI'
+import { passwordResetRequestSchema } from '../schema'
 
 const RequestPasswordResetForm = () => {
-  const [formData, setFormData] = useState({ email: '' })
-  const [formStatus, setFormStatus] = useState({
-    loading: false,
-    error: '',
-    successMessage: '',
+  const [errorMessage, setErrorMessage] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(passwordResetRequestSchema),
   })
-  const [inputErrors, setInputErrors] = useState({})
-
-  const handleChange = e => {
-    const { name, value } = e.target
-    setFormData({ ...formData, [name]: value })
-  }
-
-  // Replace these methods with your actual validation and error handling logic
-  const isSubmitValidationSuccess = () => true
-  const handleServerErrors = error => {
-    setFormStatus({ ...formStatus, loading: false, error: error.message })
-  }
-
-  const handleSubmit = async event => {
-    event.preventDefault()
-    if (!isSubmitValidationSuccess()) return
-
-    setFormStatus({ ...formStatus, loading: true })
+  const onSubmit = async formData => {
     try {
-      const response = await UserAPI.requestReset(formData)
-      setFormStatus({
-        ...formStatus,
-        successMessage:
-          'Success! We have sent you an email with instructions to reset your password.',
-        loading: false,
-      })
+      setIsLoading(true)
+      await UserAPI.requestReset(formData)
+
+      setTimeout(() => {
+        setErrorMessage('')
+        setIsLoading(false)
+
+        toast.success(
+          'The password reset has been requested. Please check your email',
+          {
+            position: 'top-right',
+          },
+        )
+      }, 3000)
     } catch (error) {
-      handleServerErrors(error)
+      setErrorMessage(error.response.data.error)
+      setIsLoading(false)
     }
   }
 
-  if (formStatus.successMessage)
-    return <p className="text-green-500">{formStatus.successMessage}</p>
-
   return (
-    <div className="max-w-sm mx-auto my-8">
-      <form onSubmit={handleSubmit}>
-        {formStatus.error && <p className="text-red-500">{formStatus.error}</p>}
-        <div className="flex flex-col gap-4">
-          <input
-            className={`w-full p-4 border ${inputErrors.email ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
-            id="email"
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-            // Tailwind does not have a direct equivalent to Material-UI's inputRef
-          />
-          {inputErrors.email && (
-            <p className="text-red-500 text-sm">{inputErrors.email}</p>
-          )}
+    <>
+      {errorMessage && (
+        <div role="alert" className="alert alert-error my-[12px] text-white">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="stroke-current shrink-0 h-6 w-6 cursor-pointer"
+            fill="none"
+            viewBox="0 0 24 24"
+            onClick={() => setErrorMessage('')}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <span>{errorMessage}</span>
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex flex-col gap-[8px]">
+          <label className="form-control w-full">
+            <div className="label">
+              <span className="label-text text-[15px] font-semibold">
+                Email <span className="text-red-500">*</span>
+              </span>
+            </div>
+            <input
+              type="email"
+              {...register('email')}
+              className={`input input-bordered w-full ${
+                errors.email
+                  ? 'border-red-500 focus:outline-red-500'
+                  : 'border-gray-300 focus:outline-primary'
+              } focus:outline-primary`}
+            />
+
+            {errors.email && (
+              <div className="label">
+                <span className="label-text-alt text-red-500">
+                  {errors.email.message}
+                </span>
+              </div>
+            )}
+          </label>
 
           <button
-            className={`w-full p-4 bg-primary text-white rounded-md hover:bg-primary-dark disabled:opacity-50`}
+            className="btn btn-squre w-full py-2 bg-primary hover:bg-primary text-white mt-[15px]"
             type="submit"
-            disabled={formStatus.loading}
           >
-            Request New Password
+            {isLoading ? (
+              <span className="loading loading-spinner"></span>
+            ) : (
+              'Request'
+            )}
           </button>
         </div>
       </form>
-    </div>
+    </>
   )
 }
 
