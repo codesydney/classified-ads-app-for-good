@@ -1,93 +1,101 @@
-import useAuthForm from '../hooks/useAuthForm'
-import { UserAPI } from '../apis/UserAPI'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
 import { Link } from 'react-router-dom'
+import { UserAPI } from '../apis/UserAPI'
+import { toast } from 'react-hot-toast'
+import { loginSchema } from '../schema/login.js'
 
 const SignInForm = () => {
-  const initialFormData = { email: '', password: '' }
   const {
-    formData,
-    inputErrors,
-    fieldRefs,
-    formStatus,
-    setFormStatus,
-    handleChange,
-    handleBlurValidation,
-    isSubmitValidationSuccess,
-    handleServerErrors,
-  } = useAuthForm(initialFormData, 'signIn')
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(loginSchema),
+  })
 
-  const handleSubmit = async event => {
-    event.preventDefault()
-
-    if (!isSubmitValidationSuccess()) return
-
-    setFormStatus({ ...formStatus, loading: true })
+  const onSubmit = async formData => {
     try {
       const response = await UserAPI.signIn(formData)
       const token = response.data.token
-      sessionStorage.setItem('jwt', token)
-
-      setFormStatus({ ...formStatus, loading: false })
-      console.log('success', response)
-
-      // redirect to home?
+      localStorage.setItem('jwt', token)
+      toast.success('Success! You are now signed in.', {
+        position: 'top-right',
+      })
     } catch (error) {
-      handleServerErrors(error)
+      toast.error(`Error signing in: ${error.message}`, {
+        position: 'top-right',
+      })
     }
   }
 
   return (
-    <div className="container mx-auto max-w-sm mt-10">
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {formStatus.error && <p className="text-red-500">{formStatus.error}</p>}
-        <div className="flex flex-col space-y-2">
-          <label htmlFor="email" className="text-gray-700">
-            Email
+    <div>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <div className="flex flex-col gap-[8px]">
+          <label className="form-control w-full">
+            <div className="label">
+              <span className="label-text text-[15px] font-semibold">
+                Email <span className="text-red-500">*</span>
+              </span>
+            </div>
+            <input
+              type="email"
+              {...register('email')}
+              className={`input input-bordered w-full ${
+                errors.email
+                  ? 'border-red-500 focus:outline-red-500'
+                  : 'border-gray-300 focus:outline-primary'
+              } focus:outline-primary`}
+            />
+
+            {errors.email && (
+              <div className="label">
+                <span className="label-text-alt text-red-500">
+                  {errors.email.message}
+                </span>
+              </div>
+            )}
           </label>
-          <input
-            id="email"
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            onBlur={handleBlurValidation}
-            ref={fieldRefs.email}
-            className={`input ${inputErrors.email ? 'border-red-500' : 'border-gray-300'} focus:ring-blue-500 focus:border-blue-500`}
-            placeholder="Enter your email"
-          />
-          {inputErrors.email && (
-            <p className="text-red-500 text-sm">{inputErrors.email}</p>
-          )}
-        </div>
-        <div className="flex flex-col space-y-2">
-          <label htmlFor="password" className="text-gray-700">
-            Password
+
+          <label className="form-control w-full">
+            <div className="label">
+              <span className="label-text text-[15px] font-semibold">
+                Password <span className="text-red-500">*</span>
+              </span>
+            </div>
+            <input
+              type="password"
+              {...register('password')}
+              className={`input input-bordered w-full ${
+                errors.password
+                  ? 'border-red-500 focus:outline-red-500'
+                  : 'border-gray-300 focus:outline-primary'
+              } focus:outline-primary`}
+            />
+
+            {errors.password && (
+              <div className="label">
+                <span className="label-text-alt text-red-500">
+                  {errors.password.message}
+                </span>
+              </div>
+            )}
           </label>
-          <input
-            id="password"
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            onBlur={handleBlurValidation}
-            ref={fieldRefs.password}
-            className={`input ${inputErrors.password ? 'border-red-500' : 'border-gray-300'} focus:ring-blue-500 focus:border-blue-500`}
-            placeholder="Enter your password"
-          />
-          {inputErrors.password && (
-            <p className="text-red-500 text-sm">{inputErrors.password}</p>
-          )}
         </div>
-        <Link
-          to="/request-reset-password"
-          className="text-blue-500 hover:underline"
-        >
-          Forgot Password?
-        </Link>
+
+        <div>
+          <Link
+            to="/request-reset-password"
+            className="text-primary hover:underline mt-[1px]"
+          >
+            Forgot Password?
+          </Link>
+        </div>
+
         <button
           type="submit"
-          disabled={formStatus.loading}
-          className={`w-full py-2 px-4 bg-primary text-white rounded hover:bg-primary ${formStatus.loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+          className="w-full py-2 px-4 bg-primary text-white rounded hover:bg-primary-dark"
         >
           Sign In
         </button>
