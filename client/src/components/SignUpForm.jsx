@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { toast } from 'react-hot-toast'
 import { UserAPI } from '../apis/UserAPI'
-import { signUpSchema } from '../schema/signup.js'
+import { signUpSchema } from '../schema'
 
 const SignUpForm = () => {
   const {
@@ -27,93 +27,91 @@ const SignUpForm = () => {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex flex-col gap-[8px]">
-          <label className="form-control w-full">
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="flex flex-col gap-[8px]">
+        <label className="form-control w-full">
+          <div className="label">
+            <span className="label-text text-[15px] font-semibold">
+              Email <span className="text-red-500">*</span>
+            </span>
+          </div>
+          <input
+            type="email"
+            {...register('email')}
+            className={`input input-bordered w-full ${
+              errors.email
+                ? 'border-red-500 focus:outline-red-500'
+                : 'border-gray-300 focus:outline-primary'
+            } focus:outline-primary`}
+          />
+
+          {errors.email && (
             <div className="label">
-              <span className="label-text text-[15px] font-semibold">
-                Email <span className="text-red-500">*</span>
+              <span className="label-text-alt text-red-500">
+                {errors.email.message}
               </span>
             </div>
-            <input
-              type="email"
-              {...register('email')}
-              className={`input input-bordered w-full ${
-                errors.email
-                  ? 'border-red-500 focus:outline-red-500'
-                  : 'border-gray-300 focus:outline-primary'
-              } focus:outline-primary`}
-            />
+          )}
+        </label>
 
-            {errors.email && (
-              <div className="label">
-                <span className="label-text-alt text-red-500">
-                  {errors.email.message}
-                </span>
-              </div>
-            )}
-          </label>
+        <label className="form-control w-full">
+          <div className="label">
+            <span className="label-text text-[15px] font-semibold">
+              Password <span className="text-red-500">*</span>
+            </span>
+          </div>
+          <input
+            type="password"
+            {...register('password')}
+            className={`input input-bordered w-full ${
+              errors.password
+                ? 'border-red-500 focus:outline-red-500'
+                : 'border-gray-300 focus:outline-primary'
+            } focus:outline-primary`}
+          />
 
-          <label className="form-control w-full">
+          {errors.password && (
             <div className="label">
-              <span className="label-text text-[15px] font-semibold">
-                Password <span className="text-red-500">*</span>
+              <span className="label-text-alt text-red-500">
+                {errors.password.message}
               </span>
             </div>
-            <input
-              type="password"
-              {...register('password')}
-              className={`input input-bordered w-full ${
-                errors.password
-                  ? 'border-red-500 focus:outline-red-500'
-                  : 'border-gray-300 focus:outline-primary'
-              } focus:outline-primary`}
-            />
+          )}
+        </label>
 
-            {errors.password && (
-              <div className="label">
-                <span className="label-text-alt text-red-500">
-                  {errors.password.message}
-                </span>
-              </div>
-            )}
-          </label>
+        <label className="form-control w-full">
+          <div className="label">
+            <span className="label-text text-[15px] font-semibold">
+              Confirm Password <span className="text-red-500">*</span>
+            </span>
+          </div>
+          <input
+            type="password"
+            {...register('confirmPassword')}
+            className={`input input-bordered w-full ${
+              errors.confirmPassword
+                ? 'border-red-500 focus:outline-red-500'
+                : 'border-gray-300 focus:outline-primary'
+            } focus:outline-primary`}
+          />
 
-          <label className="form-control w-full">
+          {errors.confirmPassword && (
             <div className="label">
-              <span className="label-text text-[15px] font-semibold">
-                Confirm Password <span className="text-red-500">*</span>
+              <span className="label-text-alt text-red-500">
+                {errors.confirmPassword.message}
               </span>
             </div>
-            <input
-              type="password"
-              {...register('confirmPassword')}
-              className={`input input-bordered w-full ${
-                errors.confirmPassword
-                  ? 'border-red-500 focus:outline-red-500'
-                  : 'border-gray-300 focus:outline-primary'
-              } focus:outline-primary`}
-            />
+          )}
+        </label>
 
-            {errors.confirmPassword && (
-              <div className="label">
-                <span className="label-text-alt text-red-500">
-                  {errors.confirmPassword.message}
-                </span>
-              </div>
-            )}
-          </label>
-
-          <button
-            className="w-full py-2 bg-primary text-white rounded-md hover:bg-primary-dark disabled:opacity-50 mt-[15px]"
-            type="submit"
-          >
-            Sign Up
-          </button>
-        </div>
-      </form>
-    </div>
+        <button
+          className="w-full py-2 bg-primary text-white rounded-md hover:bg-primary-dark disabled:opacity-50 mt-[15px]"
+          type="submit"
+        >
+          Sign Up
+        </button>
+      </div>
+    </form>
   )
 }
 
