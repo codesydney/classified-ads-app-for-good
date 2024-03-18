@@ -19,10 +19,13 @@ const RequestPasswordResetForm = () => {
   })
   const onSubmit = async formData => {
     try {
+      setIsLoading(true)
       await UserAPI.requestReset(formData)
 
       setTimeout(() => {
         setErrorMessage('')
+        setIsLoading(false)
+
         toast.success(
           'The password reset has been requested. Please check your email',
           {
@@ -32,6 +35,7 @@ const RequestPasswordResetForm = () => {
       }, 3000)
     } catch (error) {
       setErrorMessage(error.response.data.error)
+      setIsLoading(false)
     }
   }
 

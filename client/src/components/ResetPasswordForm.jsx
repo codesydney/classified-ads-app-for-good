@@ -11,6 +11,8 @@ const ResetPasswordForm = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [searchParams] = useSearchParams()
 
+  const navigate = useNavigate()
+
   const {
     register,
     handleSubmit,
@@ -28,21 +30,24 @@ const ResetPasswordForm = () => {
     }
 
     try {
+      setIsLoading(true)
       await UserAPI.resetPassword(formData, token)
 
       setTimeout(() => {
         setErrorMessage('')
+        setIsLoading(false)
+
+        navigate('/login')
         toast.success(
           'Your password has been reset. You can now login with the new credentials.',
           {
             position: 'top-right',
           },
         )
-
-        navigate('/login')
       }, 3000)
     } catch (error) {
       setErrorMessage(error.response.data.error)
+      setIsLoading(false)
     }
   }
 

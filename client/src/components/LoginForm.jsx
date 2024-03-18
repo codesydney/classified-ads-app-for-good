@@ -22,20 +22,24 @@ const LoginForm = () => {
 
   const onSubmit = async formData => {
     try {
+      setIsLoading(true)
+
       const response = await UserAPI.signIn(formData)
       const token = response.data.token
       localStorage.setItem('jwt', token)
 
       setTimeout(() => {
         setErrorMessage('')
+        setIsLoading(false)
+
+        navigate('/')
         toast.success('Success! You are now signed in.', {
           position: 'top-right',
         })
-
-        navigate('/')
       }, 3000)
     } catch (error) {
       setErrorMessage(error.response.data.error)
+      setIsLoading(false)
     }
   }
 
