@@ -1,12 +1,13 @@
 import RequestPasswordResetForm from '../components/RequestPasswordResetForm'
 import { Link } from 'react-router-dom'
+import ResetPasswordHeroPic from '../assets/ust-password-reset.avif'
 
 const RequestPasswordReset = () => {
   return (
     <div className="flex">
       <div className="hidden md:block relative h-[950px]">
         <img
-          src="https://images.unsplash.com/photo-1594451290197-2214cb06c290?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          src={ResetPasswordHeroPic}
           alt="nature"
           className="object-cover w-full h-full"
         />
