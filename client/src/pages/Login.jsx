@@ -22,7 +22,7 @@ const Login = () => {
         </div>
 
         <p className="mt-4">
-          Don't have an account? Sign up
+          Don't have an account? Sign up{' '}
           <Link to="/signup" className="text-primary hover:underline">
             here
           </Link>
