@@ -1,18 +1,20 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useNavigate } from 'react-router-dom'
-import { toast } from 'react-hot-toast'
+import { Link } from 'react-router-dom'
 import { UserAPI } from '../apis/UserAPI'
 import { passwordResetRequestSchema } from '../schema'
 
 const RequestPasswordResetForm = () => {
   const [errorMessage, setErrorMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [emailAddress, setEmailAddress] = useState('')
+  const [showEMailSuccess, setShowEmailSuccess] = useState(false)
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(passwordResetRequestSchema),
@@ -20,18 +22,15 @@ const RequestPasswordResetForm = () => {
   const onSubmit = async formData => {
     try {
       setIsLoading(true)
+      setEmailAddress(formData.email)
       await UserAPI.requestReset(formData)
 
       setTimeout(() => {
         setErrorMessage('')
         setIsLoading(false)
 
-        toast.success(
-          'The password reset has been requested. Please check your email',
-          {
-            position: 'top-right',
-          },
-        )
+        setShowEmailSuccess(true)
+        reset()
       }, 3000)
     } catch (error) {
       setErrorMessage(error.response.data.error)
@@ -58,6 +57,38 @@ const RequestPasswordResetForm = () => {
             />
           </svg>
           <span>{errorMessage}</span>
+        </div>
+      )}
+
+      {showEMailSuccess && (
+        <div
+          role="alert"
+          className="alert alert-success my-[12px] text-white text-[14px]"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="stroke-current shrink-0 h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <span>
+            Your password reset has been been sent to {emailAddress}. Please
+            check your email. <br />
+            <br />
+            <span className="">
+              Login{' '}
+              <Link to="/login" className="underline">
+                here.
+              </Link>
+            </span>
+          </span>
         </div>
       )}
 
