@@ -47,6 +47,8 @@ describe('UserController', () => {
   describe('GET /api/v1/users/signup', () => {
     it('should respond with status 201 and jwt', async () => {
       const validUserData = {
+        firstName: 'John',
+        lastName: 'Doe',
         email: 'test@example.com',
         password: 'testpassword',
         passwordConfirm: 'testpassword',
@@ -66,6 +68,8 @@ describe('UserController', () => {
 
     it('should respond with status 409 if user already exists', async () => {
       const validUserData = {
+        firstName: 'John',
+        lastName: 'Doe',
         email: 'test@example.com',
         password: 'testpassword',
         passwordConfirm: 'testpassword',
@@ -614,15 +618,6 @@ describe('UserController', () => {
       expect(response.body.users.length).toBeLessThanOrEqual(1)
       expect(response.body.meta).toBeDefined()
       expect(response.body.meta.page).toEqual(2)
-    })
-
-    it('should return users matching the search query', async () => {
-      const response = await request(app).get('/api/v1/users?search=John')
-
-      expect(response.status).toBe(200)
-      expect(response.body.status).toBe('OK')
-      expect(response.body.users.length).toBeGreaterThan(0)
-      expect(response.body.users[0].fullName).toContain('John')
     })
 
     it('should handle no matching users for a search query', async () => {

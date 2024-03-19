@@ -143,7 +143,8 @@ UserSchema.methods.verifyPassword = function (candidatePassword) {
 
 // Adding text index for smart search
 UserSchema.index({
-  fullName: 'text',
+  firstName: 'text',
+  lastName: 'text',
   'service.serviceName': 'text',
   email: 'text',
 })
