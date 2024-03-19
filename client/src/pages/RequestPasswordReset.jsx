@@ -19,13 +19,6 @@ const RequestPasswordReset = () => {
         <div className="w-full px-6 sm:px-8 md:px-16 lg:px-32 xl:px-40">
           <RequestPasswordResetForm />
         </div>
-
-        <p className="mt-4">
-          Login{' '}
-          <Link to="/login" className="text-primary">
-            here
-          </Link>
-        </p>
       </div>
     </div>
   )

@@ -63,7 +63,6 @@ const passwordResetRequestSchema = yup
       .string()
       .matches(emailRegex, 'Invalid email')
       .required('Email is required'),
-    password: yup.string().required('Password is required'),
   })
   .required()
 
