@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { UserAPI } from '../apis/UserAPI'
 import SearchBar from '../components/SearchBar'
 import Users from '../components/Users'
+import SearchResults from '../components/search/SearchResults'
 
 const Home = () => {
   const [users, setUsers] = useState([])
@@ -29,9 +30,12 @@ const Home = () => {
 
   return (
     <div>
-      <h1>Home</h1>
       <SearchBar handleSearch={handleSearch} />
-      <Users users={users} meta={meta} onPageChange={handlePageChange} />
+      <SearchResults
+        users={users}
+        meta={meta}
+        onPageChange={handlePageChange}
+      />
     </div>
   )
 }

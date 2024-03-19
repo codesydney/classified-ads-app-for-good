@@ -2,7 +2,11 @@
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      gridTemplateColumns: {
+        'auto-fit-minmax': 'repeat(auto-fit, minmax(325px, 1fr))',
+      },
+    },
   },
   plugins: [require('daisyui')],
   // daisyUI config (optional)
