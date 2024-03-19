@@ -5,8 +5,10 @@ exports.findUserByEmail = async email => {
   return user
 }
 
-exports.createUser = async (email, password) => {
+exports.createUser = async (firstName, lastName, email, password) => {
   const newUser = new User({
+    firstName,
+    lastName,
     email,
     password,
   })
