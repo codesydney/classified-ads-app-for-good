@@ -1,11 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { UserAPI } from '../apis/UserAPI.js'
-
-const configHeaders = {
-  headers: {
-    'Content-Type': 'application/json',
-  },
-}
+import { UserAPI } from '../../apis/UserAPI.js'
 
 const signUp = createAsyncThunk(
   'auth/signUp',
