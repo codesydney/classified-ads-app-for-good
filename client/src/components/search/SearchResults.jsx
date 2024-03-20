@@ -1,5 +1,5 @@
 import User from './User'
-
+import PaginationNavigation from './PaginationNavigation'
 const SearchResults = ({ users, meta, onPageChange }) => {
   return (
     <div className="mx-auto max-w-6xl">
@@ -11,23 +11,7 @@ const SearchResults = ({ users, meta, onPageChange }) => {
         )}
       </div>
       {users.length > 0 && (
-        <div style={{ marginTop: '20px' }}>
-          <button
-            onClick={() => onPageChange(meta.page - 1)}
-            disabled={meta.page <= 1}
-          >
-            Previous
-          </button>
-          <span>
-            Page {meta.page} of {meta.totalPages}{' '}
-          </span>
-          <button
-            onClick={() => onPageChange(meta.page + 1)}
-            disabled={meta.page >= meta.totalPages}
-          >
-            Next
-          </button>
-        </div>
+        <PaginationNavigation meta={meta} onPageChange={onPageChange} />
       )}
     </div>
   )
