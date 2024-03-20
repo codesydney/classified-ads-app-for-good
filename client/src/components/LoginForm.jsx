@@ -26,7 +26,7 @@ const LoginForm = () => {
 
       const response = await UserAPI.signIn(formData)
       const token = response.data.token
-      localStorage.setItem('jwt', token)
+      localStorage.setItem('accessToken', token)
 
       setTimeout(() => {
         setErrorMessage('')

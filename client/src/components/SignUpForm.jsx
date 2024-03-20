@@ -26,7 +26,7 @@ const SignUpForm = () => {
 
       const response = await UserAPI.signUp(formData)
       const token = response.data.token
-      localStorage.setItem('jwt', token)
+      localStorage.setItem('accessToken', token)
 
       setTimeout(() => {
         setErrorMessage('')
