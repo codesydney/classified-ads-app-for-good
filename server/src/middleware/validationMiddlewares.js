@@ -12,6 +12,8 @@ exports.signinValidation = [
 
 // Basic input validation for sign up route.
 exports.signupValidation = [
+  body('firstName').isLength({ min: 2 }).withMessage('Invalid first name'),
+  body('lastName').isLength({ min: 2 }).withMessage('Invalid last name'),
   body('email')
     .trim()
     .toLowerCase()
