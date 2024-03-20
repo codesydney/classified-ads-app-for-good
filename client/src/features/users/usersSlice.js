@@ -5,6 +5,10 @@ const initialState = {
   users: [],
   loading: false,
   error: null,
+  meta: {
+    page: 1,
+    totalPages: 1,
+  },
 }
 
 const usersSlice = createSlice({
@@ -21,6 +25,7 @@ const usersSlice = createSlice({
       state.loading = false
       state.error = null
       state.users = action.payload.users
+      state.meta = action.payload.meta
     })
     builder.addCase(searchUsers.rejected, (state, action) => {
       state.loading = false
