@@ -32,7 +32,7 @@ const SignUpForm = () => {
         setErrorMessage('')
         setIsLoading(false)
 
-        navigate('/login')
+        navigate('/')
         toast.success('Sign up is successful, you can now login.', {
           position: 'top-right',
         })
