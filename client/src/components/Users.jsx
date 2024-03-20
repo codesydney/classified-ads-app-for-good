@@ -8,7 +8,9 @@ const Users = ({ users, meta, onPageChange }) => {
               key={index}
               style={{ border: '1px solid black', padding: '10px' }}
             >
-              <h2>{user.fullName}</h2>
+              <h2>
+                {user.firstName} {user.lastName}
+              </h2>
               <p>Email: {user.email}</p>
               {user.service && user.service.serviceName && (
                 <p>Service Name: {user.service.serviceName}</p>
