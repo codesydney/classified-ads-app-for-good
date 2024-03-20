@@ -1,5 +1,20 @@
 const User = require('../models/User')
 
+const findUserById = async id => {
+  const user = await User.findById(id).select('-__v -isAutomated').exec()
+
+  if (!user) {
+    return null
+  }
+
+  let userObject = user.toObject()
+
+  userObject.id = userObject._id
+  delete userObject._id
+
+  return userObject
+}
+
 const findUserByEmail = email => {
   return User.findOne({ email })
 }
@@ -58,6 +73,7 @@ const getUsers = async ({ searchQuery = '', page = 1, limit = 10 }) => {
 }
 
 module.exports = {
+  findUserById,
   findUserByEmail,
   createUser,
   findUserByEmailWithPassword,
