@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
 import { useSelector } from 'react-redux'
 import { useAppDispatch } from '../store.js'
-import { signUp } from '../features/auth/authAction.js'
+import { signUp, me } from '../features/auth/authAction.js'
 import { signUpSchema } from '../schema'
 
 const SignUpForm = () => {
@@ -34,6 +34,9 @@ const SignUpForm = () => {
       }
 
       setErrorMessage('')
+
+      // After a successful login call a me function to retrieve the user's data
+      await dispatch(me())
 
       navigate('/')
       toast.success('You have successfully signed up.')
