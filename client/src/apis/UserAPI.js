@@ -19,7 +19,7 @@ const getAll = async ({ search = '', page = 1 }, cancel = false) => {
 }
 
 const login = formData => {
-  const signInURL = `${usersURL}/signin`
+  const signInURL = `${usersURL}/login`
   return api.post(signInURL, formData)
 }
 

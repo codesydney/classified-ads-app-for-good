@@ -142,7 +142,7 @@ describe('UserController', () => {
   })
 
   // SIGN IN ENDPOINT
-  describe('POST /api/v1/users/signin', () => {
+  describe('POST /api/v1/users/login', () => {
     it('should respond with status 200 and jwt if user exists and credentials are valid', async () => {
       const validUserData = {
         email: 'test@example.com',
@@ -152,7 +152,7 @@ describe('UserController', () => {
       await User.create(validUserData)
 
       const response = await request(app)
-        .post('/api/v1/users/signin')
+        .post('/api/v1/users/login')
         .send(validUserData)
 
       expect(response.status).toBe(200)
@@ -170,7 +170,7 @@ describe('UserController', () => {
       }
 
       const response = await request(app)
-        .post('/api/v1/users/signin')
+        .post('/api/v1/users/login')
         .send(validUserData)
 
       expect(response.status).toBe(401)
@@ -193,7 +193,7 @@ describe('UserController', () => {
       await User.create(validUserData)
 
       const response = await request(app)
-        .post('/api/v1/users/signin')
+        .post('/api/v1/users/login')
         .send(invalidUserData)
 
       expect(response.status).toBe(401)
@@ -210,7 +210,7 @@ describe('UserController', () => {
       }
 
       const response = await request(app)
-        .post('/api/v1/users/signin')
+        .post('/api/v1/users/login')
         .send(invalidUserData)
 
       expect(response.status).toBe(422)
@@ -227,7 +227,7 @@ describe('UserController', () => {
       }
 
       const response = await request(app)
-        .post('/api/v1/users/signin')
+        .post('/api/v1/users/login')
         .send(invalidUserData)
 
       expect(response.status).toBe(422)
@@ -426,7 +426,7 @@ describe('UserController', () => {
         .post('/api/v1/users/reset-password?token=validtoken')
         .send(validUserResetData)
       const loginResponse = await request(app)
-        .post('/api/v1/users/signin')
+        .post('/api/v1/users/login')
         .send(validUserResetData)
 
       expect(loginResponse.status).toBe(200)
@@ -473,7 +473,7 @@ describe('UserController', () => {
         .post('/api/v1/users/reset-password?token=validtoken')
         .send(validUserResetData)
       const loginResponse = await request(app)
-        .post('/api/v1/users/signin')
+        .post('/api/v1/users/login')
         .send(validUserData)
 
       expect(loginResponse.status).toBe(401)

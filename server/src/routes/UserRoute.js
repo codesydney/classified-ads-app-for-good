@@ -2,7 +2,7 @@ const express = require('express')
 const UserController = require('../controllers/UserController')
 const {
   signupValidation,
-  signinValidation,
+  loginValidation,
   emailValidation,
   handleValidationResult,
 } = require('../middleware/validationMiddlewares')
@@ -19,10 +19,10 @@ router.post(
 )
 
 router.post(
-  '/signin',
-  signinValidation,
+  '/login',
+  loginValidation,
   handleValidationResult,
-  UserController.signin,
+  UserController.login,
 )
 
 router.post(

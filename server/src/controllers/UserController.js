@@ -37,7 +37,7 @@ exports.signup = catchAsync(async (req, res, next) => {
   return res.status(201).json({ message: 'User created', token, status: 'OK' })
 })
 
-exports.signin = catchAsync(async (req, res, next) => {
+exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body
 
   // find user by email;

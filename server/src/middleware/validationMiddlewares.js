@@ -1,7 +1,7 @@
 const { body, validationResult } = require('express-validator')
 
-// basic input validation for sign in route
-exports.signinValidation = [
+// basic input validation for login route
+exports.loginValidation = [
   body('email')
     .trim()
     .toLowerCase()
