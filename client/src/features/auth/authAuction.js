@@ -55,4 +55,21 @@ const requestResetPassword = createAsyncThunk(
   },
 )
 
-export { login, signUp, requestResetPassword }
+const resetPassword = createAsyncThunk(
+  'auth/resetPassword',
+  async (formData, { rejectWithValue }) => {
+    try {
+      const token = new URLSearchParams(window.location.search).get('token')
+      const response = await UserAPI.resetPassword(formData, token)
+      return response.data
+    } catch (error) {
+      if (error.response && error.response.data.error) {
+        return rejectWithValue(error.response.data.error)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  },
+)
+
+export { login, signUp, requestResetPassword, resetPassword }

@@ -33,10 +33,9 @@ const requestReset = formData => {
   return api.post(requestResetURL, formData)
 }
 
-const resetPassword = async (formData, token) => {
-  const resetPasswordURL = usersURL + `/reset-password?token=${token}`
-  const response = await api.post(resetPasswordURL, formData)
-  return response
+const resetPassword = (formData, token) => {
+  const resetPasswordURL = `${usersURL}/reset-password?token=${token}`
+  return api.post(resetPasswordURL, formData)
 }
 
 export const UserAPI = {

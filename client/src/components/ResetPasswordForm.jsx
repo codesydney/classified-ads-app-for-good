@@ -1,17 +1,21 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { UserAPI } from '../apis/UserAPI'
 import { useSearchParams, useNavigate } from 'react-router-dom'
-import { resetPasswordSchema } from '../schema'
 import { toast } from 'react-hot-toast'
+import { useSelector } from 'react-redux'
+import { useAppDispatch } from '../store.js'
+import { resetPassword } from '../features/auth/authAuction.js'
+import { resetPasswordSchema } from '../schema'
 
 const ResetPasswordForm = () => {
   const [errorMessage, setErrorMessage] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
   const [searchParams] = useSearchParams()
 
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+
+  const { loading: isLoading } = useSelector(state => state.auth)
 
   const {
     register,
@@ -24,30 +28,28 @@ const ResetPasswordForm = () => {
   const onSubmit = async formData => {
     const token = searchParams.get('token')
     if (!token) {
-      console.log('no token')
-      // @TODO handle the token scenario
-      return
+      navigate('/login')
     }
 
     try {
-      setIsLoading(true)
-      await UserAPI.resetPassword(formData, token)
+      const response = await dispatch(resetPassword(formData, token))
 
-      setTimeout(() => {
-        setErrorMessage('')
-        setIsLoading(false)
+      if (response.type === 'auth/resetPassword/rejected') {
+        setErrorMessage(response.payload)
+        return
+      }
 
-        navigate('/login')
-        toast.success(
-          'Your password has been reset. You can now login with the new credentials.',
-          {
-            position: 'top-right',
-          },
-        )
-      }, 3000)
+      setErrorMessage('')
+
+      navigate('/login')
+      toast.success(
+        'Your password has been reset. You can now login with the new credentials.',
+        {
+          position: 'top-right',
+        },
+      )
     } catch (error) {
-      setErrorMessage(error.response.data.error)
-      setIsLoading(false)
+      setErrorMessage('Something went wrong. Please try again.')
     }
   }
 
