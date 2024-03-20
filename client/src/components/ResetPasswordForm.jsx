@@ -44,9 +44,6 @@ const ResetPasswordForm = () => {
       navigate('/login')
       toast.success(
         'Your password has been reset. You can now login with the new credentials.',
-        {
-          position: 'top-right',
-        },
       )
     } catch (error) {
       setErrorMessage('Something went wrong. Please try again.')

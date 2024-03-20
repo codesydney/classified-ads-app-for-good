@@ -36,9 +36,7 @@ const LoginForm = () => {
       setErrorMessage('')
 
       navigate('/')
-      toast.success('Success! You are now signed in.', {
-        position: 'top-right',
-      })
+      toast.success('Success! You are now signed in.')
     } catch (error) {
       setErrorMessage('Something went wrong. Please try again.')
     }

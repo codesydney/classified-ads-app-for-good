@@ -36,9 +36,7 @@ const SignUpForm = () => {
       setErrorMessage('')
 
       navigate('/')
-      toast.success('You have successfully signed up.', {
-        position: 'top-right',
-      })
+      toast.success('You have successfully signed up.')
     } catch (error) {
       setErrorMessage('Something went wrong. Please try again.')
     }

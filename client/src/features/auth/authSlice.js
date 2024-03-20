@@ -9,7 +9,7 @@ import {
 const initialState = {
   accessToken: localStorage.getItem('accessToken') || null,
   // We should do a check here if the accesss is valid and has not expired
-  isAuthenticated: Boolean(initialState.accessToken),
+  isAuthenticated: Boolean(localStorage.getItem('accessToken')),
   loading: false,
   error: null,
   success: false,
