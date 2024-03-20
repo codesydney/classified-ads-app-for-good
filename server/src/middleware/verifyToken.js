@@ -21,8 +21,6 @@ const verifyToken = (req, res, next) => {
   }
 
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-    console.log('token', token)
-
     if (err) {
       const error = new Error('Unauthorized')
       error.statusCode = 401

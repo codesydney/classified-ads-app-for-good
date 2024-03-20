@@ -165,9 +165,22 @@ const getUsers = async (req, res) => {
 }
 
 const me = async (req, res) => {
+  const {
+    user: { id },
+  } = req
+
+  const user = await UserService.findUserById(id)
+
+  if (!user) {
+    return res.status(404).json({
+      status: 'Error',
+      message: 'User not found',
+    })
+  }
+
   res.status(200).json({
     status: 'OK',
-    user: req.user,
+    user,
   })
 }
 
