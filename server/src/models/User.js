@@ -25,11 +25,17 @@ const UserSchema = new Schema({
     required: true,
     select: false, // Hide password from query results
   },
-  fullName: {
+  firstName: {
     type: String,
     trim: true,
-    minLength: [3, 'Full name must be at least 3 characters long'],
-    maxLength: [50, 'Full name must be at most 50 characters long'],
+    minLength: [2, 'First name must be at least 2 characters long'],
+    maxLength: [50, 'First name must be at most 50 characters long'],
+  },
+  lastName: {
+    type: String,
+    trim: true,
+    minLength: [2, 'Last name must be at least 2 characters long'],
+    maxLength: [50, 'Last name must be at most 50 characters long'],
   },
   phone: {
     type: String,
@@ -137,7 +143,8 @@ UserSchema.methods.verifyPassword = function (candidatePassword) {
 
 // Adding text index for smart search
 UserSchema.index({
-  fullName: 'text',
+  firstName: 'text',
+  lastName: 'text',
   'service.serviceName': 'text',
   email: 'text',
 })

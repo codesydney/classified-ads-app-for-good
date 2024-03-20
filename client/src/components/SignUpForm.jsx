@@ -70,6 +70,56 @@ const SignUpForm = () => {
           <label className="form-control w-full">
             <div className="label">
               <span className="label-text text-[15px] font-semibold">
+                First Name <span className="text-red-500">*</span>
+              </span>
+            </div>
+            <input
+              type="text"
+              {...register('firstName')}
+              className={`input input-bordered w-full ${
+                errors.firstName
+                  ? 'border-red-500 focus:outline-red-500'
+                  : 'border-gray-300 focus:outline-primary'
+              } focus:outline-primary`}
+            />
+
+            {errors.firstName && (
+              <div className="label">
+                <span className="label-text-alt text-red-500">
+                  {errors.firstName.message}
+                </span>
+              </div>
+            )}
+          </label>
+
+          <label className="form-control w-full">
+            <div className="label">
+              <span className="label-text text-[15px] font-semibold">
+                Last Name <span className="text-red-500">*</span>
+              </span>
+            </div>
+            <input
+              type="text"
+              {...register('lastName')}
+              className={`input input-bordered w-full ${
+                errors.lastName
+                  ? 'border-red-500 focus:outline-red-500'
+                  : 'border-gray-300 focus:outline-primary'
+              } focus:outline-primary`}
+            />
+
+            {errors.lastName && (
+              <div className="label">
+                <span className="label-text-alt text-red-500">
+                  {errors.lastName.message}
+                </span>
+              </div>
+            )}
+          </label>
+
+          <label className="form-control w-full">
+            <div className="label">
+              <span className="label-text text-[15px] font-semibold">
                 Email <span className="text-red-500">*</span>
               </span>
             </div>

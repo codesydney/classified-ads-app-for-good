@@ -6,7 +6,7 @@ const { sendResetEmail } = require('../utils/mail')
 const catchAsync = require('../utils/catchAsync')
 
 exports.signup = catchAsync(async (req, res, next) => {
-  const { email, password } = req.body
+  const { firstName, lastName, email, password } = req.body
 
   // Check email not in use already.
   const existingUser = await UserService.findUserByEmail(email)
@@ -19,7 +19,12 @@ exports.signup = catchAsync(async (req, res, next) => {
   }
 
   // create new user;
-  const newUser = await UserService.createUser(email, password)
+  const newUser = await UserService.createUser(
+    firstName,
+    lastName,
+    email,
+    password,
+  )
 
   // create token for user
   const token = createToken({ id: newUser._id })

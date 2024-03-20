@@ -5,8 +5,10 @@ exports.findUserByEmail = async email => {
   return user
 }
 
-exports.createUser = async (email, password) => {
+exports.createUser = async (firstName, lastName, email, password) => {
   const newUser = new User({
+    firstName,
+    lastName,
     email,
     password,
   })
@@ -27,7 +29,8 @@ exports.getUsers = async ({ searchQuery = '', page = 1, limit = 10 }) => {
   if (searchQuery.length >= 3) {
     matchCriteria = {
       $or: [
-        { fullName: { $regex: searchQuery, $options: 'i' } },
+        { firstName: { $regex: searchQuery, $options: 'i' } },
+        { lastName: { $regex: searchQuery, $options: 'i' } },
         { email: { $regex: searchQuery, $options: 'i' } },
         { 'service.serviceName': { $regex: searchQuery, $options: 'i' } },
       ],

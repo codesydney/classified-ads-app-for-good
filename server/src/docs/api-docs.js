@@ -184,10 +184,18 @@
  *           schema:
  *             type: object
  *             required:
+ *               - firstName
+ *               - lastName
  *               - email
  *               - password
  *               - passwordConfirm
  *             properties:
+ *               firstName:
+ *                  type: string
+ *                  example: John
+ *               lastName:
+ *                  type: string
+ *                  example: Doe
  *               email:
  *                 type: string
  *                 format: email
