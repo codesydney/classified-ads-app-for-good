@@ -24,10 +24,9 @@ const signIn = async formData => {
   return response
 }
 
-const signUp = async formData => {
-  const signUpURL = usersURL + '/signup'
-  const response = await api.post(signUpURL, formData)
-  return response
+const signUp = formData => {
+  const signUpURL = `${usersURL}/signup`
+  return api.post(signUpURL, formData)
 }
 
 const requestReset = async formData => {
