@@ -3,14 +3,14 @@ import { useSelector } from 'react-redux'
 import { useNavigate, Outlet } from 'react-router-dom'
 
 const ProtectedRoute = () => {
-  const { accessToken } = useSelector(state => state.auth)
+  const { isAuthenticated, accessToken } = useSelector(state => state.auth)
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (!accessToken) {
+    if (!isAuthenticated) {
       navigate('/login')
     }
-  }, [navigate, accessToken])
+  }, [navigate, isAuthenticated, accessToken])
 
   return <Outlet />
 }

@@ -8,6 +8,8 @@ import {
 
 const initialState = {
   accessToken: localStorage.getItem('accessToken') || null,
+  // We should do a check here if the accesss is valid and has not expired
+  isAuthenticated: Boolean(initialState.accessToken),
   loading: false,
   error: null,
   success: false,
@@ -20,6 +22,7 @@ const authSlice = createSlice({
     logout: state => {
       localStorage.removeItem('accessToken') // deletes token from storage
       state.accessToken = null
+      state.isAuthenticated = false
       state.error = null
       state.loading = false
     },
@@ -36,6 +39,7 @@ const authSlice = createSlice({
       state.error = null
       state.success = true
       state.accessToken = action.payload.token
+      state.isAuthenticated = true
       localStorage.setItem('accessToken', action.payload.token)
     })
     builder.addCase(signUp.rejected, (state, action) => {
@@ -43,6 +47,7 @@ const authSlice = createSlice({
       state.error = action.payload
       state.success = false
       state.accessToken = null
+      state.isAuthenticated = false
     })
 
     // Login
@@ -56,6 +61,7 @@ const authSlice = createSlice({
       state.error = null
       state.success = true
       state.accessToken = action.payload.token
+      state.isAuthenticated = true
       localStorage.setItem('accessToken', action.payload.token)
     })
     builder.addCase(login.rejected, (state, action) => {
@@ -63,6 +69,7 @@ const authSlice = createSlice({
       state.error = action.payload
       state.success = false
       state.accessToken = null
+      state.isAuthenticated = false
     })
 
     // Request Reset Password
