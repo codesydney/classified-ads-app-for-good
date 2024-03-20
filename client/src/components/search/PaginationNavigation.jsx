@@ -47,6 +47,7 @@ const PaginationNavigation = ({ meta, onPageChange }) => {
   // 1 ... pages - 3, pages - 2 (current), pages - 1, last page
   const renderEdgePages = (startPage, endPage) => {
     const pageButtons = []
+    // currently on one of the first 3 pages
     if (startPage === 1) {
       for (let i = startPage; i <= endPage; i++) {
         pageButtons.push(renderPageButton(i, i === meta.page))
@@ -54,6 +55,7 @@ const PaginationNavigation = ({ meta, onPageChange }) => {
       pageButtons.push(renderEllipsis('el'))
       pageButtons.push(renderPageButton(meta.totalPages, false))
     } else {
+      // currently on one of the last 3 pages
       pageButtons.push(renderPageButton(1, false))
       pageButtons.push(renderEllipsis('el'))
       for (let i = startPage; i <= endPage; i++) {
