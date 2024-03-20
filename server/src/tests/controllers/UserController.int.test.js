@@ -108,6 +108,8 @@ describe('UserController', () => {
 
     it('Should respond with a status of 422 if the password is invalid', async () => {
       const invalidUserData = {
+        firstName: 'John',
+        lastName: 'Doe',
         email: 'test@email.com',
         password: 'test',
         passwordConfirm: 'test',
@@ -123,6 +125,8 @@ describe('UserController', () => {
 
     it('Should respond with a status of 422 if the password and password confirm dont match', async () => {
       const invalidUserData = {
+        firstName: 'John',
+        lastName: 'Doe',
         email: 'test@email.com',
         password: 'testpassword',
         passwordConfirm: 'testpassword1',
@@ -335,11 +339,15 @@ describe('UserController', () => {
   describe('POST /api/v1/users/reset-password', () => {
     it('should respond with status 200 if token is valid and user exists', async () => {
       const validUserData = {
+        firstName: 'John',
+        lastName: 'Doe',
         email: 'test@example.com',
         password: 'testpassword',
       }
 
       const validUserResetData = {
+        firstName: 'John',
+        lastName: 'Doe',
         email: 'test@example.com',
         password: 'testpassword1',
         passwordConfirm: 'testpassword1',
@@ -384,11 +392,15 @@ describe('UserController', () => {
 
     it('should allow the user to login with new password after changing it', async () => {
       const validUserData = {
+        firstName: 'John',
+        lastName: 'Doe',
         email: 'test@example.com',
         password: 'testpassword',
       }
 
       const validUserResetData = {
+        firstName: 'John',
+        lastName: 'Doe',
         email: 'test@example.com',
         password: 'testpassword1',
         passwordConfirm: 'testpassword1',
@@ -427,11 +439,15 @@ describe('UserController', () => {
 
     it('should not allow the user to login with old password after changing it', async () => {
       const validUserData = {
+        firstName: 'John',
+        lastName: 'Doe',
         email: 'test@example.com',
         password: 'testpassword',
       }
 
       const validUserResetData = {
+        firstName: 'John',
+        lastName: 'Doe',
         email: 'test@example.com',
         password: 'testpassword1',
         passwordConfirm: 'testpassword1',
@@ -469,6 +485,8 @@ describe('UserController', () => {
 
     it('should respond with status 404 if no user exists', async () => {
       const validUserResetData = {
+        firstName: 'John',
+        lastName: 'Doe',
         email: 'test@example.com',
         password: 'testpassword1',
         passwordConfirm: 'testpassword1',
@@ -495,11 +513,15 @@ describe('UserController', () => {
 
     it('should respond with status 404 if no token exists', async () => {
       const validUserData = {
+        firstName: 'John',
+        lastName: 'Doe',
         email: 'test@example.com',
         password: 'testpassword',
       }
 
       const validUserResetData = {
+        firstName: 'John',
+        lastName: 'Doe',
         email: 'test@example.com',
         password: 'testpassword1',
         passwordConfirm: 'testpassword1',
@@ -529,11 +551,15 @@ describe('UserController', () => {
 
     it('should respond with status 400 if token is invalid, (compare token function returns false)', async () => {
       const validUserData = {
+        firstName: 'John',
+        lastName: 'Doe',
         email: 'test@example.com',
         password: 'testpassword',
       }
 
       const validUserResetData = {
+        firstName: 'John',
+        lastName: 'Doe',
         email: 'test@example.com',
         password: 'testpassword1',
         passwordConfirm: 'testpassword1',
