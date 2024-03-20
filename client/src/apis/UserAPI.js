@@ -3,7 +3,7 @@ import { defineCancelApiObject } from './configs/axiosUtils'
 
 const usersURL = '/users'
 
-const getAll = async ({ search = '', page = 1 }, cancel = false) => {
+const searchUsers = async ({ search = '', page = 1 }, cancel = false) => {
   const params = { search, page }
   const signal = cancel
     ? cancelApiObject[this.getAll.name].handleRequestCancellation().signal
@@ -39,7 +39,7 @@ const resetPassword = (formData, token) => {
 }
 
 export const UserAPI = {
-  getAll,
+  searchUsers,
   login,
   signUp,
   requestReset,

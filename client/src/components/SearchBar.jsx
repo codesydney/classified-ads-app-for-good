@@ -1,6 +1,9 @@
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { searchUsers } from '../features/users/usersAction.js'
 
-const SearchBar = ({ handleSearch }) => {
+const SearchBar = () => {
+  const dispatch = useDispatch()
   const [value, setValue] = useState('')
 
   const handleChange = e => {
@@ -9,7 +12,7 @@ const SearchBar = ({ handleSearch }) => {
 
   const handleKeyDown = e => {
     if (e.key === 'Enter') {
-      handleSearch(value)
+      dispatch(searchUsers({ search: value }))
     }
   }
 

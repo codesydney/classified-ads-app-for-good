@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
 import { useSelector } from 'react-redux'
 import { useAppDispatch } from '../store.js'
-import { signUp } from '../features/auth/authAuction.js'
+import { signUp } from '../features/auth/authAction.js'
 import { signUpSchema } from '../schema'
 
 const SignUpForm = () => {
