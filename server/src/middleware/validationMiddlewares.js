@@ -1,7 +1,7 @@
 const { body, validationResult } = require('express-validator')
 
 // basic input validation for login route
-exports.loginValidation = [
+const loginValidation = [
   body('email')
     .trim()
     .toLowerCase()
@@ -11,7 +11,7 @@ exports.loginValidation = [
 ]
 
 // Basic input validation for sign up route.
-exports.signupValidation = [
+const signupValidation = [
   body('firstName').isLength({ min: 2 }).withMessage('Invalid first name'),
   body('lastName').isLength({ min: 2 }).withMessage('Invalid last name'),
   body('email')
@@ -28,7 +28,7 @@ exports.signupValidation = [
   }),
 ]
 
-exports.emailValidation = [
+const emailValidation = [
   body('email')
     .trim()
     .toLowerCase()
@@ -36,7 +36,7 @@ exports.emailValidation = [
     .withMessage('Invalid email format'),
 ]
 
-exports.handleValidationResult = (req, res, next) => {
+const handleValidationResult = (req, res, next) => {
   // Get validation errors from request body
   const result = validationResult(req)
 
@@ -46,4 +46,11 @@ exports.handleValidationResult = (req, res, next) => {
   }
 
   next()
+}
+
+module.exports = {
+  loginValidation,
+  signupValidation,
+  emailValidation,
+  handleValidationResult,
 }

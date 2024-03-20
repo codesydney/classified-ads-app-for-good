@@ -1,11 +1,10 @@
 const User = require('../models/User')
 
-exports.findUserByEmail = async email => {
-  const user = await User.findOne({ email })
-  return user
+const findUserByEmail = email => {
+  return User.findOne({ email })
 }
 
-exports.createUser = async (firstName, lastName, email, password) => {
+const createUser = (firstName, lastName, email, password) => {
   const newUser = new User({
     firstName,
     lastName,
@@ -13,18 +12,16 @@ exports.createUser = async (firstName, lastName, email, password) => {
     password,
   })
 
-  const savedUser = await newUser.save()
-  return savedUser
+  return newUser.save()
 }
 
-exports.findUserByEmailWithPassword = async email => {
-  const user = await User.findOne({
+const findUserByEmailWithPassword = async email => {
+  return User.findOne({
     email,
   }).select('+password')
-  return user
 }
 
-exports.getUsers = async ({ searchQuery = '', page = 1, limit = 10 }) => {
+const getUsers = async ({ searchQuery = '', page = 1, limit = 10 }) => {
   let matchCriteria = {}
   if (searchQuery.length >= 3) {
     matchCriteria = {
@@ -58,4 +55,11 @@ exports.getUsers = async ({ searchQuery = '', page = 1, limit = 10 }) => {
   } catch (error) {
     throw error
   }
+}
+
+module.exports = {
+  findUserByEmail,
+  createUser,
+  findUserByEmailWithPassword,
+  getUsers,
 }

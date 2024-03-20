@@ -5,7 +5,7 @@ const passwordResetTokenUtils = require('../utils/resetTokens')
 const { sendResetEmail } = require('../utils/mail')
 const catchAsync = require('../utils/catchAsync')
 
-exports.signup = catchAsync(async (req, res, next) => {
+const signup = catchAsync(async (req, res, next) => {
   const { firstName, lastName, email, password } = req.body
 
   // Check email not in use already.
@@ -37,7 +37,7 @@ exports.signup = catchAsync(async (req, res, next) => {
   return res.status(201).json({ message: 'User created', token, status: 'OK' })
 })
 
-exports.login = catchAsync(async (req, res, next) => {
+const login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body
 
   // find user by email;
@@ -72,7 +72,7 @@ exports.login = catchAsync(async (req, res, next) => {
     .json({ message: 'User signed in', token, status: 'OK' })
 })
 
-exports.requestResetPassword = catchAsync(async (req, res, next) => {
+const requestResetPassword = catchAsync(async (req, res, next) => {
   const { email } = req.body
 
   // Check there is an account associated with email
@@ -97,7 +97,7 @@ exports.requestResetPassword = catchAsync(async (req, res, next) => {
   return res.status(200).json({ message: 'Reset email sent', status: 'OK' })
 })
 
-exports.resetPassword = catchAsync(async (req, res, next) => {
+const resetPassword = catchAsync(async (req, res, next) => {
   const { email, password } = req.body
   const { token } = req.query
 
@@ -140,7 +140,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
     .json({ message: 'Password successfully changed', status: 'OK' })
 })
 
-exports.getUsers = async (req, res) => {
+const getUsers = async (req, res) => {
   const { search, page, limit } = req.query
 
   try {
@@ -162,4 +162,12 @@ exports.getUsers = async (req, res) => {
       error: error.message,
     })
   }
+}
+
+module.exports = {
+  signup,
+  login,
+  requestResetPassword,
+  resetPassword,
+  getUsers,
 }
