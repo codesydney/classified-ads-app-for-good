@@ -74,7 +74,7 @@ const SignUpForm = () => {
               </span>
             </div>
             <input
-              type="email"
+              type="text"
               {...register('firstName')}
               className={`input input-bordered w-full ${
                 errors.firstName
@@ -99,7 +99,7 @@ const SignUpForm = () => {
               </span>
             </div>
             <input
-              type="email"
+              type="text"
               {...register('lastName')}
               className={`input input-bordered w-full ${
                 errors.lastName
