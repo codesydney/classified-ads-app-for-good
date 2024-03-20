@@ -4,7 +4,7 @@ import {
   login,
   requestResetPassword,
   resetPassword,
-} from './authAuction'
+} from './authAction'
 
 const initialState = {
   accessToken: localStorage.getItem('accessToken') || null,

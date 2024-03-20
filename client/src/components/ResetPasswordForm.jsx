@@ -5,7 +5,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
 import { useSelector } from 'react-redux'
 import { useAppDispatch } from '../store.js'
-import { resetPassword } from '../features/auth/authAuction.js'
+import { resetPassword } from '../features/auth/authAction.js'
 import { resetPasswordSchema } from '../schema'
 
 const ResetPasswordForm = () => {

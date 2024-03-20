@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useAppDispatch } from '../store.js'
-import { requestResetPassword } from '../features/auth/authAuction.js'
+import { requestResetPassword } from '../features/auth/authAction.js'
 import { passwordResetRequestSchema } from '../schema'
 
 const RequestPasswordResetForm = () => {
