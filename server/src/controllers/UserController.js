@@ -164,10 +164,18 @@ const getUsers = async (req, res) => {
   }
 }
 
+const me = async (req, res) => {
+  res.status(200).json({
+    status: 'OK',
+    user: req.user,
+  })
+}
+
 module.exports = {
   signup,
   login,
   requestResetPassword,
   resetPassword,
   getUsers,
+  me,
 }
