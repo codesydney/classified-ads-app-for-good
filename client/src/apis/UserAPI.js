@@ -18,10 +18,9 @@ const getAll = async ({ search = '', page = 1 }, cancel = false) => {
   }
 }
 
-const signIn = async formData => {
-  const signInURL = usersURL + '/signin'
-  const response = await api.post(signInURL, formData)
-  return response
+const login = async formData => {
+  const signInURL = `${usersURL}/signin`
+  return api.post(signInURL, formData)
 }
 
 const signUp = formData => {
@@ -43,7 +42,7 @@ const resetPassword = async (formData, token) => {
 
 export const UserAPI = {
   getAll,
-  signIn,
+  login,
   signUp,
   requestReset,
   resetPassword,

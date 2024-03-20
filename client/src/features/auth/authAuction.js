@@ -20,4 +20,23 @@ const signUp = createAsyncThunk(
   },
 )
 
-export { signUp }
+const login = createAsyncThunk(
+  'auth/login',
+  async (formData, { rejectWithValue }) => {
+    try {
+      const response = await UserAPI.login(formData)
+      const token = response.data.token
+      localStorage.setItem('accessToken', token)
+
+      return response.data
+    } catch (error) {
+      if (error.response && error.response.data.error) {
+        return rejectWithValue(error.response.data.error)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  },
+)
+
+export { login, signUp }

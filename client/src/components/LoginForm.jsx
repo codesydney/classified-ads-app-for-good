@@ -3,14 +3,18 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
-import { UserAPI } from '../apis/UserAPI'
+import { useSelector } from 'react-redux'
+import { useAppDispatch } from '../store.js'
+import { login } from '../features/auth/authAuction.js'
 import { loginSchema } from '../schema'
 
 const LoginForm = () => {
   const [errorMessage, setErrorMessage] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
 
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+
+  const { loading: isLoading } = useSelector(state => state.auth)
 
   const {
     register,
@@ -22,24 +26,21 @@ const LoginForm = () => {
 
   const onSubmit = async formData => {
     try {
-      setIsLoading(true)
+      const response = await dispatch(login(formData))
 
-      const response = await UserAPI.signIn(formData)
-      const token = response.data.token
-      localStorage.setItem('accessToken', token)
+      if (response.type === 'auth/login/rejected') {
+        setErrorMessage(response.payload)
+        return
+      }
 
-      setTimeout(() => {
-        setErrorMessage('')
-        setIsLoading(false)
+      setErrorMessage('')
 
-        navigate('/')
-        toast.success('Success! You are now signed in.', {
-          position: 'top-right',
-        })
-      }, 3000)
+      navigate('/')
+      toast.success('Success! You are now signed in.', {
+        position: 'top-right',
+      })
     } catch (error) {
-      setErrorMessage(error.response.data.error)
-      setIsLoading(false)
+      setErrorMessage('Something went wrong. Please try again.')
     }
   }
 
