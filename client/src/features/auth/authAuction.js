@@ -39,4 +39,20 @@ const login = createAsyncThunk(
   },
 )
 
-export { login, signUp }
+const requestResetPassword = createAsyncThunk(
+  'auth/requestResetPassword',
+  async (formData, { rejectWithValue }) => {
+    try {
+      const response = await UserAPI.requestReset(formData)
+      return response.data
+    } catch (error) {
+      if (error.response && error.response.data.error) {
+        return rejectWithValue(error.response.data.error)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  },
+)
+
+export { login, signUp, requestResetPassword }

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { signUp, login } from './authAuction'
+import { signUp, login, requestResetPassword } from './authAuction'
 
 const initialState = {
   accessToken: localStorage.getItem('accessToken') || null,
@@ -58,6 +58,23 @@ const authSlice = createSlice({
       state.error = action.payload
       state.success = false
       state.accessToken = null
+    })
+
+    // Request Reset Password
+    builder.addCase(requestResetPassword.pending, state => {
+      state.loading = true
+      state.error = null
+      state.success = false
+    })
+    builder.addCase(requestResetPassword.fulfilled, state => {
+      state.loading = false
+      state.error = null
+      state.success = true
+    })
+    builder.addCase(requestResetPassword.rejected, (state, action) => {
+      state.loading = false
+      state.error = action.payload
+      state.success = false
     })
   },
 })

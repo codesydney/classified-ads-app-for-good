@@ -18,7 +18,7 @@ const getAll = async ({ search = '', page = 1 }, cancel = false) => {
   }
 }
 
-const login = async formData => {
+const login = formData => {
   const signInURL = `${usersURL}/signin`
   return api.post(signInURL, formData)
 }
@@ -28,10 +28,9 @@ const signUp = formData => {
   return api.post(signUpURL, formData)
 }
 
-const requestReset = async formData => {
-  const requestResetURL = usersURL + '/request-reset-password'
-  const response = await api.post(requestResetURL, formData)
-  return response
+const requestReset = formData => {
+  const requestResetURL = `${usersURL}/request-reset-password`
+  return api.post(requestResetURL, formData)
 }
 
 const resetPassword = async (formData, token) => {

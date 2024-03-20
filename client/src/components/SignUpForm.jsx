@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 import { toast } from 'react-hot-toast'
+import { useSelector } from 'react-redux'
 import { useAppDispatch } from '../store.js'
 import { signUp } from '../features/auth/authAuction.js'
 import { signUpSchema } from '../schema'
@@ -36,7 +36,7 @@ const SignUpForm = () => {
       setErrorMessage('')
 
       navigate('/')
-      toast.success('Sign up is successful, you can now login.', {
+      toast.success('You have successfully signed up.', {
         position: 'top-right',
       })
     } catch (error) {
