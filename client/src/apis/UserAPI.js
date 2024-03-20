@@ -18,33 +18,29 @@ const getAll = async ({ search = '', page = 1 }, cancel = false) => {
   }
 }
 
-const signIn = async formData => {
-  const signInURL = usersURL + '/signin'
-  const response = await api.post(signInURL, formData)
-  return response
+const login = formData => {
+  const signInURL = `${usersURL}/login`
+  return api.post(signInURL, formData)
 }
 
-const signUp = async formData => {
-  const signUpURL = usersURL + '/signup'
-  const response = await api.post(signUpURL, formData)
-  return response
+const signUp = formData => {
+  const signUpURL = `${usersURL}/signup`
+  return api.post(signUpURL, formData)
 }
 
-const requestReset = async formData => {
-  const requestResetURL = usersURL + '/request-reset-password'
-  const response = await api.post(requestResetURL, formData)
-  return response
+const requestReset = formData => {
+  const requestResetURL = `${usersURL}/request-reset-password`
+  return api.post(requestResetURL, formData)
 }
 
-const resetPassword = async (formData, token) => {
-  const resetPasswordURL = usersURL + `/reset-password?token=${token}`
-  const response = await api.post(resetPasswordURL, formData)
-  return response
+const resetPassword = (formData, token) => {
+  const resetPasswordURL = `${usersURL}/reset-password?token=${token}`
+  return api.post(resetPasswordURL, formData)
 }
 
 export const UserAPI = {
   getAll,
-  signIn,
+  login,
   signUp,
   requestReset,
   resetPassword,

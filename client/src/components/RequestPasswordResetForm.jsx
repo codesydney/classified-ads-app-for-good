@@ -2,14 +2,19 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Link } from 'react-router-dom'
-import { UserAPI } from '../apis/UserAPI'
+import { useSelector } from 'react-redux'
+import { useAppDispatch } from '../store.js'
+import { requestResetPassword } from '../features/auth/authAuction.js'
 import { passwordResetRequestSchema } from '../schema'
 
 const RequestPasswordResetForm = () => {
   const [errorMessage, setErrorMessage] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
   const [emailAddress, setEmailAddress] = useState('')
   const [showEMailSuccess, setShowEmailSuccess] = useState(false)
+
+  const dispatch = useAppDispatch()
+
+  const { loading: isLoading } = useSelector(state => state.auth)
 
   const {
     register,
@@ -21,20 +26,19 @@ const RequestPasswordResetForm = () => {
   })
   const onSubmit = async formData => {
     try {
-      setIsLoading(true)
       setEmailAddress(formData.email)
-      await UserAPI.requestReset(formData)
+      const response = await dispatch(requestResetPassword(formData))
 
-      setTimeout(() => {
-        setErrorMessage('')
-        setIsLoading(false)
+      if (response.type === 'auth/requestResetPassword/rejected') {
+        setErrorMessage(response.payload)
+        return
+      }
 
-        setShowEmailSuccess(true)
-        reset()
-      }, 3000)
+      setErrorMessage('')
+      setShowEmailSuccess(true)
+      reset()
     } catch (error) {
-      setErrorMessage(error.response.data.error)
-      setIsLoading(false)
+      setErrorMessage('Something went wrong. Please try again.')
     }
   }
 

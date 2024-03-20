@@ -27,13 +27,17 @@ exports.signup = catchAsync(async (req, res, next) => {
   )
 
   // create token for user
-  const token = createToken({ id: newUser._id })
+  const token = createToken({
+    id: newUser._id,
+    firstName: newUser.firstName,
+    lastName: newUser.lastName,
+  })
 
   // return 201 response with token
   return res.status(201).json({ message: 'User created', token, status: 'OK' })
 })
 
-exports.signin = catchAsync(async (req, res, next) => {
+exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body
 
   // find user by email;
@@ -56,7 +60,11 @@ exports.signin = catchAsync(async (req, res, next) => {
   }
 
   // create token for user
-  const token = createToken({ id: user._id })
+  const token = createToken({
+    id: user._id,
+    firstName: user.firstName,
+    lastName: user.lastName,
+  })
 
   // return token
   return res
