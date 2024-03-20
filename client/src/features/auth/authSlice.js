@@ -11,7 +11,7 @@ const initialState = {
   accessToken: localStorage.getItem('accessToken') || null,
   // We should do a check here if the accesss is valid and has not expired
   isAuthenticated: Boolean(localStorage.getItem('accessToken')),
-  loggedInUser: null,
+  currentUser: null,
   loading: false,
   error: null,
   success: false,
@@ -25,6 +25,7 @@ const authSlice = createSlice({
       localStorage.removeItem('accessToken') // deletes token from storage
       state.accessToken = null
       state.isAuthenticated = false
+      state.currentUser = null
       state.error = null
       state.loading = false
     },
@@ -116,12 +117,12 @@ const authSlice = createSlice({
     builder.addCase(me.fulfilled, (state, action) => {
       state.loading = false
       state.error = null
-      state.loggedInUser = action.payload.user
+      state.currentUser = action.payload.user
     })
     builder.addCase(me.rejected, (state, action) => {
       state.loading = false
       state.error = action.payload
-      state.loggedInUser = null
+      state.currentUser = null
     })
   },
 })

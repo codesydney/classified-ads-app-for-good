@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
 import { useSelector } from 'react-redux'
 import { useAppDispatch } from '../store.js'
-import { login } from '../features/auth/authAction.js'
+import { login, me } from '../features/auth/authAction.js'
 import { loginSchema } from '../schema'
 
 const LoginForm = () => {
@@ -34,6 +34,9 @@ const LoginForm = () => {
       }
 
       setErrorMessage('')
+
+      // After a successful login call a me function to retrieve the user's data
+      await dispatch(me())
 
       navigate('/')
       toast.success('Success! You are now signed in.')

@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import { AiOutlineMenu } from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
+import { useSelector } from 'react-redux'
 import { useAppDispatch } from '../../store.js'
 import { logout } from '../../features/auth/authSlice.js'
 
@@ -14,6 +15,8 @@ const UserMenu = ({ currentUser }) => {
 
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
+
+  const { isAuthenticated } = useSelector(state => state.auth)
 
   const toggleOpen = useCallback(() => {
     setIsOpen(value => !value)
@@ -114,7 +117,20 @@ const UserMenu = ({ currentUser }) => {
         >
           <AiOutlineMenu />
           <div className="hidden md:block">
-            <Avatar src={currentUser?.image} />
+            {!isAuthenticated && !currentUser?.alumniProfilePicture && (
+              <Avatar src={null} />
+            )}
+
+            {isAuthenticated && currentUser?.alumniProfilePicture && (
+              <Avatar src={currentUser.alumniProfilePicture} />
+            )}
+
+            {isAuthenticated && !currentUser?.alumniProfilePicture && (
+              <div className="bg-primary h-[30px] w-[30px] rounded-full flex items-center justify-center font-bold">
+                {currentUser?.firstName[0]}
+                {currentUser?.lastName[0]}
+              </div>
+            )}
           </div>
         </div>
       </div>
