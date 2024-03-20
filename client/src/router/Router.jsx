@@ -48,7 +48,13 @@ const Router = () => {
         },
         {
           path: '/account',
-          element: <ProtectedRoute component={Account} />,
+          element: <ProtectedRoute />,
+          children: [
+            {
+              index: true,
+              element: <Account />,
+            },
+          ],
         },
       ],
     },
