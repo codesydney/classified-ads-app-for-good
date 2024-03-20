@@ -6,9 +6,10 @@ import { useSelector } from 'react-redux'
 const Navbar = () => {
   const { isAuthenticated } = useSelector(state => state.auth)
 
-  // This will determine if the user is logged in or not
+  // @Todo: Replace with real user data
   const currentUser = isAuthenticated && {
-    image: 'https://randomuser.me/api/portraits',
+    image:
+      'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1000.jpg',
   }
 
   return (
