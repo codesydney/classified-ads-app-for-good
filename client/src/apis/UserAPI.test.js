@@ -13,7 +13,7 @@ describe('UserAPI', () => {
       data: { users: [{ name: 'John Doe' }], meta: { page: 1, totalPages: 1 } },
     }
     const spy = jest.spyOn(api, 'get').mockResolvedValue(getAllResponse)
-    const response = await UserAPI.getAll({})
+    const response = await UserAPI.searchUsers({})
     expect(response).toEqual(getAllResponse.data)
     expect(spy).toHaveBeenCalledWith(expectedUsersURL, {
       params: {
@@ -30,7 +30,7 @@ describe('UserAPI', () => {
       data: { users: [{ name: 'John Doe' }], meta: { page: 1, totalPages: 1 } },
     }
     const spy = jest.spyOn(api, 'get').mockResolvedValue(getAllResponse)
-    const response = await UserAPI.getAll({ search: searchQuery })
+    const response = await UserAPI.searchUsers({ search: searchQuery })
     expect(response).toEqual(getAllResponse.data)
     expect(spy).toHaveBeenCalledWith(expectedUsersURL, {
       params: { search: searchQuery, page: 1 },
