@@ -19,23 +19,25 @@ const authSlice = createSlice({
       state.loading = false
     },
   },
-  extraReducers: {
-    [signUp.pending]: state => {
+  extraReducers: builder => {
+    builder.addCase(signUp.pending, state => {
       state.loading = true
       state.error = null
       state.success = false
-    },
-    [signUp.fulfilled]: (state, action) => {
+    })
+    builder.addCase(signUp.fulfilled, (state, action) => {
       state.loading = false
       state.error = null
       state.success = true
       state.accessToken = action.payload.token
-    },
-    [signUp.rejected]: (state, action) => {
+      localStorage.setItem('accessToken', action.payload.token)
+    })
+    builder.addCase(signUp.rejected, (state, action) => {
       state.loading = false
       state.error = action.payload
       state.success = false
-    },
+      state.accessToken = null
+    })
   },
 })
 
