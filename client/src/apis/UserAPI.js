@@ -38,12 +38,18 @@ const resetPassword = (formData, token) => {
   return api.post(resetPasswordURL, formData)
 }
 
+const me = token => {
+  const meURL = `${usersURL}/me?token=${token}`
+  return api.get(meURL)
+}
+
 export const UserAPI = {
   searchUsers,
   login,
   signUp,
   requestReset,
   resetPassword,
+  me,
 }
 
 // defining the cancel API object for UserAPI
