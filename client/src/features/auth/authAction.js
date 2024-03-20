@@ -72,4 +72,18 @@ const resetPassword = createAsyncThunk(
   },
 )
 
-export { login, signUp, requestResetPassword, resetPassword }
+const me = createAsyncThunk('auth/me', async (_, { rejectWithValue }) => {
+  try {
+    const token = localStorage.getItem('accessToken')
+    const response = await UserAPI.me(token)
+    return response.data
+  } catch (error) {
+    if (error.response && error.response.data.error) {
+      return rejectWithValue(error.response.data.error)
+    } else {
+      return rejectWithValue(error.message)
+    }
+  }
+})
+
+export { login, signUp, requestResetPassword, resetPassword, me }

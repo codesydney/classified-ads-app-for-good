@@ -4,12 +4,14 @@ import {
   login,
   requestResetPassword,
   resetPassword,
+  me,
 } from './authAction'
 
 const initialState = {
   accessToken: localStorage.getItem('accessToken') || null,
   // We should do a check here if the accesss is valid and has not expired
   isAuthenticated: Boolean(localStorage.getItem('accessToken')),
+  loggedInUser: null,
   loading: false,
   error: null,
   success: false,
@@ -104,6 +106,22 @@ const authSlice = createSlice({
       state.loading = false
       state.error = action.payload
       state.success = false
+    })
+
+    // Me
+    builder.addCase(me.pending, state => {
+      state.loading = true
+      state.error = null
+    })
+    builder.addCase(me.fulfilled, (state, action) => {
+      state.loading = false
+      state.error = null
+      state.loggedInUser = action.payload.user
+    })
+    builder.addCase(me.rejected, (state, action) => {
+      state.loading = false
+      state.error = action.payload
+      state.loggedInUser = null
     })
   },
 })
