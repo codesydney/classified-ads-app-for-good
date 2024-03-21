@@ -7,10 +7,12 @@ const getUserById = async id => {
     return null
   }
 
-  user.id = user._id
-  delete user._id
+  let userObject = user.toObject()
 
-  return user
+  userObject.id = userObject._id
+  delete userObject._id
+
+  return userObject
 }
 
 const hasNestedFieldsUpdated = (nestedObject, requiredFields) => {

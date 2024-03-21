@@ -39,10 +39,29 @@ const resetPassword = (formData, token) => {
 }
 
 const me = token => {
-  const meURL = `${usersURL}/me?token=${token}`
-  return api.get(meURL)
+  const meURL = `${usersURL}/me`
+  return api.get(meURL, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
 }
 
+const updateProfile = async (profileData, token) => {
+  const updateProfileURL = `${usersURL}/profile/me`
+
+  try {
+    const response = await api.put(updateProfileURL, profileData, token, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (error) {
+    console.error('Error updating user profile:', error)
+    throw error
+  }
+}
 export const UserAPI = {
   searchUsers,
   login,
