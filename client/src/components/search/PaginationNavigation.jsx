@@ -1,7 +1,8 @@
 import { MdNavigateNext, MdNavigateBefore } from 'react-icons/md'
 import NavigationButton from './NavigationButton'
+import { useSelector } from 'react-redux'
 
-const PaginationNavigation = ({ meta, onPageChange }) => {
+const PaginationNavigation = ({ meta, handlePageChange }) => {
   // Variables that determine the type of navigation
   const isFirstTwoPages = () => meta.page < 3
   const isThirdPage = () => meta.page === 3
@@ -14,7 +15,7 @@ const PaginationNavigation = ({ meta, onPageChange }) => {
       <NavigationButton
         key={pageNumber}
         isActive={isActive}
-        handleClick={() => onPageChange(pageNumber)}
+        handleClick={() => handlePageChange(pageNumber)}
       >
         {pageNumber}
       </NavigationButton>
@@ -101,7 +102,7 @@ const PaginationNavigation = ({ meta, onPageChange }) => {
       {meta.hasPrevPage && (
         <NavigationButton
           isActive={false}
-          handleClick={() => onPageChange(meta.page - 1)}
+          handleClick={() => handlePageChange(meta.page - 1)}
         >
           <MdNavigateBefore className="w-6 h-6" />
         </NavigationButton>
@@ -110,7 +111,7 @@ const PaginationNavigation = ({ meta, onPageChange }) => {
       {meta.hasNextPage && (
         <NavigationButton
           isActive={false}
-          handleClick={() => onPageChange(meta.page + 1)}
+          handleClick={() => handlePageChange(meta.page + 1)}
         >
           <MdNavigateNext className="w-6 h-6" />
         </NavigationButton>
