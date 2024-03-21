@@ -2,14 +2,17 @@ const express = require('express')
 const UserController = require('../controllers/UserController')
 const {
   signupValidation,
-  signinValidation,
+  loginValidation,
   emailValidation,
   handleValidationResult,
 } = require('../middleware/validationMiddlewares')
+const { verifyToken } = require('../middleware/verifyToken')
 
 const router = express.Router()
 
 router.get('/', UserController.getUsers)
+
+router.get('/me', verifyToken, UserController.me)
 
 router.post(
   '/signup',
@@ -19,10 +22,10 @@ router.post(
 )
 
 router.post(
-  '/signin',
-  signinValidation,
+  '/login',
+  loginValidation,
   handleValidationResult,
-  UserController.signin,
+  UserController.login,
 )
 
 router.post(

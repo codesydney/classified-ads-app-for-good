@@ -1,123 +1,167 @@
 import { useState } from 'react'
-import { UserAPI } from '../apis/UserAPI'
-import { useSearchParams, Link } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { useSearchParams, useNavigate } from 'react-router-dom'
+import { toast } from 'react-hot-toast'
+import { useSelector } from 'react-redux'
+import { useAppDispatch } from '../store.js'
+import { resetPassword } from '../features/auth/authAction.js'
+import { resetPasswordSchema } from '../schema'
 
 const ResetPasswordForm = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    passwordConfirm: '',
-  })
-  const [formStatus, setFormStatus] = useState({
-    loading: false,
-    error: '',
-    successMessage: '',
-  })
-  const [inputErrors, setInputErrors] = useState({})
+  const [errorMessage, setErrorMessage] = useState('')
   const [searchParams] = useSearchParams()
 
-  const handleChange = e => {
-    const { name, value } = e.target
-    setFormData({ ...formData, [name]: value })
-  }
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
 
-  // Placeholder for validation logic
-  const isSubmitValidationSuccess = () => true
-  const handleServerErrors = error => {
-    setFormStatus({ ...formStatus, loading: false, error: error.message })
-  }
+  const { loading: isLoading } = useSelector(state => state.auth)
 
-  const handleSubmit = async event => {
-    event.preventDefault()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(resetPasswordSchema),
+  })
 
-    if (!isSubmitValidationSuccess()) return
-
+  const onSubmit = async formData => {
     const token = searchParams.get('token')
     if (!token) {
-      setFormStatus({
-        ...formStatus,
-        error: 'Invalid token. Please request another email.',
-      })
-      return
+      navigate('/login')
     }
 
-    setFormStatus({ ...formStatus, loading: true })
     try {
-      await UserAPI.resetPassword(formData, token)
-      setFormStatus({
-        ...formStatus,
-        successMessage: 'Success! You can now sign in using your new password.',
-        loading: false,
-      })
-    } catch (error) {
-      handleServerErrors(error)
-    }
-  }
+      const response = await dispatch(resetPassword(formData, token))
 
-  if (formStatus.successMessage) {
-    return (
-      <div className="text-center mt-6">
-        <p className="mb-4">{formStatus.successMessage}</p>
-        <Link to="/signin" className="text-primary hover:underline">
-          Sign in here
-        </Link>
-      </div>
-    )
+      if (response.type === 'auth/resetPassword/rejected') {
+        setErrorMessage(response.payload)
+        return
+      }
+
+      setErrorMessage('')
+
+      navigate('/login')
+      toast.success(
+        'Your password has been reset. You can now login with the new credentials.',
+      )
+    } catch (error) {
+      setErrorMessage('Something went wrong. Please try again.')
+    }
   }
 
   return (
-    <div className="max-w-sm mx-auto mt-10">
-      <form onSubmit={handleSubmit}>
-        {formStatus.error && <p className="text-red-500">{formStatus.error}</p>}
-        <div className="flex flex-col gap-4">
-          <input
-            className={`w-full p-4 border ${inputErrors.email ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-          {inputErrors.email && (
-            <p className="text-red-500 text-sm">{inputErrors.email}</p>
-          )}
+    <>
+      {errorMessage && (
+        <div role="alert" className="alert alert-error my-[12px] text-white">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="stroke-current shrink-0 h-6 w-6 cursor-pointer"
+            fill="none"
+            viewBox="0 0 24 24"
+            onClick={() => setErrorMessage('')}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <span>{errorMessage}</span>
+        </div>
+      )}
 
-          <input
-            className={`w-full p-4 border ${inputErrors.password ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
-            type="password"
-            name="password"
-            placeholder="New Password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-          {inputErrors.password && (
-            <p className="text-red-500 text-sm">{inputErrors.password}</p>
-          )}
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex flex-col gap-[8px]">
+          <label className="form-control w-full">
+            <div className="label">
+              <span className="label-text text-[15px] font-semibold">
+                Email <span className="text-red-500">*</span>
+              </span>
+            </div>
+            <input
+              type="email"
+              {...register('email')}
+              className={`input input-bordered w-full ${
+                errors.email
+                  ? 'border-red-500 focus:outline-red-500'
+                  : 'border-gray-300 focus:outline-primary'
+              } focus:outline-primary`}
+            />
 
-          <input
-            className={`w-full p-4 border ${inputErrors.passwordConfirm ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
-            type="password"
-            name="passwordConfirm"
-            placeholder="Confirm New Password"
-            value={formData.passwordConfirm}
-            onChange={handleChange}
-          />
-          {inputErrors.passwordConfirm && (
-            <p className="text-red-500 text-sm">
-              {inputErrors.passwordConfirm}
-            </p>
-          )}
+            {errors.email && (
+              <div className="label">
+                <span className="label-text-alt text-red-500">
+                  {errors.email.message}
+                </span>
+              </div>
+            )}
+          </label>
+
+          <label className="form-control w-full">
+            <div className="label">
+              <span className="label-text text-[15px] font-semibold">
+                Password <span className="text-red-500">*</span>
+              </span>
+            </div>
+            <input
+              type="password"
+              {...register('password')}
+              className={`input input-bordered w-full ${
+                errors.password
+                  ? 'border-red-500 focus:outline-red-500'
+                  : 'border-gray-300 focus:outline-primary'
+              } focus:outline-primary`}
+            />
+
+            {errors.password && (
+              <div className="label">
+                <span className="label-text-alt text-red-500">
+                  {errors.password.message}
+                </span>
+              </div>
+            )}
+          </label>
+
+          <label className="form-control w-full">
+            <div className="label">
+              <span className="label-text text-[15px] font-semibold">
+                Confirm Password <span className="text-red-500">*</span>
+              </span>
+            </div>
+            <input
+              type="password"
+              {...register('passwordConfirm')}
+              className={`input input-bordered w-full ${
+                errors.passwordConfirm
+                  ? 'border-red-500 focus:outline-red-500'
+                  : 'border-gray-300 focus:outline-primary'
+              } focus:outline-primary`}
+            />
+
+            {errors.passwordConfirm && (
+              <div className="label">
+                <span className="label-text-alt text-red-500">
+                  {errors.passwordConfirm.message}
+                </span>
+              </div>
+            )}
+          </label>
 
           <button
-            className={`w-full p-4 bg-primary text-white rounded-md hover:bg-primary-dark disabled:opacity-50`}
+            className="btn btn-squre w-full py-2 bg-primary hover:bg-primary text-white mt-[15px]"
             type="submit"
-            disabled={formStatus.loading}
           >
-            Reset Password
+            {isLoading ? (
+              <span className="loading loading-spinner"></span>
+            ) : (
+              'Reset'
+            )}
           </button>
         </div>
       </form>
-    </div>
+    </>
   )
 }
 

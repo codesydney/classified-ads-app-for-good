@@ -1,10 +1,10 @@
 import Container from '../Container.jsx'
 import Logo from './Logo.jsx'
 import UserMenu from './UserMenu.jsx'
+import { useSelector } from 'react-redux'
 
 const Navbar = () => {
-  // This will determine if the user is logged in or not
-  const currentUser = null
+  const { currentUser } = useSelector(state => state.auth)
 
   return (
     <div className="fixed top-0 w-full bg-white z-10 shadow-sm mb-[150px]">

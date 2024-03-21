@@ -3,6 +3,11 @@ require('dotenv').config()
 const sendGridApiKey = process.env.SENDGRID_API_KEY
 sgMail.setApiKey(sendGridApiKey)
 
+const clientURL =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:5173/'
+    : 'https://classifieds.code.sydney/'
+
 // Template for reset email
 function emailFormat(text) {
   return `
@@ -23,7 +28,7 @@ async function sendResetEmail(email, token) {
     html: emailFormat(`
       <h3>Password Reset</h3>
       <p>Click the link below to reset your password</p>
-      <a href="${process.env.CLIENT_URL}/reset-password?token=${token}">Reset Password</a>
+      <a href="${clientURL}reset-password?token=${token}&email=${email}">Reset Password</a>
     `),
   }
   try {

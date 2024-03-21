@@ -1,6 +1,11 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { AiOutlineMenu } from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-hot-toast'
+import { useSelector } from 'react-redux'
+import { useAppDispatch } from '../../store.js'
+import { logout } from '../../features/auth/authSlice.js'
+
 import Avatar from '../Avatar.jsx'
 import MenuItem from './MenuItem.jsx'
 
@@ -9,6 +14,9 @@ const UserMenu = ({ currentUser }) => {
   const menuRef = useRef()
 
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+
+  const { isAuthenticated } = useSelector(state => state.auth)
 
   const toggleOpen = useCallback(() => {
     setIsOpen(value => !value)
@@ -38,6 +46,23 @@ const UserMenu = ({ currentUser }) => {
   return (
     <div className="relative" ref={menuRef}>
       <div className="flex flex-row items-center gap-3">
+        <div
+          className="
+            hidden
+            md:block
+            text-sm
+            font-semibold
+            py-3
+            px-4
+            rounded-full
+            hover:bg-neutral-100
+            transition
+            cursor-pointer
+          "
+          onClick={() => navigate('/')}
+        >
+          Home
+        </div>
         <div
           className="
             hidden
@@ -92,7 +117,20 @@ const UserMenu = ({ currentUser }) => {
         >
           <AiOutlineMenu />
           <div className="hidden md:block">
-            <Avatar src={currentUser?.image} />
+            {!isAuthenticated && !currentUser?.alumniProfilePicture && (
+              <Avatar src={null} />
+            )}
+
+            {isAuthenticated && currentUser?.alumniProfilePicture && (
+              <Avatar src={currentUser.alumniProfilePicture} />
+            )}
+
+            {isAuthenticated && !currentUser?.alumniProfilePicture && (
+              <div className="bg-primary h-[30px] w-[30px] rounded-full flex items-center justify-center font-bold">
+                {currentUser?.firstName[0]}
+                {currentUser?.lastName[0]}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -114,8 +152,18 @@ const UserMenu = ({ currentUser }) => {
           <div className="flex flex-col cursor-pointer">
             {currentUser ? (
               <>
-                <MenuItem label="Profile" onClick={() => handleNavigate('/')} />
+                <div className="hidden md:block">
+                  <MenuItem
+                    label="Account"
+                    onClick={() => handleNavigate('/account')}
+                  />
+                </div>
                 <div className="md:hidden">
+                  <MenuItem label="Home" onClick={() => handleNavigate('/')} />
+                  <MenuItem
+                    label="Account"
+                    onClick={() => handleNavigate('/account')}
+                  />
                   <MenuItem
                     label="About"
                     onClick={() => handleNavigate('/about')}
@@ -125,13 +173,20 @@ const UserMenu = ({ currentUser }) => {
                     onClick={() => handleNavigate('/contact')}
                   />
                 </div>
-
                 <hr />
-                <MenuItem label="Logout" onClick={() => handleNavigate('/')} />
+                <MenuItem
+                  label="Logout"
+                  onClick={() => {
+                    dispatch(logout())
+                    handleNavigate('/')
+                    toast.success('Logged out successfully')
+                  }}
+                />
               </>
             ) : (
               <>
                 <div className="md:hidden">
+                  <MenuItem label="Home" onClick={() => handleNavigate('/')} />
                   <MenuItem
                     label="About"
                     onClick={() => handleNavigate('/about')}

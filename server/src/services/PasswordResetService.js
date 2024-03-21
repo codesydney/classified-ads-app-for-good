@@ -1,7 +1,7 @@
 const PasswordResetToken = require('../models/PasswordResetToken')
 
 // Generate new password reset token
-exports.generatePasswordResetToken = async (id, hashedToken) => {
+const generatePasswordResetToken = async (id, hashedToken) => {
   // Does user have an existing token already?
   const existingToken = await PasswordResetToken.findOne({ user: id })
 
@@ -16,15 +16,19 @@ exports.generatePasswordResetToken = async (id, hashedToken) => {
     token: hashedToken,
   })
 
-  const savedToken = await resetToken.save()
-  return savedToken
+  return resetToken.save()
 }
 
-exports.findTokenByUserId = async id => {
-  const token = await PasswordResetToken.findOne({ user: id })
-  return token
+const findTokenByUserId = id => {
+  return PasswordResetToken.findOne({ user: id })
 }
 
-exports.findTokenAndDelete = async id => {
+const findTokenAndDelete = async id => {
   await PasswordResetToken.findOneAndDelete({ user: id })
+}
+
+module.exports = {
+  generatePasswordResetToken,
+  findTokenByUserId,
+  findTokenAndDelete,
 }

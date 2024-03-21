@@ -10,8 +10,7 @@ const Footer = () => {
         <img
           src={Logo}
           alt="UST Alumnai Australia Logo"
-          width="180"
-          height="180"
+          className="w-[120px] h-[70px] md:w-[180px] md:h-[120px]"
         />
         <p className="font-bold">Connecting Thomasians Down Under</p>
         <p>Copyright © {year} - All right reserved</p>
@@ -23,7 +22,7 @@ const Footer = () => {
         </p>
       </aside>
       <nav>
-        <div className="grid grid-flow-col gap-4">
+        <div className="grid grid-flow-col mt-[-20px]">
           <a
             className="cursor-pointer"
             href="https://www.facebook.com/USTAlumniAustralia"

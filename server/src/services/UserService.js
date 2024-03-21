@@ -1,33 +1,48 @@
 const User = require('../models/User')
 
-exports.findUserByEmail = async email => {
-  const user = await User.findOne({ email })
-  return user
+const findUserById = async id => {
+  const user = await User.findById(id).select('-__v -isAutomated').exec()
+
+  if (!user) {
+    return null
+  }
+
+  let userObject = user.toObject()
+
+  userObject.id = userObject._id
+  delete userObject._id
+
+  return userObject
 }
 
-exports.createUser = async (email, password) => {
+const findUserByEmail = email => {
+  return User.findOne({ email })
+}
+
+const createUser = (firstName, lastName, email, password) => {
   const newUser = new User({
+    firstName,
+    lastName,
     email,
     password,
   })
 
-  const savedUser = await newUser.save()
-  return savedUser
+  return newUser.save()
 }
 
-exports.findUserByEmailWithPassword = async email => {
-  const user = await User.findOne({
+const findUserByEmailWithPassword = async email => {
+  return User.findOne({
     email,
   }).select('+password')
-  return user
 }
 
-exports.getUsers = async ({ searchQuery = '', page = 1, limit = 10 }) => {
+const getUsers = async ({ searchQuery = '', page = 1, limit = 10 }) => {
   let matchCriteria = {}
   if (searchQuery.length >= 3) {
     matchCriteria = {
       $or: [
-        { fullName: { $regex: searchQuery, $options: 'i' } },
+        { firstName: { $regex: searchQuery, $options: 'i' } },
+        { lastName: { $regex: searchQuery, $options: 'i' } },
         { email: { $regex: searchQuery, $options: 'i' } },
         { 'service.serviceName': { $regex: searchQuery, $options: 'i' } },
       ],
@@ -55,4 +70,12 @@ exports.getUsers = async ({ searchQuery = '', page = 1, limit = 10 }) => {
   } catch (error) {
     throw error
   }
+}
+
+module.exports = {
+  findUserById,
+  findUserByEmail,
+  createUser,
+  findUserByEmailWithPassword,
+  getUsers,
 }

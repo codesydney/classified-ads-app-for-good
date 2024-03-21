@@ -69,7 +69,8 @@ const universities = [
 const generateUser = async () => ({
   email: faker.internet.email(),
   password: await bcrypt.hash('hello123', await bcrypt.genSalt(10)),
-  fullName: faker.person.fullName(),
+  firstName: faker.person.firstName(),
+  lastName: faker.person.lastName(),
   phone: '0411222333',
   suburb: faker.location.city(),
   postcode: faker.location.zipCode('####'),

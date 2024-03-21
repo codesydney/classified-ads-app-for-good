@@ -9,107 +9,119 @@ const phoneRegex =
 const postcodeRegex = /^[0-9]{4}$/
 const urlRegex = /^(https?:\/\/)[^\s/$.?#].[^\s]*$/
 
-const UserSchema = new Schema({
-  email: {
-    type: String,
-    required: true,
-    trim: true,
-    unique: true,
-    validate: {
-      validator: email => emailRegex.test(email),
-      message: 'Invalid email format',
+const UserSchema = new Schema(
+  {
+    email: {
+      type: String,
+      required: true,
+      trim: true,
+      unique: true,
+      validate: {
+        validator: email => emailRegex.test(email),
+        message: 'Invalid email format',
+      },
     },
-  },
-  password: {
-    type: String,
-    required: true,
-    select: false, // Hide password from query results
-  },
-  fullName: {
-    type: String,
-    trim: true,
-    minLength: [3, 'Full name must be at least 3 characters long'],
-    maxLength: [50, 'Full name must be at most 50 characters long'],
-  },
-  phone: {
-    type: String,
-    trim: true,
-    validate: {
-      validator: phone => phoneRegex.test(phone),
-      message: 'Invalid phone number format',
+    password: {
+      type: String,
+      required: true,
+      select: false, // Hide password from query results
     },
-  },
-  suburb: {
-    type: String,
-    trim: true,
-    minLength: [3, 'Suburb must be at least 3 characters long'],
-    maxLength: [50, 'Suburb must be at most 50 characters long'],
-  },
-  postcode: {
-    type: String,
-    trim: true,
-    validate: {
-      validator: postcode => postcodeRegex.test(postcode),
-      message: 'Invalid postcode format',
-    },
-  },
-  facebookName: {
-    type: String,
-    trim: true,
-    minLength: [3, 'Facebook name must be at least 3 characters long'],
-    maxLength: [50, 'Facebook name must be at most 50 characters long'],
-  },
-  story: {
-    type: String,
-    trim: true,
-    minLength: [3, 'Story must be at least 3 characters long'],
-    maxLength: [500, 'Story must be at most 500 characters long'],
-  },
-  alumniProfilePicture: {
-    type: String,
-    trim: true,
-  },
-  education: {
-    course: {
+    firstName: {
       type: String,
       trim: true,
-      minLength: [3, 'Course must be at least 3 characters long'],
+      minLength: [2, 'First name must be at least 2 characters long'],
+      maxLength: [50, 'First name must be at most 50 characters long'],
     },
-    college: {
+    lastName: {
       type: String,
       trim: true,
-      minLength: [3, 'College must be at least 3 characters long'],
+      minLength: [2, 'Last name must be at least 2 characters long'],
+      maxLength: [50, 'Last name must be at most 50 characters long'],
     },
-    yearGraduated: {
-      type: Number,
-      min: [1900, 'Year must be at least 1900'],
-      max: [new Date().getFullYear(), 'Year must be at most the current year'],
-    },
-  },
-  service: {
-    serviceName: {
-      type: String,
-      trim: true,
-      minLength: [3, 'Service name must be at least 3 characters long'],
-    },
-    serviceLogo: {
-      type: String,
-      trim: true,
-    },
-    serviceUrl: {
+    phone: {
       type: String,
       trim: true,
       validate: {
-        validator: url => urlRegex.test(url),
-        message: 'Invalid URL format',
+        validator: phone => phoneRegex.test(phone),
+        message: 'Invalid phone number format',
       },
     },
+    suburb: {
+      type: String,
+      trim: true,
+      minLength: [3, 'Suburb must be at least 3 characters long'],
+      maxLength: [50, 'Suburb must be at most 50 characters long'],
+    },
+    postcode: {
+      type: String,
+      trim: true,
+      validate: {
+        validator: postcode => postcodeRegex.test(postcode),
+        message: 'Invalid postcode format',
+      },
+    },
+    facebookName: {
+      type: String,
+      trim: true,
+      minLength: [3, 'Facebook name must be at least 3 characters long'],
+      maxLength: [50, 'Facebook name must be at most 50 characters long'],
+    },
+    story: {
+      type: String,
+      trim: true,
+      minLength: [3, 'Story must be at least 3 characters long'],
+      maxLength: [500, 'Story must be at most 500 characters long'],
+    },
+    alumniProfilePicture: {
+      type: String,
+      trim: true,
+    },
+    education: {
+      course: {
+        type: String,
+        trim: true,
+        minLength: [3, 'Course must be at least 3 characters long'],
+      },
+      college: {
+        type: String,
+        trim: true,
+        minLength: [3, 'College must be at least 3 characters long'],
+      },
+      yearGraduated: {
+        type: Number,
+        min: [1900, 'Year must be at least 1900'],
+        max: [
+          new Date().getFullYear(),
+          'Year must be at most the current year',
+        ],
+      },
+    },
+    service: {
+      serviceName: {
+        type: String,
+        trim: true,
+        minLength: [3, 'Service name must be at least 3 characters long'],
+      },
+      serviceLogo: {
+        type: String,
+        trim: true,
+      },
+      serviceUrl: {
+        type: String,
+        trim: true,
+        validate: {
+          validator: url => urlRegex.test(url),
+          message: 'Invalid URL format',
+        },
+      },
+    },
+    isAutomated: {
+      type: Boolean,
+      default: false,
+    },
   },
-  isAutomated: {
-    type: Boolean,
-    default: false,
-  },
-})
+  { timestamps: true },
+)
 
 UserSchema.pre('save', function (next) {
   if (!this.isModified('password')) return next()
@@ -137,7 +149,8 @@ UserSchema.methods.verifyPassword = function (candidatePassword) {
 
 // Adding text index for smart search
 UserSchema.index({
-  fullName: 'text',
+  firstName: 'text',
+  lastName: 'text',
   'service.serviceName': 'text',
   email: 'text',
 })

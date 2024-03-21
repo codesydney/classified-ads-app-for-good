@@ -1,17 +1,17 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-hot-toast'
 import { useSelector } from 'react-redux'
 import { useAppDispatch } from '../store.js'
-import { requestResetPassword } from '../features/auth/authAction.js'
-import { passwordResetRequestSchema } from '../schema'
+import { login, me } from '../features/auth/authAction.js'
+import { loginSchema } from '../schema'
 
-const RequestPasswordResetForm = () => {
+const LoginForm = () => {
   const [errorMessage, setErrorMessage] = useState('')
-  const [emailAddress, setEmailAddress] = useState('')
-  const [showEMailSuccess, setShowEmailSuccess] = useState(false)
 
+  const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
   const { loading: isLoading } = useSelector(state => state.auth)
@@ -19,24 +19,27 @@ const RequestPasswordResetForm = () => {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(passwordResetRequestSchema),
+    resolver: yupResolver(loginSchema),
   })
+
   const onSubmit = async formData => {
     try {
-      setEmailAddress(formData.email)
-      const response = await dispatch(requestResetPassword(formData))
+      const response = await dispatch(login(formData))
 
-      if (response.type === 'auth/requestResetPassword/rejected') {
+      if (response.type === 'auth/login/rejected') {
         setErrorMessage(response.payload)
         return
       }
 
       setErrorMessage('')
-      setShowEmailSuccess(true)
-      reset()
+
+      // After a successful login call a me function to retrieve the user's data
+      await dispatch(me())
+
+      navigate('/')
+      toast.success('Success! You are now signed in.')
     } catch (error) {
       setErrorMessage('Something went wrong. Please try again.')
     }
@@ -61,38 +64,6 @@ const RequestPasswordResetForm = () => {
             />
           </svg>
           <span>{errorMessage}</span>
-        </div>
-      )}
-
-      {showEMailSuccess && (
-        <div
-          role="alert"
-          className="alert alert-success my-[12px] text-white text-[14px]"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="stroke-current shrink-0 h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          <span>
-            Your password reset has been been sent to {emailAddress}. Please
-            check your email. <br />
-            <br />
-            <span className="">
-              Login{' '}
-              <Link to="/login" className="underline">
-                here.
-              </Link>
-            </span>
-          </span>
         </div>
       )}
 
@@ -123,20 +94,54 @@ const RequestPasswordResetForm = () => {
             )}
           </label>
 
-          <button
-            className="btn btn-squre w-full py-2 bg-primary hover:bg-primary text-white mt-[15px]"
-            type="submit"
-          >
-            {isLoading ? (
-              <span className="loading loading-spinner"></span>
-            ) : (
-              'Request'
+          <label className="form-control w-full">
+            <div className="label">
+              <span className="label-text text-[15px] font-semibold">
+                Password <span className="text-red-500">*</span>
+              </span>
+            </div>
+            <input
+              type="password"
+              {...register('password')}
+              className={`input input-bordered w-full ${
+                errors.password
+                  ? 'border-red-500 focus:outline-red-500'
+                  : 'border-gray-300 focus:outline-primary'
+              } focus:outline-primary`}
+            />
+
+            {errors.password && (
+              <div className="label">
+                <span className="label-text-alt text-red-500">
+                  {errors.password.message}
+                </span>
+              </div>
             )}
-          </button>
+          </label>
         </div>
+
+        <div className="mt-[15px]">
+          <Link
+            to="/request-reset-password"
+            className="text-primary hover:underline "
+          >
+            Forgot Password?
+          </Link>
+        </div>
+
+        <button
+          className="btn btn-squre w-full py-2 bg-primary hover:bg-primary text-white mt-[15px]"
+          type="submit"
+        >
+          {isLoading ? (
+            <span className="loading loading-spinner"></span>
+          ) : (
+            'Login'
+          )}
+        </button>
       </form>
     </>
   )
 }
 
-export default RequestPasswordResetForm
+export default LoginForm

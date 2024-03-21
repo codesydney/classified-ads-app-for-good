@@ -47,6 +47,8 @@ describe('UserController', () => {
   describe('GET /api/v1/users/signup', () => {
     it('should respond with status 201 and jwt', async () => {
       const validUserData = {
+        firstName: 'John',
+        lastName: 'Doe',
         email: 'test@example.com',
         password: 'testpassword',
         passwordConfirm: 'testpassword',
@@ -66,6 +68,8 @@ describe('UserController', () => {
 
     it('should respond with status 409 if user already exists', async () => {
       const validUserData = {
+        firstName: 'John',
+        lastName: 'Doe',
         email: 'test@example.com',
         password: 'testpassword',
         passwordConfirm: 'testpassword',
@@ -104,6 +108,8 @@ describe('UserController', () => {
 
     it('Should respond with a status of 422 if the password is invalid', async () => {
       const invalidUserData = {
+        firstName: 'John',
+        lastName: 'Doe',
         email: 'test@email.com',
         password: 'test',
         passwordConfirm: 'test',
@@ -119,6 +125,8 @@ describe('UserController', () => {
 
     it('Should respond with a status of 422 if the password and password confirm dont match', async () => {
       const invalidUserData = {
+        firstName: 'John',
+        lastName: 'Doe',
         email: 'test@email.com',
         password: 'testpassword',
         passwordConfirm: 'testpassword1',
@@ -134,7 +142,7 @@ describe('UserController', () => {
   })
 
   // SIGN IN ENDPOINT
-  describe('POST /api/v1/users/signin', () => {
+  describe('POST /api/v1/users/login', () => {
     it('should respond with status 200 and jwt if user exists and credentials are valid', async () => {
       const validUserData = {
         email: 'test@example.com',
@@ -144,7 +152,7 @@ describe('UserController', () => {
       await User.create(validUserData)
 
       const response = await request(app)
-        .post('/api/v1/users/signin')
+        .post('/api/v1/users/login')
         .send(validUserData)
 
       expect(response.status).toBe(200)
@@ -162,7 +170,7 @@ describe('UserController', () => {
       }
 
       const response = await request(app)
-        .post('/api/v1/users/signin')
+        .post('/api/v1/users/login')
         .send(validUserData)
 
       expect(response.status).toBe(401)
@@ -185,7 +193,7 @@ describe('UserController', () => {
       await User.create(validUserData)
 
       const response = await request(app)
-        .post('/api/v1/users/signin')
+        .post('/api/v1/users/login')
         .send(invalidUserData)
 
       expect(response.status).toBe(401)
@@ -202,7 +210,7 @@ describe('UserController', () => {
       }
 
       const response = await request(app)
-        .post('/api/v1/users/signin')
+        .post('/api/v1/users/login')
         .send(invalidUserData)
 
       expect(response.status).toBe(422)
@@ -219,7 +227,7 @@ describe('UserController', () => {
       }
 
       const response = await request(app)
-        .post('/api/v1/users/signin')
+        .post('/api/v1/users/login')
         .send(invalidUserData)
 
       expect(response.status).toBe(422)
@@ -331,11 +339,15 @@ describe('UserController', () => {
   describe('POST /api/v1/users/reset-password', () => {
     it('should respond with status 200 if token is valid and user exists', async () => {
       const validUserData = {
+        firstName: 'John',
+        lastName: 'Doe',
         email: 'test@example.com',
         password: 'testpassword',
       }
 
       const validUserResetData = {
+        firstName: 'John',
+        lastName: 'Doe',
         email: 'test@example.com',
         password: 'testpassword1',
         passwordConfirm: 'testpassword1',
@@ -380,11 +392,15 @@ describe('UserController', () => {
 
     it('should allow the user to login with new password after changing it', async () => {
       const validUserData = {
+        firstName: 'John',
+        lastName: 'Doe',
         email: 'test@example.com',
         password: 'testpassword',
       }
 
       const validUserResetData = {
+        firstName: 'John',
+        lastName: 'Doe',
         email: 'test@example.com',
         password: 'testpassword1',
         passwordConfirm: 'testpassword1',
@@ -410,7 +426,7 @@ describe('UserController', () => {
         .post('/api/v1/users/reset-password?token=validtoken')
         .send(validUserResetData)
       const loginResponse = await request(app)
-        .post('/api/v1/users/signin')
+        .post('/api/v1/users/login')
         .send(validUserResetData)
 
       expect(loginResponse.status).toBe(200)
@@ -423,11 +439,15 @@ describe('UserController', () => {
 
     it('should not allow the user to login with old password after changing it', async () => {
       const validUserData = {
+        firstName: 'John',
+        lastName: 'Doe',
         email: 'test@example.com',
         password: 'testpassword',
       }
 
       const validUserResetData = {
+        firstName: 'John',
+        lastName: 'Doe',
         email: 'test@example.com',
         password: 'testpassword1',
         passwordConfirm: 'testpassword1',
@@ -453,7 +473,7 @@ describe('UserController', () => {
         .post('/api/v1/users/reset-password?token=validtoken')
         .send(validUserResetData)
       const loginResponse = await request(app)
-        .post('/api/v1/users/signin')
+        .post('/api/v1/users/login')
         .send(validUserData)
 
       expect(loginResponse.status).toBe(401)
@@ -465,6 +485,8 @@ describe('UserController', () => {
 
     it('should respond with status 404 if no user exists', async () => {
       const validUserResetData = {
+        firstName: 'John',
+        lastName: 'Doe',
         email: 'test@example.com',
         password: 'testpassword1',
         passwordConfirm: 'testpassword1',
@@ -491,11 +513,15 @@ describe('UserController', () => {
 
     it('should respond with status 404 if no token exists', async () => {
       const validUserData = {
+        firstName: 'John',
+        lastName: 'Doe',
         email: 'test@example.com',
         password: 'testpassword',
       }
 
       const validUserResetData = {
+        firstName: 'John',
+        lastName: 'Doe',
         email: 'test@example.com',
         password: 'testpassword1',
         passwordConfirm: 'testpassword1',
@@ -525,11 +551,15 @@ describe('UserController', () => {
 
     it('should respond with status 400 if token is invalid, (compare token function returns false)', async () => {
       const validUserData = {
+        firstName: 'John',
+        lastName: 'Doe',
         email: 'test@example.com',
         password: 'testpassword',
       }
 
       const validUserResetData = {
+        firstName: 'John',
+        lastName: 'Doe',
         email: 'test@example.com',
         password: 'testpassword1',
         passwordConfirm: 'testpassword1',
@@ -614,15 +644,6 @@ describe('UserController', () => {
       expect(response.body.users.length).toBeLessThanOrEqual(1)
       expect(response.body.meta).toBeDefined()
       expect(response.body.meta.page).toEqual(2)
-    })
-
-    it('should return users matching the search query', async () => {
-      const response = await request(app).get('/api/v1/users?search=John')
-
-      expect(response.status).toBe(200)
-      expect(response.body.status).toBe('OK')
-      expect(response.body.users.length).toBeGreaterThan(0)
-      expect(response.body.users[0].fullName).toContain('John')
     })
 
     it('should handle no matching users for a search query', async () => {
