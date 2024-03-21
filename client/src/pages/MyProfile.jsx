@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
 
-const Account = () => {
+const MyProfile = () => {
   const { currentUser } = useSelector(state => state.auth)
 
   return (
@@ -10,4 +10,4 @@ const Account = () => {
   )
 }
 
-export default Account
+export default MyProfile
