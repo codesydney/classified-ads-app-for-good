@@ -120,8 +120,17 @@ const UserSchema = new Schema(
       default: false,
     },
   },
-  { timestamps: true },
+  {
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  },
 )
+
+// Virtual for fullName
+UserSchema.virtual('fullName').get(function () {
+  return `${this.firstName} ${this.lastName}`
+})
 
 UserSchema.pre('save', function (next) {
   if (!this.isModified('password')) return next()
