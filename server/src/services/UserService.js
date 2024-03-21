@@ -44,7 +44,14 @@ const getUsers = async ({ searchQuery = '', page = 1, limit = 10 }) => {
         { firstName: { $regex: searchQuery, $options: 'i' } },
         { lastName: { $regex: searchQuery, $options: 'i' } },
         { email: { $regex: searchQuery, $options: 'i' } },
+        { suburb: { $regex: searchQuery, $options: 'i' } },
+        { postcode: { $regex: searchQuery, $options: 'i' } },
+        { facebookName: { $regex: searchQuery, $options: 'i' } },
+        { story: { $regex: searchQuery, $options: 'i' } },
+        { 'education.course': { $regex: searchQuery, $options: 'i' } },
+        { 'education.college': { $regex: searchQuery, $options: 'i' } },
         { 'service.serviceName': { $regex: searchQuery, $options: 'i' } },
+        { 'service.serviceUrl': { $regex: searchQuery, $options: 'i' } },
       ],
     }
   }

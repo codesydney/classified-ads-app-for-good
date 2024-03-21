@@ -120,8 +120,17 @@ const UserSchema = new Schema(
       default: false,
     },
   },
-  { timestamps: true },
+  {
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  },
 )
+
+// Virtual for fullName
+UserSchema.virtual('fullName').get(function () {
+  return `${this.firstName} ${this.lastName}`
+})
 
 UserSchema.pre('save', function (next) {
   if (!this.isModified('password')) return next()
@@ -147,12 +156,19 @@ UserSchema.methods.verifyPassword = function (candidatePassword) {
   })
 }
 
-// Adding text index for smart search
+// Adding text index for string matching
 UserSchema.index({
   firstName: 'text',
   lastName: 'text',
-  'service.serviceName': 'text',
   email: 'text',
+  suburb: 'text',
+  postcode: 'text',
+  facebookName: 'text',
+  story: 'text',
+  'education.course': 'text',
+  'education.college': 'text',
+  'service.serviceName': 'text',
+  'service.serviceUrl': 'text',
 })
 
 module.exports = mongoose.model('User', UserSchema)
