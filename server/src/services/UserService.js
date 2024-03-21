@@ -13,6 +13,72 @@ const getUserById = async id => {
   return user
 }
 
+const hasNestedFieldsUpdated = (nestedObject, requiredFields) => {
+  return requiredFields.every(
+    field => nestedObject[field] !== undefined && nestedObject[field] !== null,
+  )
+}
+
+const updateAlumniProfile = async (userId, profileUpdates) => {
+  // Check for completeness of required fields
+  const requiredFields = [
+    'firstName',
+    'lastName',
+    'email',
+    'phone',
+    'suburb',
+    'postcode',
+    'facebookName',
+    'story',
+    'alumniProfilePicture',
+  ]
+
+  const educationFields = ['course', 'college', 'yearGraduated']
+  const serviceFields = ['serviceName', 'serviceLogo', 'serviceUrl']
+
+  let isProfileComplete = requiredFields.every(
+    field =>
+      profileUpdates[field] !== undefined && profileUpdates[field] !== null,
+  )
+
+  // Check for completeness of education nested fields if they are part of the update
+  if (
+    profileUpdates.education &&
+    !hasNestedFieldsUpdated(profileUpdates.education, educationFields)
+  ) {
+    isProfileComplete = false
+  }
+
+  // Check for completeness of service nested fields if they are part of the update
+  if (
+    profileUpdates.service &&
+    !hasNestedFieldsUpdated(profileUpdates.service, serviceFields)
+  ) {
+    isProfileComplete = false
+  }
+
+  // If all required fields are updated, set isProfileComplete to true
+  if (isProfileComplete) {
+    profileUpdates.isProfileComplete = true
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(userId, profileUpdates, {
+    new: true,
+    select: '-__v -isAutomated',
+  }).exec()
+
+  if (!updatedUser) {
+    return null
+  }
+
+  // Prepare the user object for response
+  const userObject = updatedUser.toObject()
+  userObject.id = userObject._id
+  delete userObject._id
+
+  return userObject
+}
+
 const findUserByEmail = email => {
   return User.findOne({ email })
 }
@@ -79,6 +145,7 @@ const getUsers = async ({ searchQuery = '', page = 1, limit = 10 }) => {
 
 module.exports = {
   getUserById,
+  updateAlumniProfile,
   findUserByEmail,
   createUser,
   findUserByEmailWithPassword,

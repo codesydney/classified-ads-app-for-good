@@ -184,6 +184,26 @@ const me = async (req, res) => {
   })
 }
 
+const updateAlumniProfile = catchAsync(async (req, res) => {
+  const { id } = req.user
+  const profileUpdates = req.body
+
+  const updatedUser = await UserService.updateAlumniProfile(id, profileUpdates)
+
+  if (!updatedUser) {
+    return res.status(404).json({
+      status: 'Error',
+      message: 'User not found',
+    })
+  }
+
+  res.status(200).json({
+    status: 'OK',
+    message: 'Profile updated successfully',
+    user: updatedUser,
+  })
+})
+
 module.exports = {
   signup,
   login,
@@ -191,4 +211,5 @@ module.exports = {
   resetPassword,
   getUsers,
   me,
+  updateAlumniProfile,
 }

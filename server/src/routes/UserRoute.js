@@ -14,6 +14,8 @@ router.get('/', UserController.getUsers)
 
 router.get('/me', verifyToken, UserController.me)
 
+router.put('/profile/me', verifyToken, UserController.updateAlumniProfile)
+
 router.post(
   '/signup',
   signupValidation,
