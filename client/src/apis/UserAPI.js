@@ -69,6 +69,7 @@ export const UserAPI = {
   requestReset,
   resetPassword,
   me,
+  updateProfile,
 }
 
 // defining the cancel API object for UserAPI
