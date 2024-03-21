@@ -5,6 +5,8 @@ const verifyToken = (req, res, next) => {
   const authHeader = req.headers.authorization
   let token = null
 
+  console.log('authHeader', authHeader)
+
   if (authHeader) {
     const parts = authHeader.split(' ')
     if (parts.length === 2 && parts[0] === 'Bearer') {
@@ -13,6 +15,8 @@ const verifyToken = (req, res, next) => {
   } else if (req.query.token) {
     token = req.query.token
   }
+
+  console.log('token', token)
 
   if (!token) {
     const error = new Error('Unauthorized')

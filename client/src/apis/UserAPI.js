@@ -51,17 +51,20 @@ const updateProfile = async (profileData, token) => {
   const updateProfileURL = `${usersURL}/profile/me`
 
   try {
-    const response = await api.put(updateProfileURL, profileData, token, {
+    const config = {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    })
+    }
+
+    const response = await api.put(updateProfileURL, profileData, config)
     return response.data
   } catch (error) {
     console.error('Error updating user profile:', error)
     throw error
   }
 }
+
 export const UserAPI = {
   searchUsers,
   login,
