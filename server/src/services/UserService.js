@@ -1,6 +1,6 @@
 const User = require('../models/User')
 
-const findUserById = async id => {
+const getUserById = async id => {
   const user = await User.findById(id).select('-__v -isAutomated').exec()
 
   if (!user) {
@@ -78,7 +78,7 @@ const getUsers = async ({ searchQuery = '', page = 1, limit = 10 }) => {
 }
 
 module.exports = {
-  findUserById,
+  getUserById,
   findUserByEmail,
   createUser,
   findUserByEmailWithPassword,

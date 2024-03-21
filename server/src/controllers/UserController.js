@@ -169,7 +169,7 @@ const me = async (req, res) => {
     user: { id },
   } = req
 
-  const user = await UserService.findUserById(id)
+  const user = await UserService.getUserById(id)
 
   if (!user) {
     return res.status(404).json({
