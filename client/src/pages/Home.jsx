@@ -1,12 +1,11 @@
-import SearchBar from '../components/SearchBar'
-import Users from '../components/Users'
+import SearchBar from '../components/search/SearchBar'
+import SearchResults from '../components/search/SearchResults'
 
 const Home = () => {
   return (
     <div>
-      <h1>Home</h1>
       <SearchBar />
-      <Users />
+      <SearchResults />
     </div>
   )
 }

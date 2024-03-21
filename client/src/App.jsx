@@ -24,7 +24,6 @@ function App() {
         <div className="mt-[100px] flex-grow">
           <Outlet />
         </div>
-
         <div>
           <Footer />
         </div>

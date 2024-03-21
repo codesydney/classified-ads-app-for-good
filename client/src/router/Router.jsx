@@ -1,4 +1,8 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import {
+  createBrowserRouter,
+  RouterProvider,
+  useRouteError,
+} from 'react-router-dom'
 import App from '../App'
 import ProtectedRoute from './ProtectedRoute.jsx'
 import Home from '../pages/Home'
@@ -7,16 +11,17 @@ import Contact from '../pages/Contact'
 import Login from '../pages/Login.jsx'
 import Signup from '../pages/Signup'
 import RequestPasswordReset from '../pages/RequestPasswordReset'
-import ErrorPage from '../pages/Error'
+import ErrorComponent from '../components/errors/ErrorComponent.jsx'
 import ResetPassword from '../pages/ResetPassword'
 import Account from '../pages/Account'
 
 const Router = () => {
+  // const error = useRouteError()
   const router = createBrowserRouter([
     {
       path: '/',
       element: <App />,
-      errorElement: <ErrorPage />,
+      errorElement: <ErrorComponent />,
       children: [
         {
           index: true,

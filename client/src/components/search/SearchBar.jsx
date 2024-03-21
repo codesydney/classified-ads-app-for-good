@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { searchUsers } from '../features/users/usersAction.js'
+import { searchUsers } from '../../features/users/usersAction.js'
 
 const SearchBar = () => {
   const dispatch = useDispatch()
