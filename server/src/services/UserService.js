@@ -7,12 +7,10 @@ const findUserById = async id => {
     return null
   }
 
-  let userObject = user.toObject()
+  user.id = user._id
+  delete user._id
 
-  userObject.id = userObject._id
-  delete userObject._id
-
-  return userObject
+  return user
 }
 
 const findUserByEmail = email => {
