@@ -4,7 +4,7 @@ import { defineCancelApiObject } from './configs/axiosUtils'
 const usersURL = '/users'
 
 const searchUsers = async ({ search = '', page = 1 }, cancel = false) => {
-  const params = { search, page }
+  const params = { search, page, limit: 12 }
   const signal = cancel
     ? cancelApiObject[this.getAll.name].handleRequestCancellation().signal
     : undefined
