@@ -2,7 +2,7 @@ import defaultServiceLogo from '../../assets/serviceImgPlaceholder.svg'
 import style from './userImg.module.css'
 const ServiceImg = ({ serviceName, serviceLogo }) => {
   return (
-    <div>
+    <div style={{ aspectRatio: 4 / 3 }}>
       <img
         src={serviceLogo || defaultServiceLogo}
         alt={`${serviceName} Logo`}
