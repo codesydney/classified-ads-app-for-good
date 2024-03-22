@@ -136,7 +136,6 @@ const authSlice = createSlice({
       state.loading = false
       state.error = null
       state.success = true
-      state.currentUser = action.payload
     })
     builder.addCase(updateProfile.rejected, (state, action) => {
       state.loading = false

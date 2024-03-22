@@ -67,9 +67,11 @@ const MyProfile = () => {
     }
   }
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault()
-    const response = dispatch(updateProfile(profile))
+    const response = await dispatch(updateProfile(profile))
+
+    console.log('response', response)
 
     if (response.type === 'auth/updateProfile/fulfilled') {
       dispatch(me())

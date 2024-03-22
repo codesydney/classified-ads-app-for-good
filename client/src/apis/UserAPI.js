@@ -57,7 +57,7 @@ const updateProfile = async (profileData, token) => {
       },
     }
 
-    const response = await api.put(updateProfileURL, profileData, config)
+    const response = await api.patch(updateProfileURL, profileData, config)
     return response.data
   } catch (error) {
     console.error('Error updating user profile:', error)
