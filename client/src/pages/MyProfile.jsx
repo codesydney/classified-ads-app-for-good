@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
+import { toast } from 'react-hot-toast'
 import { updateProfile, me } from '../features/auth/authAction.js'
 import { useAppDispatch } from '../store.js'
 
 // @TODO - revamp this page. only used to test the profile update endpoint
+// @TODO - S3 image upload
+// @TODO - at the moment, its sending all the fields to the PATCH regardless of the update or not, we want only send the field that was updated.
 const MyProfile = () => {
   const { currentUser } = useSelector(state => state.auth)
   const dispatch = useAppDispatch()
@@ -71,9 +74,8 @@ const MyProfile = () => {
     event.preventDefault()
     const response = await dispatch(updateProfile(profile))
 
-    console.log('response', response)
-
     if (response.type === 'auth/updateProfile/fulfilled') {
+      toast.success('Profile updated successfully')
       dispatch(me())
     }
   }
@@ -185,7 +187,7 @@ const MyProfile = () => {
             <span className="text-gray-700">Course</span>
             <input
               type="text"
-              name="course"
+              name="education.course"
               value={profile.education.course}
               onChange={handleChange}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
@@ -195,7 +197,7 @@ const MyProfile = () => {
             <span className="text-gray-700">College</span>
             <input
               type="text"
-              name="college"
+              name="education.college"
               value={profile.education.college}
               onChange={handleChange}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
@@ -205,7 +207,7 @@ const MyProfile = () => {
             <span className="text-gray-700">Year Graduated</span>
             <input
               type="text"
-              name="yearGraudated"
+              name="education.yearGraudated"
               value={profile.education.yearGraduated}
               onChange={handleChange}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
@@ -217,7 +219,7 @@ const MyProfile = () => {
             <span className="text-gray-700">Service Name</span>
             <input
               type="text"
-              name="serviceName"
+              name="service.serviceName"
               value={profile.service.serviceName}
               onChange={handleChange}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
@@ -230,7 +232,7 @@ const MyProfile = () => {
             </span>
             <input
               type="text"
-              name="serviceLogo"
+              name="service.serviceLogo"
               value={profile.service.serviceLogo}
               onChange={handleChange}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
@@ -240,7 +242,7 @@ const MyProfile = () => {
             <span className="text-gray-700">Service URL</span>
             <input
               type="text"
-              name="serviceURL"
+              name="service.serviceURL"
               value={profile.education.serviceUrl}
               onChange={handleChange}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
