@@ -13,7 +13,7 @@ import Signup from '../pages/Signup'
 import RequestPasswordReset from '../pages/RequestPasswordReset'
 import ErrorComponent from '../components/errors/ErrorComponent.jsx'
 import ResetPassword from '../pages/ResetPassword'
-import Account from '../pages/Account'
+import MyProfile from '../pages/MyProfile.jsx'
 
 const Router = () => {
   // const error = useRouteError()
@@ -52,12 +52,12 @@ const Router = () => {
           element: <ResetPassword />,
         },
         {
-          path: '/account',
+          path: '/profile/me',
           element: <ProtectedRoute />,
           children: [
             {
               index: true,
-              element: <Account />,
+              element: <MyProfile />,
             },
           ],
         },

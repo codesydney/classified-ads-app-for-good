@@ -1,6 +1,6 @@
 const User = require('../models/User')
 
-const findUserById = async id => {
+const getUserById = async id => {
   const user = await User.findById(id).select('-__v -isAutomated').exec()
 
   if (!user) {
@@ -15,6 +15,32 @@ const findUserById = async id => {
   return userObject
 }
 
+const hasNestedFieldsUpdated = (nestedObject, requiredFields) => {
+  return requiredFields.every(
+    field => nestedObject[field] !== undefined && nestedObject[field] !== null,
+  )
+}
+
+const updateAlumniProfile = async (userId, profileUpdates) => {
+  const updatedUser = await User.findByIdAndUpdate(
+    userId,
+    { $set: profileUpdates },
+    {
+      new: true,
+      select: '-__v -isAutomated',
+    },
+  ).exec()
+
+  if (!updatedUser) {
+    return null
+  }
+
+  const userObject = updatedUser.toObject()
+  userObject.id = userObject._id
+  delete userObject._id
+
+  return userObject
+}
 const findUserByEmail = email => {
   return User.findOne({ email })
 }
@@ -80,7 +106,8 @@ const getUsers = async ({ searchQuery = '', page = 1, limit = 10 }) => {
 }
 
 module.exports = {
-  findUserById,
+  getUserById,
+  updateAlumniProfile,
   findUserByEmail,
   createUser,
   findUserByEmailWithPassword,

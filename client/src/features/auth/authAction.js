@@ -86,4 +86,25 @@ const me = createAsyncThunk('auth/me', async (_, { rejectWithValue }) => {
   }
 })
 
-export { login, signUp, requestResetPassword, resetPassword, me }
+const updateProfile = createAsyncThunk(
+  'auth/updateProfile',
+  async (profileData, { getState, rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem('accessToken')
+
+      console.log('token', token)
+      console.log('profileData', profileData)
+
+      const response = await UserAPI.updateProfile(profileData, token)
+      return response.data
+    } catch (error) {
+      if (error.response && error.response.data.error) {
+        return rejectWithValue(error.response.data.error)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  },
+)
+
+export { login, signUp, requestResetPassword, resetPassword, me, updateProfile }

@@ -4,7 +4,7 @@ import { defineCancelApiObject } from './configs/axiosUtils'
 const usersURL = '/users'
 
 const searchUsers = async ({ search = '', page = 1 }, cancel = false) => {
-  const params = { search, page }
+  const params = { search, page, limit: 12 }
   const signal = cancel
     ? cancelApiObject[this.getAll.name].handleRequestCancellation().signal
     : undefined
@@ -39,8 +39,30 @@ const resetPassword = (formData, token) => {
 }
 
 const me = token => {
-  const meURL = `${usersURL}/me?token=${token}`
-  return api.get(meURL)
+  const meURL = `${usersURL}/me`
+  return api.get(meURL, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+}
+
+const updateProfile = async (profileData, token) => {
+  const updateProfileURL = `${usersURL}/profile/me`
+
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+
+    const response = await api.patch(updateProfileURL, profileData, config)
+    return response.data
+  } catch (error) {
+    console.error('Error updating user profile:', error)
+    throw error
+  }
 }
 
 export const UserAPI = {
@@ -50,6 +72,7 @@ export const UserAPI = {
   requestReset,
   resetPassword,
   me,
+  updateProfile,
 }
 
 // defining the cancel API object for UserAPI
