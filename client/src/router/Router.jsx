@@ -14,7 +14,7 @@ import RequestPasswordReset from '../pages/RequestPasswordReset'
 import ErrorComponent from '../components/errors/ErrorComponent.jsx'
 import ResetPassword from '../pages/ResetPassword'
 import MyProfile from '../pages/MyProfile.jsx'
-
+import ProfileLayout from '../components/profile/ProfileLayout.jsx'
 const Router = () => {
   // const error = useRouteError()
   const router = createBrowserRouter([
@@ -58,6 +58,16 @@ const Router = () => {
             {
               index: true,
               element: <MyProfile />,
+            },
+          ],
+        },
+        {
+          path: '/account',
+          element: <ProtectedRoute />,
+          children: [
+            {
+              index: true,
+              element: <ProfileLayout />,
             },
           ],
         },

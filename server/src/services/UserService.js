@@ -41,6 +41,7 @@ const updateAlumniProfile = async (userId, profileUpdates) => {
 
   return userObject
 }
+
 const findUserByEmail = email => {
   return User.findOne({ email })
 }
