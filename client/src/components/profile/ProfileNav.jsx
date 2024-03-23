@@ -4,8 +4,18 @@ import { RiAccountCircleLine } from 'react-icons/ri'
 import { MdOutlineBusinessCenter } from 'react-icons/md'
 import { IoSettingsOutline } from 'react-icons/io5'
 import profileImg from '../../assets/placeholder.jpg'
+import { useNavigate } from 'react-router-dom'
+import withLogout from '../shared/withLogout'
 
 const ProfileNav = () => {
+  const LogoutButton = withLogout(({ handleLogout }) => (
+    <button
+      className="hidden md:block py-2 px-4 border-2 w-full border-primary text-primary rounded text-center hover:bg-primary hover:border-transparent hover:text-white"
+      onClick={handleLogout}
+    >
+      Logout
+    </button>
+  ))
   return (
     <div className="p-5">
       <div className="flex items-center gap-[10px] mb-6 md:mb-16 md:flex-col">
@@ -44,9 +54,7 @@ const ProfileNav = () => {
           </NavItem>
         </ul>
       </nav>
-      <button className="hidden md:block py-2 px-4 border-2 w-full border-primary text-primary rounded text-center hover:bg-primary hover:border-transparent hover:text-white">
-        Logout
-      </button>
+      <LogoutButton />
     </div>
   )
 }

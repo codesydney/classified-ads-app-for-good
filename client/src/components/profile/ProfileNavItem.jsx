@@ -1,6 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
-const activeClass = 'text-primary'
-const normalClass = ''
+
 const NavItem = ({ location, icon, children }) => {
   const { pathname } = useLocation()
   let isActive = pathname === location
