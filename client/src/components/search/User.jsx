@@ -18,21 +18,13 @@ const User = ({ user }) => {
           that the user offers. Will probably need this for field for their
           public profile page anyway?
         </p>
-        <div className="mt-auto flex gap-4 justify-between">
+        <div className="mt-auto flex gap-4 justify-between w-[100%] md:w-[50%]">
           <Link
-            className=" py-2 px-4 bg-primary text-white rounded flex-grow text-center border-primary border-2 hover:bg-primary/70 hover:border-transparent "
-            to="/about"
+            className="py-2 px-4 bg-primary text-white rounded flex-grow text-center border-primary border-2 hover:bg-primary/70 hover:border-transparent]"
+            to={`/profile/${user.id}`}
           >
             View Profile
           </Link>
-          {user.service?.serviceUrl && (
-            <Link
-              className="py-2 px-4 border-2 border-primary text-primary rounded flex-grow text-center hover:bg-primary/10 hover:border-transparent"
-              to="/about"
-            >
-              See Service
-            </Link>
-          )}
         </div>
       </div>
     </div>
