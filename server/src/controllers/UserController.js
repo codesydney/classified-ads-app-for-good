@@ -206,15 +206,15 @@ const updateAlumniProfile = catchAsync(async (req, res) => {
 
 const getUserProfile = catchAsync(async (req, res) => {
   const { userId } = req.params
+  const { isAuthenticated } = req
 
-  const userDetails = await UserService.getUserProfile(userId)
-
-  console.log('userDetails', userDetails)
+  const userDetails = await UserService.getUserProfile(userId, isAuthenticated)
 
   res.status(200).json({
     status: 'OK',
     message: 'User retrieved successfully',
     user: userDetails,
+    isAuthenticated,
   })
 })
 

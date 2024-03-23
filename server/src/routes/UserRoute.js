@@ -7,6 +7,7 @@ const {
   handleValidationResult,
 } = require('../middleware/validationMiddlewares')
 const { verifyToken } = require('../middleware/verifyToken')
+const { authenticationStatus } = require('../middleware/authenticationStatus')
 
 const router = express.Router()
 
@@ -14,7 +15,11 @@ router.get('/', UserController.getUsers)
 
 router.get('/me', verifyToken, UserController.me)
 
-router.get('/profile/:userId', UserController.getUserProfile)
+router.get(
+  '/profile/:userId',
+  authenticationStatus,
+  UserController.getUserProfile,
+)
 
 router.patch('/profile/me', verifyToken, UserController.updateAlumniProfile)
 

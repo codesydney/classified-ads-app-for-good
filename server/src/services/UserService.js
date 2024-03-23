@@ -105,10 +105,10 @@ const getUsers = async ({ searchQuery = '', page = 1, limit = 10 }) => {
   }
 }
 
-const getUserProfile = id => {
-  console.log(`passing in id ${id}`)
+const getUserProfile = async (userId, isAuthenticated) => {
+  const userDetails = await getUserById(userId)
 
-  return id
+  return userDetails
 }
 
 module.exports = {

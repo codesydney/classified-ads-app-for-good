@@ -16,17 +16,11 @@ const authenticationStatus = (req, res, next) => {
 
   if (!token) {
     req.isAuthenticated = false
-    next()
+    return next()
   }
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-    if (err) {
-      const error = new Error('Unauthorized')
-      error.statusCode = 401
-      throw error
-    }
-
-    req.isAuthenticated = true
+  jwt.verify(token, process.env.JWT_SECRET, (err, _decoded) => {
+    req.isAuthenticated = !err
     next()
   })
 }
