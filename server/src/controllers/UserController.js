@@ -141,14 +141,18 @@ const resetPassword = catchAsync(async (req, res, next) => {
 })
 
 const getUsers = async (req, res) => {
+  const { isAuthenticated } = req
   const { search, page, limit } = req.query
 
   try {
-    const result = await UserService.getUsers({
-      searchQuery: search,
-      page: page,
-      limit: limit,
-    })
+    const result = await UserService.getUsers(
+      {
+        searchQuery: search,
+        page: page,
+        limit: limit,
+      },
+      isAuthenticated,
+    )
 
     res.status(200).json({
       status: 'OK',
@@ -214,7 +218,6 @@ const getUserProfile = catchAsync(async (req, res) => {
     status: 'OK',
     message: 'User retrieved successfully',
     user: userDetails,
-    isAuthenticated,
   })
 })
 

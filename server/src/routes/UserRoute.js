@@ -11,7 +11,7 @@ const { authenticationStatus } = require('../middleware/authenticationStatus')
 
 const router = express.Router()
 
-router.get('/', UserController.getUsers)
+router.get('/', authenticationStatus, UserController.getUsers)
 
 router.get('/me', verifyToken, UserController.me)
 
