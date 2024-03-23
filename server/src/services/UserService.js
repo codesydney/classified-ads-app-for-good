@@ -108,7 +108,28 @@ const getUsers = async ({ searchQuery = '', page = 1, limit = 10 }) => {
 const getUserProfile = async (userId, isAuthenticated) => {
   const userDetails = await getUserById(userId)
 
-  return userDetails
+  if (isAuthenticated) {
+    return userDetails
+  } else {
+    return {
+      id: userDetails.id,
+      firstName: userDetails.firstName,
+      lastName: userDetails.lastName,
+      fullName: userDetails.fullName,
+      state: userDetails.state,
+      alumniProfilePicture: userDetails.alumniProfilePicture,
+      education: {
+        course: userDetails.education.course,
+        college: userDetails.education.college,
+        yearGraduated: userDetails.education.yearGraduated,
+      },
+      service: {
+        serviceName: userDetails.service.serviceName,
+        serviceLogo: userDetails.service.serviceLogo,
+        serviceUrl: userDetails.service.serviceUrl,
+      },
+    }
+  }
 }
 
 module.exports = {
