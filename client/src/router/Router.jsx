@@ -15,6 +15,10 @@ import ErrorComponent from '../components/errors/ErrorComponent.jsx'
 import ResetPassword from '../pages/ResetPassword'
 import MyProfile from '../pages/MyProfile.jsx'
 import ProfileLayout from '../components/profile/ProfileLayout.jsx'
+import ProfileGeneral from '../components/profile/general/ProfileGeneral.jsx'
+import ProfileService from '../components/profile/service/ProfileService.jsx'
+import ProfileEducation from '../components/profile/education/ProfileEducation.jsx'
+import ProfileSettings from '../components/profile/settings/ProfileSettings.jsx'
 const Router = () => {
   // const error = useRouteError()
   const router = createBrowserRouter([
@@ -51,23 +55,47 @@ const Router = () => {
           path: '/reset-password',
           element: <ResetPassword />,
         },
+        // {
+        //   path: '/profile/me',
+        //   element: <ProtectedRoute />,
+        //   children: [
+        //     {
+        //       index: true,
+        //       element: <MyProfile />,
+        //     },
+        //   ],
+        // },
         {
           path: '/profile/me',
-          element: <ProtectedRoute />,
-          children: [
-            {
-              index: true,
-              element: <MyProfile />,
-            },
-          ],
+          element: (
+            <ProtectedRoute>
+              <MyProfile />
+            </ProtectedRoute>
+          ),
         },
         {
           path: '/account',
-          element: <ProtectedRoute />,
+          element: (
+            <ProtectedRoute>
+              <ProfileLayout />
+            </ProtectedRoute>
+          ),
           children: [
             {
               index: true,
-              element: <ProfileLayout />,
+              element: <ProfileGeneral />,
+            },
+            {
+              path: '/account/service',
+              element: <ProfileService />,
+            },
+            {
+              path: '/account/education',
+              element: <ProfileEducation />,
+            },
+            {
+              path: '/account/settings',
+              element: <ProfileSettings />,
             },
           ],
         },

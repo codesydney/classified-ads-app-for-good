@@ -15,4 +15,18 @@ const ProtectedRoute = () => {
   return <Outlet />
 }
 
-export default ProtectedRoute
+// Maybe design as:
+const ProtectedRouteReplacement = ({ children }) => {
+  const { isAuthenticated, accessToken } = useSelector(state => state.auth)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/login')
+    }
+  }, [navigate, isAuthenticated, accessToken])
+
+  return children
+}
+
+export default ProtectedRouteReplacement
