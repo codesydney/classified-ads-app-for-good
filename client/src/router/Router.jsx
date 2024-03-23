@@ -14,6 +14,7 @@ import RequestPasswordReset from '../pages/RequestPasswordReset'
 import ErrorComponent from '../components/errors/ErrorComponent.jsx'
 import ResetPassword from '../pages/ResetPassword'
 import MyProfile from '../pages/MyProfile.jsx'
+import UserProfile from '../pages/UserProfile.jsx'
 
 const Router = () => {
   // const error = useRouteError()
@@ -60,6 +61,10 @@ const Router = () => {
               element: <MyProfile />,
             },
           ],
+        },
+        {
+          path: '/profile/:userId',
+          element: <UserProfile />,
         },
       ],
     },

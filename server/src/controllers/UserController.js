@@ -141,14 +141,18 @@ const resetPassword = catchAsync(async (req, res, next) => {
 })
 
 const getUsers = async (req, res) => {
+  const { isAuthenticated } = req
   const { search, page, limit } = req.query
 
   try {
-    const result = await UserService.getUsers({
-      searchQuery: search,
-      page: page,
-      limit: limit,
-    })
+    const result = await UserService.getUsers(
+      {
+        searchQuery: search,
+        page: page,
+        limit: limit,
+      },
+      isAuthenticated,
+    )
 
     res.status(200).json({
       status: 'OK',
@@ -204,6 +208,19 @@ const updateAlumniProfile = catchAsync(async (req, res) => {
   })
 })
 
+const getUserProfile = catchAsync(async (req, res) => {
+  const { userId } = req.params
+  const { isAuthenticated } = req
+
+  const userDetails = await UserService.getUserProfile(userId, isAuthenticated)
+
+  res.status(200).json({
+    status: 'OK',
+    message: 'User retrieved successfully',
+    user: userDetails,
+  })
+})
+
 module.exports = {
   signup,
   login,
@@ -212,4 +229,5 @@ module.exports = {
   getUsers,
   me,
   updateAlumniProfile,
+  getUserProfile,
 }
