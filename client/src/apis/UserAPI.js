@@ -3,14 +3,24 @@ import { defineCancelApiObject } from './configs/axiosUtils'
 
 const usersURL = '/users'
 
-const searchUsers = async ({ search = '', page = 1 }, cancel = false) => {
+const searchUsers = async (
+  { search = '', page = 1 },
+  token,
+  cancel = false,
+) => {
   const params = { search, page, limit: 12 }
   const signal = cancel
     ? cancelApiObject[this.getAll.name].handleRequestCancellation().signal
     : undefined
 
   try {
-    const response = await api.get(usersURL, { params, signal })
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+
+    const response = await api.get(usersURL, { params, signal, ...config })
     return response.data
   } catch (error) {
     console.error('Error fetching users:', error)

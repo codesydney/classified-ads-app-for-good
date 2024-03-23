@@ -7,8 +7,9 @@ const searchUsers = createAsyncThunk(
     try {
       // Simulate loading time - remove the setTimeout below
       await new Promise(resolve => setTimeout(resolve, 2000))
+      const token = localStorage.getItem('accessToken')
 
-      const response = await UserAPI.searchUsers({ search, page })
+      const response = await UserAPI.searchUsers({ search, page }, token)
       return response
     } catch (error) {
       if (error.response && error.response.data.error) {
