@@ -105,6 +105,12 @@ const getUsers = async ({ searchQuery = '', page = 1, limit = 10 }) => {
   }
 }
 
+const getUserProfile = id => {
+  console.log(`passing in id ${id}`)
+
+  return id
+}
+
 module.exports = {
   getUserById,
   updateAlumniProfile,
@@ -112,4 +118,5 @@ module.exports = {
   createUser,
   findUserByEmailWithPassword,
   getUsers,
+  getUserProfile,
 }
