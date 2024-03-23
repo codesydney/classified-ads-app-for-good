@@ -20,4 +20,21 @@ const searchUsers = createAsyncThunk(
   },
 )
 
-export { searchUsers }
+const getUserProfile = createAsyncThunk(
+  'users/getUserProfile',
+  async ({ userId }, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem('accessToken')
+      const response = await UserAPI.getUserProfile(userId, token)
+      return response.data
+    } catch (error) {
+      if (error.response && error.response.data.error) {
+        return rejectWithValue(error.response.data.error)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  },
+)
+
+export { searchUsers, getUserProfile }

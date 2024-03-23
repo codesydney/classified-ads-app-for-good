@@ -65,6 +65,25 @@ const updateProfile = async (profileData, token) => {
   }
 }
 
+const getUserProfile = async (userId, token) => {
+  const getUsersProfileURL = `${usersURL}/profile/${userId}`
+
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+
+    const response = await api.get(getUsersProfileURL, config)
+
+    return response.data
+  } catch (error) {
+    console.error('Error retrieving users profile', error)
+    throw error
+  }
+}
+
 export const UserAPI = {
   searchUsers,
   login,
@@ -73,6 +92,7 @@ export const UserAPI = {
   resetPassword,
   me,
   updateProfile,
+  getUserProfile,
 }
 
 // defining the cancel API object for UserAPI
