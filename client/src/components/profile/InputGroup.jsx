@@ -1,8 +1,17 @@
 import Tooltip from './Tooltip'
 import { useRef } from 'react'
-const InputGroup = ({ name, label, type, errors, required, tooltip }) => {
+
+const InputGroup = ({
+  name,
+  label,
+  type,
+  errors,
+  required,
+  tooltip,
+  register,
+  setFocus,
+}) => {
   const tooltipRef = useRef(null)
-  const inputRef = useRef(null)
 
   // Prevent tooltip from opening on label click -> focus input el instead
   const preventTooltipPropagation = e => {
@@ -10,7 +19,8 @@ const InputGroup = ({ name, label, type, errors, required, tooltip }) => {
     if (tooltipRef.current && tooltipRef.current.contains(e.target)) {
       return
     }
-    inputRef.current.focus()
+
+    setFocus(name)
   }
 
   if (type === 'textarea') {
@@ -27,8 +37,7 @@ const InputGroup = ({ name, label, type, errors, required, tooltip }) => {
         </div>
         <textarea
           rows="5"
-          ref={inputRef}
-          // {...register(name)}
+          {...register(name)}
           className={`textarea textarea-bordered w-full ${
             errors[name]
               ? 'border-red-500 focus:outline-red-500'
@@ -58,9 +67,9 @@ const InputGroup = ({ name, label, type, errors, required, tooltip }) => {
         {tooltip && <Tooltip tooltipRef={tooltipRef}>{tooltip}</Tooltip>}
       </div>
       <input
-        ref={inputRef}
         type={type}
-        // {...register(name)}
+        {...register(name)}
+        // {}
         className={`input input-bordered w-full ${
           errors[name]
             ? 'border-red-500 focus:outline-red-500'

@@ -82,66 +82,46 @@ const passwordResetRequestSchema = yup
   })
   .required()
 
-// Validation for general information form. Only validates dirty fields.
 const generalInformationSchema = yup.object({
-  firstName: yup.string().when('firstName', {
-    is: (value, schema) => useFormContext().formState.dirtyFields.firstName,
-    then: yup
-      .string()
-      .required('First name is required')
-      .min(2, 'First name must be at least 2 character')
-      .max(50, 'First name cannot exceed 50 characters'),
-  }),
-  lastName: yup.string().when('lastName', {
-    is: (value, schema) => useFormContext().formState.dirtyFields.lastName,
-    then: yup
-      .string()
-      .required('Last name is required')
-      .min(2, 'Last name must be at least 2 character')
-      .max(50, 'Last name cannot exceed 50 characters'),
-  }),
-  email: yup.string().when('email', {
-    is: (value, schema) => useFormContext().formState.dirtyFields.email,
-    then: yup.string().email('Invalid email').required('Email is required'),
-  }),
-  phone: yup.string().when('phone', {
-    is: (value, schema) => useFormContext().formState.dirtyFields.phone,
-    then: yup
-      .string()
-      .nullable()
-      .matches(phoneRegex, 'Please enter a valid 10-digit phone number'),
-  }),
-  suburb: yup.string().when('suburb', {
-    is: (value, schema) => useFormContext().formState.dirtyFields.suburb,
-    then: yup
-      .string()
-      .nullable()
-      .min(3, 'Suburb must be at least 3 character')
-      .max(50, 'Suburb cannot exceed 50 characters'),
-  }),
-  postcode: yup.string().when('postcode', {
-    is: (value, schema) => useFormContext().formState.dirtyFields.postcode,
-    then: yup
-      .string()
-      .nullable()
-      .matches(postcodeRegex, 'Please enter a valid Australian Postcode'),
-  }),
-  facebookName: yup.string().when('facebookName', {
-    is: (value, schema) => useFormContext().formState.dirtyFields.facebookName,
-    then: yup
-      .string()
-      .nullable()
-      .min(3, 'Facebook name must be at least 3 character')
-      .max(50, 'Facebook name cannot exceed 50 characters'),
-  }),
-  story: yup.string().when('story', {
-    is: (value, schema) => useFormContext().formState.dirtyFields.story,
-    then: yup
-      .string()
-      .nullable()
-      .min(3, 'Facebook story name must be at least 3 character')
-      .max(500, 'Facebook story name cannot exceed 50 characters'),
-  }),
+  firstName: yup
+    .string()
+    .required('First name is required')
+    .min(2, 'First name must be at least 2 character')
+    .max(50, 'First name cannot exceed 50 characters'),
+  lastName: yup
+    .string()
+    .required('Last name is required')
+    .min(2, 'Last name must be at least 2 character')
+    .max(50, 'Last name cannot exceed 50 characters'),
+  email: yup.string().email('Invalid email').required('Email is required'),
+  phone: yup
+    .string()
+    .nullable()
+    .transform((curr, orig) => (orig === '' ? null : curr))
+    .matches(phoneRegex, 'Please enter a valid 10-digit phone number'),
+  suburb: yup
+    .string()
+    .nullable()
+    .transform((curr, orig) => (orig === '' ? null : curr))
+    .min(3, 'Suburb must be at least 3 character')
+    .max(50, 'Suburb cannot exceed 50 characters'),
+  postcode: yup
+    .string()
+    .nullable()
+    .transform((curr, orig) => (orig === '' ? null : curr))
+    .matches(postcodeRegex, 'Please enter a valid Australian Postcode'),
+  facebookName: yup
+    .string()
+    .nullable()
+    .transform((curr, orig) => (orig === '' ? null : curr))
+    .min(3, 'Facebook name must be at least 3 character')
+    .max(50, 'Facebook name cannot exceed 50 characters'),
+  story: yup
+    .string()
+    .nullable()
+    .transform((curr, orig) => (orig === '' ? null : curr))
+    .min(3, 'Facebook story name must be at least 3 character')
+    .max(500, 'Facebook story name cannot exceed 50 characters'),
 })
 
 export {
