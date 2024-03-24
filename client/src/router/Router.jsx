@@ -74,7 +74,7 @@ const Router = () => {
           ),
         },
         {
-          path: '/account',
+          path: '/profile',
           element: (
             <ProtectedRoute>
               <ProfileLayout />
@@ -86,15 +86,15 @@ const Router = () => {
               element: <ProfileGeneral />,
             },
             {
-              path: '/account/service',
+              path: '/profile/service',
               element: <ProfileService />,
             },
             {
-              path: '/account/education',
+              path: '/profile/education',
               element: <ProfileEducation />,
             },
             {
-              path: '/account/settings',
+              path: '/profile/settings',
               element: <ProfileSettings />,
             },
           ],

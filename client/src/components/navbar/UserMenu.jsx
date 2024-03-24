@@ -155,14 +155,14 @@ const UserMenu = ({ currentUser }) => {
                 <div className="hidden md:block">
                   <MenuItem
                     label="My Profile"
-                    onClick={() => handleNavigate('/profile/me')}
+                    onClick={() => handleNavigate('/profile')}
                   />
                 </div>
                 <div className="md:hidden">
                   <MenuItem label="Home" onClick={() => handleNavigate('/')} />
                   <MenuItem
                     label="Account"
-                    onClick={() => handleNavigate('/profile/me')}
+                    onClick={() => handleNavigate('/profile')}
                   />
                   <MenuItem
                     label="About"

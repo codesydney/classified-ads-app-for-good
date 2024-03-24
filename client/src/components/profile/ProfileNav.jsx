@@ -35,25 +35,25 @@ const ProfileNav = () => {
       <nav className="md:mb-20">
         <ul className="flex justify-between items-center md:flex-col md:items-stretch md:gap-4">
           <NavItem
-            location="/account"
+            location="/profile"
             icon={<RiAccountCircleLine className="w-[30px] h-[30px]" />}
           >
             General
           </NavItem>
           <NavItem
-            location="/account/education"
+            location="/profile/education"
             icon={<PiCertificate className="w-[30px] h-[30px]" />}
           >
             Education
           </NavItem>
           <NavItem
-            location="/account/service"
+            location="/profile/service"
             icon={<MdOutlineBusinessCenter className="w-[30px] h-[30px]" />}
           >
             Service
           </NavItem>
           <NavItem
-            location="/account/settings"
+            location="/profile/settings"
             icon={<IoSettingsOutline className="w-[30px] h-[30px]" />}
           >
             Settings
