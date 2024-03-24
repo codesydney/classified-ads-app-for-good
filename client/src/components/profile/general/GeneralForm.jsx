@@ -51,7 +51,7 @@ const GeneralForm = () => {
       const response = await dispatch(updateGeneral(fieldsToUpdate))
 
       if (response.type === 'auth/updateGeneral/rejected') {
-        setErrorMessage(response.payload)
+        return setErrorMessage(response.payload)
       }
       setErrorMessage('')
       toast.success('Your information has been updated!')

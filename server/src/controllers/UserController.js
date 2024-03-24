@@ -4,7 +4,7 @@ const { createToken } = require('../utils/handleJwt')
 const passwordResetTokenUtils = require('../utils/resetTokens')
 const { sendResetEmail } = require('../utils/mail')
 const catchAsync = require('../utils/catchAsync')
-const { buildNestedQuery } = require('../utils/buildNestedUpdateQuery')
+const buildNestedQuery = require('../utils/buildNestedUpdateQuery')
 
 const signup = catchAsync(async (req, res, next) => {
   const { firstName, lastName, email, password } = req.body
@@ -212,11 +212,20 @@ const updateServiceInformation = catchAsync(async (req, res) => {
   const profileUpdates = req.body
   // Do stuff here for image ?
   const nestedQueryObj = buildNestedQuery('service', profileUpdates)
-  console.log(nestedQueryObj)
+
+  const updatedUser = await UserService.updateAlumniProfile(id, nestedQueryObj)
+
+  if (!updatedUser) {
+    return res.status(404).json({
+      status: 'Error',
+      message: 'User not found',
+    })
+  }
 
   return res.status(200).json({
     status: 'OK',
-    message: 'working so far',
+    message: 'User Service updated',
+    user: updatedUser,
   })
 })
 
@@ -224,12 +233,21 @@ const updateServiceInformation = catchAsync(async (req, res) => {
 const updateEducationInformation = catchAsync(async (req, res) => {
   const { id } = req.user
   const profileUpdates = req.body
-  const nestedQueryObj = buildNestedQuery('education', profileUpdates)
-  console.log(nestedQueryObj)
 
+  const nestedQueryObj = buildNestedQuery('education', profileUpdates)
+
+  const updatedUser = await UserService.updateAlumniProfile(id, nestedQueryObj)
+
+  if (!updatedUser) {
+    return res.status(404).json({
+      status: 'Error',
+      message: 'User not found',
+    })
+  }
   return res.status(200).json({
     status: 'OK',
-    message: 'working so far',
+    message: 'user education updated',
+    user: updatedUser,
   })
 })
 

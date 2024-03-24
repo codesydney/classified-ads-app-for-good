@@ -7,6 +7,8 @@ import {
   me,
   updateProfile,
   updateGeneral,
+  updateService,
+  updateEducation,
 } from './authAction'
 
 const initialState = {
@@ -157,6 +159,40 @@ const authSlice = createSlice({
       state.currentUser = action.payload.user
     })
     builder.addCase(updateGeneral.rejected, (state, action) => {
+      state.loading = false
+      state.error = action.payload
+      state.success = false
+    })
+    // Update Service
+    builder.addCase(updateService.pending, state => {
+      state.loading = true
+      state.error = null
+      state.success = false
+    })
+    builder.addCase(updateService.fulfilled, (state, action) => {
+      state.loading = false
+      state.error = null
+      state.success = true
+      state.currentUser = action.payload.user
+    })
+    builder.addCase(updateService.rejected, (state, action) => {
+      state.loading = false
+      state.error = action.payload
+      state.success = false
+    })
+    // Update Education
+    builder.addCase(updateEducation.pending, state => {
+      state.loading = true
+      state.error = null
+      state.success = false
+    })
+    builder.addCase(updateEducation.fulfilled, (state, action) => {
+      state.loading = false
+      state.error = null
+      state.success = true
+      state.currentUser = action.payload.user
+    })
+    builder.addCase(updateEducation.rejected, (state, action) => {
       state.loading = false
       state.error = action.payload
       state.success = false

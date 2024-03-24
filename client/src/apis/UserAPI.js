@@ -83,6 +83,42 @@ const updateGeneral = async (profileData, token) => {
   }
 }
 
+const updateService = async (profileData, token) => {
+  const updateServiceURL = `${usersURL}/profile/service`
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+
+    const response = await api.patch(updateServiceURL, profileData, config)
+
+    return response.data
+  } catch (error) {
+    console.error('error updating service information')
+    throw error
+  }
+}
+
+const updateEducation = async (profileData, token) => {
+  const updateEducationURL = `${usersURL}/profile/education`
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+
+    const response = await api.patch(updateEducationURL, profileData, config)
+
+    return response.data
+  } catch (error) {
+    console.error('error updating education information')
+    throw error
+  }
+}
+
 export const UserAPI = {
   searchUsers,
   login,
@@ -92,6 +128,8 @@ export const UserAPI = {
   me,
   updateProfile,
   updateGeneral,
+  updateService,
+  updateEducation,
 }
 
 // defining the cancel API object for UserAPI

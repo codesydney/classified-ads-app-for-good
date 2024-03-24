@@ -6,3 +6,5 @@ const buildNestedQuery = (sectionName, updateObject) => {
   }
   return updateQueryObj
 }
+
+module.exports = buildNestedQuery

@@ -114,7 +114,45 @@ const updateGeneral = createAsyncThunk(
       const token = localStorage.getItem('accessToken')
 
       const response = await UserAPI.updateGeneral(profileData, token)
-      console.log('update general', response)
+
+      return response
+    } catch (error) {
+      if (error.response && error.response.data.error) {
+        return rejectWithValue(error.response.data.error)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  },
+)
+
+const updateService = createAsyncThunk(
+  'auth/updateService',
+  async (profileData, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem('accessToken')
+
+      const response = await UserAPI.updateService(profileData, token)
+
+      return response
+    } catch (error) {
+      if (error.response && error.response.data.error) {
+        return rejectWithValue(error.response.data.error)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  },
+)
+
+const updateEducation = createAsyncThunk(
+  'auth/updateEducation',
+  async (profileData, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem('accessToken')
+
+      const response = await UserAPI.updateEducation(profileData, token)
+
       return response
     } catch (error) {
       if (error.response && error.response.data.error) {
@@ -134,4 +172,6 @@ export {
   me,
   updateProfile,
   updateGeneral,
+  updateService,
+  updateEducation,
 }
