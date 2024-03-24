@@ -3,14 +3,24 @@ import { defineCancelApiObject } from './configs/axiosUtils'
 
 const usersURL = '/users'
 
-const searchUsers = async ({ search = '', page = 1 }, cancel = false) => {
+const searchUsers = async (
+  { search = '', page = 1 },
+  token,
+  cancel = false,
+) => {
   const params = { search, page, limit: 12 }
   const signal = cancel
     ? cancelApiObject[this.getAll.name].handleRequestCancellation().signal
     : undefined
 
   try {
-    const response = await api.get(usersURL, { params, signal })
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+
+    const response = await api.get(usersURL, { params, signal, ...config })
     return response.data
   } catch (error) {
     console.error('Error fetching users:', error)
@@ -61,6 +71,25 @@ const updateProfile = async (profileData, token) => {
     return response.data
   } catch (error) {
     console.error('Error updating user profile:', error)
+    throw error
+  }
+}
+
+const getUserProfile = async (userId, token) => {
+  const getUsersProfileURL = `${usersURL}/profile/${userId}`
+
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+
+    const response = await api.get(getUsersProfileURL, config)
+
+    return response.data
+  } catch (error) {
+    console.error('Error retrieving users profile', error)
     throw error
   }
 }
@@ -127,6 +156,7 @@ export const UserAPI = {
   resetPassword,
   me,
   updateProfile,
+  getUserProfile,
   updateGeneral,
   updateService,
   updateEducation,

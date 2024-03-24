@@ -1,5 +1,26 @@
 const User = require('../models/User')
 
+const constructUnauthenticatedUsersResponse = user => {
+  return {
+    id: user.id,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    fullName: user.fullName,
+    state: user.state,
+    alumniProfilePicture: user.alumniProfilePicture,
+    education: {
+      course: user.education.course,
+      college: user.education.college,
+      yearGraduated: user.education.yearGraduated,
+    },
+    service: {
+      serviceName: user.service.serviceName,
+      serviceLogo: user.service.serviceLogo,
+      serviceUrl: user.service.serviceUrl,
+    },
+  }
+}
+
 const getUserById = async id => {
   const user = await User.findById(id).select('-__v -isAutomated').exec()
 
@@ -63,7 +84,10 @@ const findUserByEmailWithPassword = async email => {
   }).select('+password')
 }
 
-const getUsers = async ({ searchQuery = '', page = 1, limit = 10 }) => {
+const getUsers = async (
+  { searchQuery = '', page = 1, limit = 10 },
+  isAuthenticated,
+) => {
   let matchCriteria = {}
   if (searchQuery.length >= 3) {
     matchCriteria = {
@@ -91,8 +115,15 @@ const getUsers = async ({ searchQuery = '', page = 1, limit = 10 }) => {
     const total = await User.countDocuments(matchCriteria)
     const totalPages = Math.ceil(total / limit)
 
+    // based on the authentication status, filter out some fields
+    const usersResponse = isAuthenticated
+      ? users
+      : users.map(userDetails =>
+          constructUnauthenticatedUsersResponse(userDetails),
+        )
+
     return {
-      data: users,
+      data: usersResponse,
       meta: {
         total,
         page: Number(page),
@@ -106,6 +137,17 @@ const getUsers = async ({ searchQuery = '', page = 1, limit = 10 }) => {
   }
 }
 
+const getUserProfile = async (userId, isAuthenticated) => {
+  const userDetails = await getUserById(userId)
+
+  // based on the authentication status, filter out some fields
+  if (isAuthenticated) {
+    return userDetails
+  } else {
+    return constructUnauthenticatedUsersResponse(userDetails)
+  }
+}
+
 module.exports = {
   getUserById,
   updateAlumniProfile,
@@ -113,4 +155,5 @@ module.exports = {
   createUser,
   findUserByEmailWithPassword,
   getUsers,
+  getUserProfile,
 }

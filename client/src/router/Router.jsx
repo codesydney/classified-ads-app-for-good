@@ -18,7 +18,8 @@ import ProfileLayout from '../components/profile/ProfileLayout.jsx'
 import ProfileGeneral from '../components/profile/general/ProfileGeneral.jsx'
 import ProfileService from '../components/profile/service/ProfileService.jsx'
 import ProfileEducation from '../components/profile/education/ProfileEducation.jsx'
-import ProfileSettings from '../components/profile/settings/ProfileSettings.jsx'
+import ProfileSettings from '../components/profile/settings/ProfileSettings.jsx'import UserProfile from '../pages/UserProfile.jsx'
+
 const Router = () => {
   // const error = useRouteError()
   const router = createBrowserRouter([
@@ -98,6 +99,10 @@ const Router = () => {
               element: <ProfileSettings />,
             },
           ],
+        },
+        {
+          path: '/profile/:userId',
+          element: <UserProfile />,
         },
       ],
     },
