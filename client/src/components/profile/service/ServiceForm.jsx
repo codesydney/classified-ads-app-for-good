@@ -41,7 +41,7 @@ const ServiceForm = () => {
     }
   }
   return (
-    <form>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <InputGroup
         name="serviceName"
         label="Service Name"

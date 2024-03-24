@@ -6,6 +6,7 @@ import { toast } from 'react-hot-toast'
 import { useAppDispatch } from '../../../store'
 import InputGroup from '../InputGroup.jsx'
 import FormButton from '../FormButton.jsx'
+import { educationSchema } from '../../../schema/index.js'
 
 const EducationForm = () => {
   const [errorMessage, setErrorMessage] = useState('')
@@ -17,7 +18,7 @@ const EducationForm = () => {
     setFocus,
     reset,
   } = useForm({
-    resolver: yupResolver(generalInformationSchema),
+    resolver: yupResolver(educationSchema),
   })
   const { currentUser } = useSelector(state => state.auth)
 
@@ -41,29 +42,35 @@ const EducationForm = () => {
   }
 
   return (
-    <form>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <InputGroup
         name="course"
         label="Course"
         type="text"
-        errors={{ message: 'hello' }}
+        errors={errors}
+        register={register}
+        setFocus={setFocus}
         tooltip="This is a tooltip for the input"
       />
       <InputGroup
         name="college"
         label="College"
         type="text"
-        errors={{ message: 'hello' }}
+        errors={errors}
+        register={register}
+        setFocus={setFocus}
         tooltip="This is a tooltip for the input"
       />
       <InputGroup
         name="yearGraduated"
         label="Year Graduated"
         type="text"
-        errors={{ message: 'hello' }}
+        errors={errors}
+        register={register}
+        setFocus={setFocus}
         tooltip="This is a tooltip for the input"
       />
-      <FormButton>Update Education</FormButton>
+      <FormButton isDirty={isDirty}>Update Education</FormButton>
     </form>
   )
 }

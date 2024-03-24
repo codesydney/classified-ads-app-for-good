@@ -8,6 +8,7 @@ const phoneRegex =
   /^\({0,1}((0|\+61)(2|4|3|7|8)){0,1}\){0,1}(\ |-){0,1}[0-9]{2}(\ |-){0,1}[0-9]{2}(\ |-){0,1}[0-9]{1}(\ |-){0,1}[0-9]{3}$/
 const postcodeRegex = /^[0-9]{4}$/
 const urlRegex = /^(https?:\/\/)[^\s/$.?#].[^\s]*$/
+const yearRegex = /\b(?:19[5-9]\d|20(?:[012]\d|24))\b/
 
 const signUpSchema = yup
   .object({
@@ -143,6 +144,24 @@ const serviceSchema = yup.object({
     .matches(urlRegex, 'Please enter a valid URL'),
 })
 
+const educationSchema = yup.object({
+  course: yup
+    .string()
+    .nullable()
+    .transform((curr, orig) => (orig === '' ? null : curr))
+    .min(3, 'Course must be at least 3 character'),
+  college: yup
+    .string()
+    .nullable()
+    .transform((curr, orig) => (orig === '' ? null : curr))
+    .min(3, 'College must be at least 3 character'),
+  yearGraduated: yup
+    .string()
+    .nullable()
+    .transform((curr, orig) => (orig === '' ? null : curr))
+    .matches(yearRegex, 'Please enter a valid year (1950 - now)'),
+})
+
 export {
   signUpSchema,
   loginSchema,
@@ -150,4 +169,5 @@ export {
   passwordResetRequestSchema,
   generalInformationSchema,
   serviceSchema,
+  educationSchema,
 }
