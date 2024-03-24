@@ -1,16 +1,11 @@
-const FormButton = ({ children, isDirty }) => {
+const FormButton = ({ children, isDirty, isLoading }) => {
   return (
     <button
-      disabled={!isDirty}
+      disabled={!isDirty || isLoading}
       className="btn btn-squre w-fit py-2 bg-primary hover:bg-primary text-white mt-[15px]"
       type="submit"
     >
-      {/* {isLoading ? (
-            <span className="loading loading-spinner"></span>
-          ) : (
-            'Login'
-          )} */}
-      {children}
+      {isLoading ? <span className="loading loading-spinner"></span> : children}
     </button>
   )
 }

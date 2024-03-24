@@ -154,7 +154,7 @@ const authSlice = createSlice({
       state.loading = false
       state.error = null
       state.success = true
-      state.currentUser = action.payload.updatedUser
+      state.currentUser = action.payload.user
     })
     builder.addCase(updateGeneral.rejected, (state, action) => {
       state.loading = false

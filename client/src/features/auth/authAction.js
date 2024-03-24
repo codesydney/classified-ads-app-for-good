@@ -114,7 +114,8 @@ const updateGeneral = createAsyncThunk(
       const token = localStorage.getItem('accessToken')
 
       const response = await UserAPI.updateGeneral(profileData, token)
-      return response.data
+      console.log('update general', response)
+      return response
     } catch (error) {
       if (error.response && error.response.data.error) {
         return rejectWithValue(error.response.data.error)

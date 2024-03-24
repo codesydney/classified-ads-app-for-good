@@ -75,6 +75,7 @@ const updateGeneral = async (profileData, token) => {
     }
 
     const response = await api.patch(updateGeneralURL, profileData, config)
+
     return response.data
   } catch (error) {
     console.error('error updating General information')
