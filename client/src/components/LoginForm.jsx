@@ -38,7 +38,7 @@ const LoginForm = () => {
       // After a successful login call a me function to retrieve the user's data
       await dispatch(me())
 
-      navigate('/')
+      navigate('/profile')
       toast.success('Success! You are now signed in.')
     } catch (error) {
       setErrorMessage('Something went wrong. Please try again.')
