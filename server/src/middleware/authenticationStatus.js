@@ -1,28 +1,43 @@
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
-const authenticationStatus = (req, res, next) => {
+const extractToken = req => {
   const authHeader = req.headers.authorization
-  let token = null
-
   if (authHeader) {
     const parts = authHeader.split(' ')
     if (parts.length === 2 && parts[0] === 'Bearer') {
-      token = parts[1]
+      return parts[1]
     }
   } else if (req.query.token) {
-    token = req.query.token
+    return req.query.token
   }
+  return null
+}
 
+const setAuthenticationStatus = (req, isAuthenticated) => {
+  req.isAuthenticated = isAuthenticated
+}
+
+const authenticationStatus = async (req, res, next) => {
+  const token = extractToken(req)
   if (!token) {
-    req.isAuthenticated = false
+    setAuthenticationStatus(req, false)
     return next()
   }
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, _decoded) => {
-    req.isAuthenticated = !err
+  try {
+    const decoded = await jwt.verify(token, process.env.JWT_SECRET)
+    // Check in the decodedToken to see if the user is the USTAA Officer
+    if (!decoded.isOfficer) {
+      setAuthenticationStatus(req, false)
+      return next()
+    }
+    setAuthenticationStatus(req, true)
     next()
-  })
+  } catch (err) {
+    setAuthenticationStatus(req, false)
+    next()
+  }
 }
 
 module.exports = {

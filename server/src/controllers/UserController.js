@@ -31,6 +31,7 @@ const signup = catchAsync(async (req, res, next) => {
     id: newUser._id,
     firstName: newUser.firstName,
     lastName: newUser.lastName,
+    isOfficer: newUser.isOfficer,
   })
 
   // return 201 response with token
@@ -64,6 +65,7 @@ const login = catchAsync(async (req, res, next) => {
     id: user._id,
     firstName: user.firstName,
     lastName: user.lastName,
+    isOfficer: user.isOfficer,
   })
 
   // return token

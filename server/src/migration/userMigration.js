@@ -88,6 +88,7 @@ const generateUser = async () => ({
     serviceUrl: faker.image.avatar(),
   },
   isAutomated: true,
+  isOfficer: false,
 })
 
 // Function to insert a batch of users into the database
