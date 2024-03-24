@@ -18,7 +18,8 @@ import ProfileLayout from '../components/profile/ProfileLayout.jsx'
 import ProfileGeneral from '../components/profile/general/ProfileGeneral.jsx'
 import ProfileService from '../components/profile/service/ProfileService.jsx'
 import ProfileEducation from '../components/profile/education/ProfileEducation.jsx'
-import ProfileSettings from '../components/profile/settings/ProfileSettings.jsx'import UserProfile from '../pages/UserProfile.jsx'
+import ProfileSettings from '../components/profile/settings/ProfileSettings.jsx'
+import UserProfile from '../pages/UserProfile.jsx'
 
 const Router = () => {
   // const error = useRouteError()
@@ -67,12 +68,8 @@ const Router = () => {
         //   ],
         // },
         {
-          path: '/profile/me',
-          element: (
-            <ProtectedRoute>
-              <MyProfile />
-            </ProtectedRoute>
-          ),
+          path: '/profile/:userId',
+          element: <UserProfile />,
         },
         {
           path: '/profile',
@@ -101,8 +98,12 @@ const Router = () => {
           ],
         },
         {
-          path: '/profile/:userId',
-          element: <UserProfile />,
+          path: '/profile/me',
+          element: (
+            <ProtectedRoute>
+              <MyProfile />
+            </ProtectedRoute>
+          ),
         },
       ],
     },
