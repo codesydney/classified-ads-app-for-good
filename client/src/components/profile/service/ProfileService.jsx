@@ -1,9 +1,9 @@
 import ServiceForm from './ServiceForm'
-
+import SectionHeading from '../ProfileSectionHeading'
 const ProfileService = () => {
   return (
     <div className="">
-      <h1>Service</h1>
+      <SectionHeading>Service</SectionHeading>
       <ServiceForm />
     </div>
   )

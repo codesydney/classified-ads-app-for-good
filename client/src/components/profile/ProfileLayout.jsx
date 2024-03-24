@@ -11,7 +11,9 @@ const ProfileLayout = () => {
         </div>
         <div className="md:col-span-2">
           <Header />
-          <Outlet />
+          <div className="bg-white shadow-md rounded-md p-4">
+            <Outlet />
+          </div>
         </div>
       </div>
     </div>

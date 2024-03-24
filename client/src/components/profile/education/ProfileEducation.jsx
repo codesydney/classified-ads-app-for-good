@@ -1,9 +1,10 @@
+import SectionHeading from '../ProfileSectionHeading'
 import EducationForm from './EducationForm'
 
 const ProfileEducation = () => {
   return (
     <div className="">
-      <h1>Education</h1>
+      <SectionHeading>Education</SectionHeading>
       <EducationForm />
     </div>
   )

@@ -1,9 +1,9 @@
 import SettingsForm from './SettingsForm'
-
+import SectionHeading from '../ProfileSectionHeading'
 const ProfileSettings = () => {
   return (
     <div className="">
-      <h1>Settings</h1>
+      <SectionHeading>Settings</SectionHeading>
       <SettingsForm />
     </div>
   )
