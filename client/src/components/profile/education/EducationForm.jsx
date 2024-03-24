@@ -8,6 +8,38 @@ import InputGroup from '../InputGroup.jsx'
 import FormButton from '../FormButton.jsx'
 
 const EducationForm = () => {
+  const [errorMessage, setErrorMessage] = useState('')
+  const dispatch = useAppDispatch()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isDirty },
+    setFocus,
+    reset,
+  } = useForm({
+    resolver: yupResolver(generalInformationSchema),
+  })
+  const { currentUser } = useSelector(state => state.auth)
+
+  useEffect(() => {
+    if (currentUser) {
+      const defaultVals = {
+        serviceName: currentUser?.service?.serviceName || '',
+        serviceUrl: currentUser?.service?.serviceUrl || '',
+        serviceDescription: currentUser?.service?.serviceDescription || '',
+      }
+      reset(defaultVals)
+    }
+  }, [currentUser])
+
+  const onSubmit = async formData => {
+    try {
+      console.log('wooohooo')
+    } catch (error) {
+      console.log('error')
+    }
+  }
+
   return (
     <form>
       <InputGroup

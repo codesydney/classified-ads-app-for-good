@@ -1,6 +1,7 @@
-const FormButton = ({ children }) => {
+const FormButton = ({ children, isDirty }) => {
   return (
     <button
+      disabled={!isDirty}
       className="btn btn-squre w-fit py-2 bg-primary hover:bg-primary text-white mt-[15px]"
       type="submit"
     >

@@ -124,10 +124,30 @@ const generalInformationSchema = yup.object({
     .max(500, 'Facebook story name cannot exceed 50 characters'),
 })
 
+const serviceSchema = yup.object({
+  serviceName: yup
+    .string()
+    .nullable()
+    .transform((curr, orig) => (orig === '' ? null : curr))
+    .min(3, 'Service name must be at least 3 character'),
+  serviceDescription: yup
+    .string()
+    .nullable()
+    .transform((curr, orig) => (orig === '' ? null : curr))
+    .min(3, 'Service description must be at least 3 character')
+    .max(500, 'Service cannot exceed 500 characters'),
+  serviceUrl: yup
+    .string()
+    .nullable()
+    .transform((curr, orig) => (orig === '' ? null : curr))
+    .matches(urlRegex, 'Please enter a valid URL'),
+})
+
 export {
   signUpSchema,
   loginSchema,
   resetPasswordSchema,
   passwordResetRequestSchema,
   generalInformationSchema,
+  serviceSchema,
 }
