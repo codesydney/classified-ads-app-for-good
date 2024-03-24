@@ -4,6 +4,7 @@ const { createToken } = require('../utils/handleJwt')
 const passwordResetTokenUtils = require('../utils/resetTokens')
 const { sendResetEmail } = require('../utils/mail')
 const catchAsync = require('../utils/catchAsync')
+const { buildNestedQuery } = require('../utils/buildNestedUpdateQuery')
 
 const signup = catchAsync(async (req, res, next) => {
   const { firstName, lastName, email, password } = req.body
@@ -184,6 +185,7 @@ const me = async (req, res) => {
   })
 }
 
+// Also used by brodie form general info update form.
 const updateAlumniProfile = catchAsync(async (req, res) => {
   const { id } = req.user
   const profileUpdates = req.body
@@ -204,6 +206,33 @@ const updateAlumniProfile = catchAsync(async (req, res) => {
   })
 })
 
+// Update service nested obj
+const updateServiceInformation = catchAsync(async (req, res) => {
+  const { id } = req.user
+  const profileUpdates = req.body
+  // Do stuff here for image ?
+  const nestedQueryObj = buildNestedQuery('service', profileUpdates)
+  console.log(nestedQueryObj)
+
+  return res.status(200).json({
+    status: 'OK',
+    message: 'working so far',
+  })
+})
+
+// update education nested obj
+const updateEducationInformation = catchAsync(async (req, res) => {
+  const { id } = req.user
+  const profileUpdates = req.body
+  const nestedQueryObj = buildNestedQuery('education', profileUpdates)
+  console.log(nestedQueryObj)
+
+  return res.status(200).json({
+    status: 'OK',
+    message: 'working so far',
+  })
+})
+
 module.exports = {
   signup,
   login,
@@ -212,4 +241,6 @@ module.exports = {
   getUsers,
   me,
   updateAlumniProfile,
+  updateServiceInformation,
+  updateEducationInformation,
 }

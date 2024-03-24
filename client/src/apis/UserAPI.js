@@ -65,6 +65,23 @@ const updateProfile = async (profileData, token) => {
   }
 }
 
+const updateGeneral = async (profileData, token) => {
+  const updateGeneralURL = `${usersURL}/profile/general`
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+
+    const response = await api.patch(updateGeneralURL, profileData, config)
+    return response.data
+  } catch (error) {
+    console.error('error updating General information')
+    throw error
+  }
+}
+
 export const UserAPI = {
   searchUsers,
   login,
@@ -73,6 +90,7 @@ export const UserAPI = {
   resetPassword,
   me,
   updateProfile,
+  updateGeneral,
 }
 
 // defining the cancel API object for UserAPI
