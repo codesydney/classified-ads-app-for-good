@@ -1,5 +1,6 @@
 const User = require('../models/User')
 
+// This is breaking my build. If you are a user without these fields -> will break on their own page.
 const constructUnauthenticatedUsersResponse = user => {
   return {
     id: user.id,
@@ -62,6 +63,7 @@ const updateAlumniProfile = async (userId, profileUpdates) => {
 
   return userObject
 }
+
 const findUserByEmail = email => {
   return User.findOne({ email })
 }

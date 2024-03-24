@@ -38,7 +38,7 @@ const SignUpForm = () => {
       // After a successful login call a me function to retrieve the user's data
       await dispatch(me())
 
-      navigate('/')
+      navigate('/profile')
       toast.success('You have successfully signed up.')
     } catch (error) {
       setErrorMessage('Something went wrong. Please try again.')

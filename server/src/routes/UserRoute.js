@@ -23,6 +23,24 @@ router.get(
 
 router.patch('/profile/me', verifyToken, UserController.updateAlumniProfile)
 
+router.patch(
+  '/profile/general',
+  verifyToken,
+  UserController.updateAlumniProfile,
+)
+
+router.patch(
+  '/profile/service',
+  verifyToken,
+  UserController.updateServiceInformation,
+)
+
+router.patch(
+  '/profile/education',
+  verifyToken,
+  UserController.updateEducationInformation,
+)
+
 router.post(
   '/signup',
   signupValidation,

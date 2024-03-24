@@ -20,6 +20,7 @@ const setAuthenticationStatus = (req, isAuthenticated) => {
 
 const authenticationStatus = async (req, res, next) => {
   const token = extractToken(req)
+
   if (!token) {
     setAuthenticationStatus(req, false)
     return next()

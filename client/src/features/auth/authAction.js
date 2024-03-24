@@ -103,4 +103,71 @@ const updateProfile = createAsyncThunk(
   },
 )
 
-export { login, signUp, requestResetPassword, resetPassword, me, updateProfile }
+const updateGeneral = createAsyncThunk(
+  'auth/updateGeneral',
+  async (profileData, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem('accessToken')
+
+      const response = await UserAPI.updateGeneral(profileData, token)
+
+      return response
+    } catch (error) {
+      if (error.response && error.response.data.error) {
+        return rejectWithValue(error.response.data.error)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  },
+)
+
+const updateService = createAsyncThunk(
+  'auth/updateService',
+  async (profileData, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem('accessToken')
+
+      const response = await UserAPI.updateService(profileData, token)
+
+      return response
+    } catch (error) {
+      if (error.response && error.response.data.error) {
+        return rejectWithValue(error.response.data.error)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  },
+)
+
+const updateEducation = createAsyncThunk(
+  'auth/updateEducation',
+  async (profileData, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem('accessToken')
+
+      const response = await UserAPI.updateEducation(profileData, token)
+
+      return response
+    } catch (error) {
+      if (error.response && error.response.data.error) {
+        return rejectWithValue(error.response.data.error)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  },
+)
+
+export {
+  login,
+  signUp,
+  requestResetPassword,
+  resetPassword,
+  me,
+  updateProfile,
+  updateGeneral,
+  updateService,
+  updateEducation,
+}
