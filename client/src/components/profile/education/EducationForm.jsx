@@ -37,9 +37,8 @@ const EducationForm = () => {
 
   const onSubmit = async formData => {
     try {
-      console.log('fields to update')
       const fieldsToUpdate = formatDirtyFields(dirtyFields, formData)
-      console.log(fieldsToUpdate)
+
       const response = await dispatch(updateEducation(fieldsToUpdate))
 
       if (response.type === 'auth/updateEducation/rejected') {
