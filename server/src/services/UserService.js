@@ -136,6 +136,13 @@ const getUsers = async (
 }
 
 const getUserProfile = async (userId, isAuthenticated) => {
+  // check that the user has not set their profile to be hidden
+  const user = await User.findById(userId).exec()
+
+  if (!user || user.hideProfile) {
+    return null
+  }
+
   const userDetails = await getUserById(userId)
 
   // based on the authentication status, filter out some fields
