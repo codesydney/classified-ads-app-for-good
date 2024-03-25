@@ -270,6 +270,16 @@ const getUserProfile = catchAsync(async (req, res) => {
   })
 })
 
+const updatePassword = catchAsync(async (req, res) => {
+  const { id } = req.user
+  const passwordData = req.body
+
+  res.status(200).json({
+    status: 'OK',
+    message: 'endpoint wowrks',
+  })
+})
+
 module.exports = {
   signup,
   login,
@@ -281,4 +291,5 @@ module.exports = {
   updateServiceInformation,
   updateEducationInformation,
   getUserProfile,
+  updatePassword,
 }

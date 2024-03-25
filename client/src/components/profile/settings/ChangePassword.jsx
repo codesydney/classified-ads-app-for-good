@@ -38,6 +38,7 @@ const ChangePassword = () => {
 
       setErrorMessage('')
       toast.success('Your password has been changed!')
+      reset()
     } catch (error) {
       console.log('Error', error)
       setErrorMessage('Something went wrong')
