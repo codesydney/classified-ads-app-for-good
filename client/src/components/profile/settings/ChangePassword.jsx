@@ -3,10 +3,35 @@ import FormButton from '../FormButton.jsx'
 import { useState } from 'react'
 import { changePasswordSchema } from '../../../schema/index.js'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useForm } from 'react-hook-form'
+import { toast } from 'react-hot-toast'
+import { useSelector } from 'react-redux'
+
 const ChangePassword = () => {
   const [formOpen, setFormOpen] = useState(false)
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isDirty },
+    setFocus,
+    reset,
+  } = useForm({
+    resolver: yupResolver(changePasswordSchema),
+  })
+
+  const { loading: isLoading } = useSelector(state => state.auth)
+
+  const onSubmit = async formData => {
+    try {
+      console.log('Whoooooo')
+    } catch (error) {
+      console.log('Error', error)
+    }
+  }
+
   return (
-    <div className="mb-4">
+    <div className="mb-4" onSubmit={handleSubmit(onSubmit)}>
       <h3 className="text-bold text-xl mb-2">Change Password</h3>
       <div className="">
         {formOpen ? (
@@ -16,9 +41,9 @@ const ChangePassword = () => {
               label="Current Password"
               type="password"
               required={true}
-              errors={false}
-              register={() => {}}
-              setFocus={false}
+              errors={errors}
+              register={register}
+              setFocus={setFocus}
               tooltip="Enter the password you have now."
             />
             <InputGroup
@@ -26,9 +51,9 @@ const ChangePassword = () => {
               label="New Password"
               type="password"
               required={true}
-              errors={false}
-              register={() => {}}
-              setFocus={false}
+              errors={errors}
+              register={register}
+              setFocus={setFocus}
               tooltip="Enter your new password"
             />
             <InputGroup
@@ -36,18 +61,23 @@ const ChangePassword = () => {
               label="Confirm New Password"
               type="password"
               required={true}
-              errors={false}
-              register={() => {}}
-              setFocus={false}
+              errors={errors}
+              register={register}
+              setFocus={setFocus}
               tooltip="Enter your new password again"
             />
             <div className="flex gap-4">
-              <FormButton isLoading={false} isDirty={false}>
+              <FormButton isLoading={isLoading} isDirty={isDirty}>
                 Change Password
               </FormButton>
               <button
                 className="btn btn-squre w-fit py-2 bg-red-400 hover:bg-red-500 text-white mt-[15px]"
-                onClick={() => setFormOpen(false)}
+                type="button"
+                onClick={e => {
+                  e.preventDefault()
+                  setFormOpen(false)
+                  reset()
+                }}
               >
                 Cancel
               </button>

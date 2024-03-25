@@ -162,20 +162,22 @@ const educationSchema = yup.object({
     .matches(yearRegex, 'Please enter a valid year (1950 - now)'),
 })
 
-const changePasswordSchema = yup.object({
-  currentPassword: yup
-    .string()
-    .required('Current password is required')
-    .min(8, 'Invalid credentials'),
-  newPassword: yup
-    .string()
-    .required('New password is required')
-    .min(8, 'New password must be at least 8 characters'),
-  newPasswordConfirm: yup
-    .string()
-    .required()
-    .oneOf([yup.ref('newPassword', null)], 'Passwords must match.'),
-})
+const changePasswordSchema = yup
+  .object({
+    currentPassword: yup
+      .string()
+      .required('Current password is required')
+      .min(8, 'Invalid credentials'),
+    newPassword: yup
+      .string()
+      .required('New password is required')
+      .min(8, 'New password must be at least 8 characters'),
+    newPasswordConfirm: yup
+      .string()
+      .required()
+      .oneOf([yup.ref('newPassword'), null], 'Passwords must match.'),
+  })
+  .required()
 
 export {
   signUpSchema,
