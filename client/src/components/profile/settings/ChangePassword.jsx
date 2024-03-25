@@ -6,9 +6,12 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { useSelector } from 'react-redux'
+import { updatePassword } from '../../../features/auth/authAction.js'
+import { useAppDispatch } from '../../../store.js'
 
 const ChangePassword = () => {
   const [formOpen, setFormOpen] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
 
   const {
     register,
@@ -21,12 +24,23 @@ const ChangePassword = () => {
   })
 
   const { loading: isLoading } = useSelector(state => state.auth)
+  const dispatch = useAppDispatch()
 
   const onSubmit = async formData => {
     try {
-      console.log('Whoooooo')
+      console.log('wooohooo')
+
+      const response = await dispatch(updatePassword(formData))
+      console.log('respnese', response)
+      if (response.type === 'auth/updatePassword/rejected') {
+        return setErrorMessage(response.payload)
+      }
+
+      setErrorMessage('')
+      toast.success('Your password has been changed!')
     } catch (error) {
       console.log('Error', error)
+      setErrorMessage('Something went wrong')
     }
   }
 
@@ -36,6 +50,28 @@ const ChangePassword = () => {
       <div className="">
         {formOpen ? (
           <form className="">
+            {errorMessage && (
+              <div
+                role="alert"
+                className="alert alert-error my-[12px] text-white"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="stroke-current shrink-0 h-6 w-6 cursor-pointer"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  onClick={() => setErrorMessage('')}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                <span>{errorMessage}</span>
+              </div>
+            )}
             <InputGroup
               name="currentPassword"
               label="Current Password"

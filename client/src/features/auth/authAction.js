@@ -160,6 +160,24 @@ const updateEducation = createAsyncThunk(
   },
 )
 
+const updatePassword = createAsyncThunk(
+  'auth/updatePassword',
+  async (passwordData, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem('accessToken')
+      const response = await UserAPI.updatePassword(passwordData, token)
+
+      return response
+    } catch (error) {
+      if (error.response && error.response.data.error) {
+        return rejectWithValue(error.response.data.error)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  },
+)
+
 export {
   login,
   signUp,
@@ -170,4 +188,5 @@ export {
   updateGeneral,
   updateService,
   updateEducation,
+  updatePassword,
 }

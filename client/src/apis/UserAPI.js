@@ -148,6 +148,24 @@ const updateEducation = async (profileData, token) => {
   }
 }
 
+const updatePassword = async (passwordData, token) => {
+  const updatePasswordURL = `${usersURL}/profile/password`
+
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+
+    const response = await api.patch(updatePasswordURL, passwordData, config)
+    return response.data
+  } catch (error) {
+    console.error('Error updating password', error)
+    throw error
+  }
+}
+
 export const UserAPI = {
   searchUsers,
   login,
@@ -160,6 +178,7 @@ export const UserAPI = {
   updateGeneral,
   updateService,
   updateEducation,
+  updatePassword,
 }
 
 // defining the cancel API object for UserAPI
