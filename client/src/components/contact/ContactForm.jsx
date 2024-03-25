@@ -4,6 +4,8 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { contactFormSchema } from '../../schema'
 import InputGroup from '../profile/InputGroup'
 import FormButton from '../profile/FormButton'
+import emailjs from '@emailjs/browser'
+
 const ContactForm = () => {
   const [errorMessage, setErrorMessage] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
@@ -12,12 +14,36 @@ const ContactForm = () => {
     register,
     handleSubmit,
     reset,
+    setFocus,
     formState: { errors },
   } = useForm({ resolver: yupResolver(contactFormSchema) })
 
   // Email js required 3rd param to be html form el
   const onSubmit = async (formData, event) => {
     console.log('formWorking', formData)
+    const formEl = event.target
+    try {
+      setIsLoading(true)
+
+      await emailjs.sendForm(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        formEl,
+        {
+          publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+        },
+      )
+
+      setErrorMessage('')
+      setSuccessMessage('You will hear from our team shortly.')
+    } catch (error) {
+      console.error(error)
+      setErrorMessage('Oops! We could not send you message. Try again later')
+      setSuccessMessage('')
+    } finally {
+      setIsLoading(false)
+      reset()
+    }
   }
   return (
     <form
@@ -68,6 +94,7 @@ const ContactForm = () => {
         type="text"
         errors={errors}
         register={register}
+        setFocus={setFocus}
         tooltip="A first name will be sufficient"
       />
       <InputGroup
@@ -76,6 +103,7 @@ const ContactForm = () => {
         type="email"
         errors={errors}
         register={register}
+        setFocus={setFocus}
         tooltip="Provide you email so we can get back to you."
       />
       <InputGroup
@@ -85,6 +113,7 @@ const ContactForm = () => {
         errors={errors}
         register={register}
         tooltip=""
+        setFocus={setFocus}
       />
       <FormButton isLoading={isLoading} isDirty={true}>
         Contact Us

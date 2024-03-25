@@ -3,8 +3,8 @@ import contactIllustration from '../assets/contactIllustration.svg'
 
 const Contact = () => {
   return (
-    <div className="my-10 flex-grow flex items-center">
-      <div className="px-4 max-w-{1200px] mx-auto md:grid md:grid-cols-2 gap-10 lg:gap-20">
+    <div className="my-10 flex-grow flex items-center max-w-[1200px] mx-auto">
+      <div className="px-4 md:grid md:grid-cols-2 gap-10 lg:gap-20">
         <div className="mb-5">
           <h1 className="text-4xl text-bold text-primary text-center mb-5 md:text-5xl">
             Contact Us

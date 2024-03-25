@@ -28,6 +28,7 @@
     "server"
   ],
   "dependencies": {
+    "@emailjs/browser": "^4.3.3",
     "pino-pretty": "^10.3.1"
   }
 }
