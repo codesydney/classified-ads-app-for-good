@@ -84,11 +84,11 @@ const getUsers = async (
   isAuthenticated,
 ) => {
   let matchCriteria = {
-    hideProfile: false,
+    $and: [{ hideProfile: false }],
   }
 
   if (searchQuery.length >= 3) {
-    matchCriteria = {
+    matchCriteria.$and.push({
       $or: [
         { firstName: { $regex: searchQuery, $options: 'i' } },
         { lastName: { $regex: searchQuery, $options: 'i' } },
@@ -102,7 +102,10 @@ const getUsers = async (
         { 'service.serviceName': { $regex: searchQuery, $options: 'i' } },
         { 'service.serviceUrl': { $regex: searchQuery, $options: 'i' } },
       ],
-    }
+    })
+  } else {
+    // If no searchQuery, just ensure hideProfile: false is the only criteria
+    matchCriteria = { hideProfile: false }
   }
 
   let skip = (page - 1) * limit
@@ -119,6 +122,8 @@ const getUsers = async (
       : users.map(userDetails =>
           constructUnauthenticatedUsersResponse(userDetails),
         )
+
+    console.log('users', users)
 
     return {
       data: usersResponse,
