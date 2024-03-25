@@ -123,6 +123,10 @@ const UserSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    displayProfile: {
+      type: Boolean,
+      default: true,
+    },
   },
   {
     timestamps: true,
