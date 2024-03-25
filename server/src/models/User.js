@@ -123,9 +123,9 @@ const UserSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    displayProfile: {
+    hideProfile: {
       type: Boolean,
-      default: true,
+      default: false,
     },
   },
   {

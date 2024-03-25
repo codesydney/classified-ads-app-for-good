@@ -37,12 +37,6 @@ const getUserById = async id => {
   return userObject
 }
 
-const hasNestedFieldsUpdated = (nestedObject, requiredFields) => {
-  return requiredFields.every(
-    field => nestedObject[field] !== undefined && nestedObject[field] !== null,
-  )
-}
-
 const updateAlumniProfile = async (userId, profileUpdates) => {
   const updatedUser = await User.findByIdAndUpdate(
     userId,
@@ -89,7 +83,10 @@ const getUsers = async (
   { searchQuery = '', page = 1, limit = 10 },
   isAuthenticated,
 ) => {
-  let matchCriteria = {}
+  let matchCriteria = {
+    hideProfile: false,
+  }
+
   if (searchQuery.length >= 3) {
     matchCriteria = {
       $or: [

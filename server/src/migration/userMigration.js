@@ -89,7 +89,7 @@ const generateUser = async () => ({
   },
   isAutomated: true,
   isOfficer: false,
-  displayProfile: true,
+  hideProfile: false,
 })
 
 // Function to insert a batch of users into the database
