@@ -41,6 +41,8 @@ router.patch(
   UserController.updateEducationInformation,
 )
 
+router.patch('/profile/password', verifyToken, UserController.updatePassword)
+
 router.post(
   '/signup',
   signupValidation,
