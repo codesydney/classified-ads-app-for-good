@@ -1,23 +1,26 @@
 const User = require('../models/User')
 
-// This is breaking my build. If you are a user without these fields -> will break on their own page.
 const constructUnauthenticatedUsersResponse = user => {
+  const safeUser = user || {}
+  const safeEducation = safeUser.education || {}
+  const safeService = safeUser.service || {}
+
   return {
-    id: user.id,
-    firstName: user.firstName,
-    lastName: user.lastName,
-    fullName: user.fullName,
-    state: user.state,
-    alumniProfilePicture: user.alumniProfilePicture,
+    id: safeUser.id || '',
+    firstName: safeUser.firstName || '',
+    lastName: safeUser.lastName || '',
+    fullName: safeUser.fullName || '',
+    state: safeUser.state || '',
+    alumniProfilePicture: safeUser.alumniProfilePicture || '',
     education: {
-      course: user.education.course,
-      college: user.education.college,
-      yearGraduated: user.education.yearGraduated,
+      course: safeEducation.course || '',
+      college: safeEducation.college || '',
+      yearGraduated: safeEducation.yearGraduated || '',
     },
     service: {
-      serviceName: user.service.serviceName,
-      serviceLogo: user.service.serviceLogo,
-      serviceUrl: user.service.serviceUrl,
+      serviceName: safeService.serviceName || '',
+      serviceLogo: safeService.serviceLogo || '',
+      serviceUrl: safeService.serviceUrl || '',
     },
   }
 }
@@ -122,8 +125,6 @@ const getUsers = async (
       : users.map(userDetails =>
           constructUnauthenticatedUsersResponse(userDetails),
         )
-
-    console.log('users', users)
 
     return {
       data: usersResponse,
