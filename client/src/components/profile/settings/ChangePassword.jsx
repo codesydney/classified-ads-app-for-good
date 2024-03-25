@@ -1,7 +1,8 @@
 import InputGroup from '../InputGroup.jsx'
 import FormButton from '../FormButton.jsx'
 import { useState } from 'react'
-
+import { changePasswordSchema } from '../../../schema/index.js'
+import { yupResolver } from '@hookform/resolvers/yup'
 const ChangePassword = () => {
   const [formOpen, setFormOpen] = useState(false)
   return (
