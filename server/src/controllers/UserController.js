@@ -308,11 +308,18 @@ const updatePassword = catchAsync(async (req, res) => {
 const deleteMe = catchAsync(async (req, res) => {
   const { id } = req.user
 
-  // return res.status(400).json({ status: 'Error' })
+  const deletedUser = await UserService.deleteUserProfile(id)
 
-  return res.json({
+  if (!deletedUser) {
+    return res.status(404).json({
+      status: 'Error',
+      message: 'User not found',
+    })
+  }
+
+  return res.status(204).json({
     status: 'OK',
-    message: 'Endpoint being hit',
+    message: 'User ',
   })
 })
 

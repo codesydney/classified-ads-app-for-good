@@ -160,6 +160,16 @@ const getUserProfile = async (userId, isAuthenticated) => {
   }
 }
 
+const deleteUserProfile = async userId => {
+  const deletedUser = await User.findByIdAndDelete(userId)
+
+  if (!deletedUser) {
+    return null
+  }
+
+  return deletedUser
+}
+
 module.exports = {
   getUserById,
   updateAlumniProfile,
@@ -169,4 +179,5 @@ module.exports = {
   getUsers,
   getUserProfile,
   getUserByIdMongooseDoc,
+  deleteUserProfile,
 }
