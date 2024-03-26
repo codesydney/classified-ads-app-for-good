@@ -37,6 +37,17 @@ const getUserById = async id => {
   return userObject
 }
 
+// Need to return a mongoose doc to run .verifyPassword() and password field
+const getUserByIdMongooseDoc = async id => {
+  const user = await User.findById(id).select('+password')
+
+  if (!user) {
+    return null
+  }
+
+  return user
+}
+
 const hasNestedFieldsUpdated = (nestedObject, requiredFields) => {
   return requiredFields.every(
     field => nestedObject[field] !== undefined && nestedObject[field] !== null,
@@ -157,4 +168,5 @@ module.exports = {
   findUserByEmailWithPassword,
   getUsers,
   getUserProfile,
+  getUserByIdMongooseDoc,
 }

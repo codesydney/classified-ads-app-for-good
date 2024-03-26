@@ -270,13 +270,38 @@ const getUserProfile = catchAsync(async (req, res) => {
   })
 })
 
+// Update password for authenticated user
 const updatePassword = catchAsync(async (req, res) => {
   const { id } = req.user
-  const passwordData = req.body
+  const { currentPassword, newPassword } = req.body
+  console.log(currentPassword)
+  // Fetch user
+  const user = await UserService.getUserByIdMongooseDoc(id)
+
+  if (!user) {
+    return res.status(404).json({
+      status: 'Error',
+      message: 'User not found',
+    })
+  }
+  console.log(user)
+  // check user entered valid current password.
+  const validPassword = await user.verifyPassword(currentPassword)
+
+  if (!validPassword) {
+    return res.status(401).json({
+      status: 'Error',
+      message: 'Invalid Credentials',
+    })
+  }
+
+  // Update password in db
+  user.password = newPassword
+  await user.save()
 
   res.status(200).json({
     status: 'OK',
-    message: 'endpoint wowrks',
+    message: 'User password successfully changed',
   })
 })
 

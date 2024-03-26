@@ -4,6 +4,7 @@ const {
   signupValidation,
   loginValidation,
   emailValidation,
+  changePasswordValidation,
   handleValidationResult,
 } = require('../middleware/validationMiddlewares')
 const { verifyToken } = require('../middleware/verifyToken')
@@ -41,7 +42,13 @@ router.patch(
   UserController.updateEducationInformation,
 )
 
-router.patch('/profile/password', verifyToken, UserController.updatePassword)
+router.patch(
+  '/profile/password',
+  changePasswordValidation,
+  handleValidationResult,
+  verifyToken,
+  UserController.updatePassword,
+)
 
 router.post(
   '/signup',
