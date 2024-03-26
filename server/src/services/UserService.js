@@ -66,8 +66,49 @@ const updateAlumniProfile = async (userId, profileUpdates) => {
   }
 
   const userObject = updatedUser.toObject()
+
   userObject.id = userObject._id
   delete userObject._id
+
+  // Check for the presence and non-emptiness of specific fields to determine if the profile is complete
+  const requiredFields = [
+    'firstName',
+    'lastName',
+    'email',
+    'state',
+    'postcode',
+    'story',
+    'alumniProfilePicture',
+    'education.college',
+    'education.course',
+    'education.yearGraduated',
+  ]
+  let isProfileComplete = true
+
+  for (const field of requiredFields) {
+    const fieldParts = field.split('.')
+    let fieldValue = userObject
+
+    for (const part of fieldParts) {
+      fieldValue = fieldValue[part]
+      if (fieldValue === undefined) {
+        // If the field is missing at any level, set isProfileComplete to false and break out of the loop
+        isProfileComplete = false
+        break
+      }
+    }
+
+    // If the field value is empty, set isProfileComplete to false
+    if (isProfileComplete && (fieldValue === '' || fieldValue === null)) {
+      isProfileComplete = false
+    }
+
+    // If isProfileComplete has been set to false, no need to check further fields
+    if (!isProfileComplete) break
+  }
+
+  // Update the isProfileComplete status based on the fields check
+  await User.findByIdAndUpdate(userId, { $set: { isProfileComplete } }).exec()
 
   return userObject
 }
