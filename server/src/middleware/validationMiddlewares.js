@@ -36,6 +36,25 @@ const emailValidation = [
     .withMessage('Invalid email format'),
 ]
 
+const changePasswordValidation = [
+  body('currentPassword')
+    .trim()
+    .isLength({ min: 6 })
+    .withMessage('Invalid password format'),
+  body('newPassword')
+    .trim()
+    .isLength({ min: 6 })
+    .withMessage('Password must be at least 6 characters'),
+  body('newPasswordConfirm')
+    .trim()
+    .custom((value, { req }) => {
+      if (value !== req.body.newPassword) {
+        throw new Error('Passwords do not match')
+      }
+      return true
+    }),
+]
+
 const handleValidationResult = (req, res, next) => {
   // Get validation errors from request body
   const result = validationResult(req)
@@ -52,5 +71,6 @@ module.exports = {
   loginValidation,
   signupValidation,
   emailValidation,
+  changePasswordValidation,
   handleValidationResult,
 }
