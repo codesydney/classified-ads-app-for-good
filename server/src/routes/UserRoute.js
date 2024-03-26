@@ -14,6 +14,8 @@ const router = express.Router()
 
 router.get('/', authenticationStatus, UserController.getUsers)
 
+router.delete('/me', verifyToken, UserController.deleteMe)
+
 router.get('/me', verifyToken, UserController.me)
 
 router.get(

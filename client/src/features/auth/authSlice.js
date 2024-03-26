@@ -10,6 +10,7 @@ import {
   updateService,
   updateEducation,
   updatePassword,
+  deleteAccount,
 } from './authAction'
 
 const initialState = {
@@ -211,6 +212,23 @@ const authSlice = createSlice({
       state.success = true
     })
     builder.addCase(updatePassword.rejected, (state, action) => {
+      state.loading = false
+      state.error = action.payload
+      state.success = false
+    })
+
+    // Delete acccount
+    builder.addCase(deleteAccount.pending, state => {
+      state.loading = true
+      state.error = null
+      state.success = false
+    })
+    builder.addCase(deleteAccount.fulfilled, state => {
+      state.loading = false
+      state.error = false
+      state.success = true
+    })
+    builder.addCase(deleteAccount.rejected, (state, action) => {
       state.loading = false
       state.error = action.payload
       state.success = false

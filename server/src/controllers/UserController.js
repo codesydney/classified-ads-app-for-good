@@ -305,6 +305,17 @@ const updatePassword = catchAsync(async (req, res) => {
   })
 })
 
+const deleteMe = catchAsync(async (req, res) => {
+  const { id } = req.user
+
+  // return res.status(400).json({ status: 'Error' })
+
+  return res.json({
+    status: 'OK',
+    message: 'Endpoint being hit',
+  })
+})
+
 module.exports = {
   signup,
   login,
@@ -317,4 +328,5 @@ module.exports = {
   updateEducationInformation,
   getUserProfile,
   updatePassword,
+  deleteMe,
 }

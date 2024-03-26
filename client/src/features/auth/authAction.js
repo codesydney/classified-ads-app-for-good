@@ -178,6 +178,23 @@ const updatePassword = createAsyncThunk(
   },
 )
 
+const deleteAccount = createAsyncThunk(
+  'auth/deleteAccount',
+  async (_, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem('accessToken')
+      const response = await UserAPI.deleteAccount(token)
+      return response
+    } catch (error) {
+      if (error.response && error.response.data.error) {
+        return rejectWithValue(error.response.data.error)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  },
+)
+
 export {
   login,
   signUp,
@@ -189,4 +206,5 @@ export {
   updateService,
   updateEducation,
   updatePassword,
+  deleteAccount,
 }
