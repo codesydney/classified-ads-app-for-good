@@ -46,11 +46,11 @@ const ChangePassword = () => {
   }
 
   return (
-    <div className="mb-4" onSubmit={handleSubmit(onSubmit)}>
+    <div className="mb-8">
       <h3 className="text-bold text-xl mb-2">Change Password</h3>
       <div className="">
         {formOpen ? (
-          <form className="">
+          <form className="" onSubmit={handleSubmit(onSubmit)}>
             {errorMessage && (
               <div
                 role="alert"
