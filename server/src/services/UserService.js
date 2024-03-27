@@ -1,26 +1,22 @@
 const User = require('../models/User')
 
 const constructUnauthenticatedUsersResponse = user => {
-  const safeUser = user || {}
-  const safeEducation = safeUser.education || {}
-  const safeService = safeUser.service || {}
-
   return {
-    id: safeUser.id || '',
-    firstName: safeUser.firstName || '',
-    lastName: safeUser.lastName || '',
-    fullName: safeUser.fullName || '',
-    state: safeUser.state || '',
-    alumniProfilePicture: safeUser.alumniProfilePicture || '',
+    id: user.id,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    fullName: user.fullName,
+    state: user.state,
+    alumniProfilePicture: user.alumniProfilePicture,
     education: {
-      course: safeEducation.course || '',
-      college: safeEducation.college || '',
-      yearGraduated: safeEducation.yearGraduated || '',
+      course: user.education.course,
+      college: user.education.college,
+      yearGraduated: user.education.yearGraduated,
     },
     service: {
-      serviceName: safeService.serviceName || '',
-      serviceLogo: safeService.serviceLogo || '',
-      serviceUrl: safeService.serviceUrl || '',
+      serviceName: user.service.serviceName,
+      serviceLogo: user.service.serviceLogo,
+      serviceUrl: user.service.serviceUrl,
     },
   }
 }
@@ -38,6 +34,17 @@ const getUserById = async id => {
   delete userObject._id
 
   return userObject
+}
+
+// Need to return a mongoose doc to run .verifyPassword() and password field
+const getUserByIdMongooseDoc = async id => {
+  const user = await User.findById(id).select('+password')
+
+  if (!user) {
+    return null
+  }
+
+  return user
 }
 
 const updateAlumniProfile = async (userId, profileUpdates) => {
@@ -86,12 +93,9 @@ const getUsers = async (
   { searchQuery = '', page = 1, limit = 10 },
   isAuthenticated,
 ) => {
-  let matchCriteria = {
-    $and: [{ hideProfile: false }],
-  }
-
+  let matchCriteria = {}
   if (searchQuery.length >= 3) {
-    matchCriteria.$and.push({
+    matchCriteria = {
       $or: [
         { firstName: { $regex: searchQuery, $options: 'i' } },
         { lastName: { $regex: searchQuery, $options: 'i' } },
@@ -105,10 +109,7 @@ const getUsers = async (
         { 'service.serviceName': { $regex: searchQuery, $options: 'i' } },
         { 'service.serviceUrl': { $regex: searchQuery, $options: 'i' } },
       ],
-    })
-  } else {
-    // If no searchQuery, just ensure hideProfile: false is the only criteria
-    matchCriteria = { hideProfile: false }
+    }
   }
 
   let skip = (page - 1) * limit
@@ -142,13 +143,6 @@ const getUsers = async (
 }
 
 const getUserProfile = async (userId, isAuthenticated) => {
-  // check that the user has not set their profile to be hidden
-  const user = await User.findById(userId).exec()
-
-  if (!user || user.hideProfile) {
-    return null
-  }
-
   const userDetails = await getUserById(userId)
 
   // based on the authentication status, filter out some fields
@@ -159,6 +153,16 @@ const getUserProfile = async (userId, isAuthenticated) => {
   }
 }
 
+const deleteUserProfile = async userId => {
+  const deletedUser = await User.findByIdAndDelete(userId)
+
+  if (!deletedUser) {
+    return null
+  }
+
+  return deletedUser
+}
+
 module.exports = {
   getUserById,
   updateAlumniProfile,
@@ -167,4 +171,6 @@ module.exports = {
   findUserByEmailWithPassword,
   getUsers,
   getUserProfile,
+  getUserByIdMongooseDoc,
+  deleteUserProfile,
 }
