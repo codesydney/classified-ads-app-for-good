@@ -48,12 +48,6 @@ const getUserByIdMongooseDoc = async id => {
   return user
 }
 
-const hasNestedFieldsUpdated = (nestedObject, requiredFields) => {
-  return requiredFields.every(
-    field => nestedObject[field] !== undefined && nestedObject[field] !== null,
-  )
-}
-
 const updateAlumniProfile = async (userId, profileUpdates) => {
   const updatedUser = await User.findByIdAndUpdate(
     userId,
