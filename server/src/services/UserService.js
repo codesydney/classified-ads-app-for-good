@@ -1,22 +1,26 @@
 const User = require('../models/User')
 
 const constructUnauthenticatedUsersResponse = user => {
+  const safeUser = user || {}
+  const safeEducation = safeUser.education || {}
+  const safeService = safeUser.service || {}
+
   return {
-    id: user.id,
-    firstName: user.firstName,
-    lastName: user.lastName,
-    fullName: user.fullName,
-    state: user.state,
-    alumniProfilePicture: user.alumniProfilePicture,
+    id: safeUser.id || '',
+    firstName: safeUser.firstName || '',
+    lastName: safeUser.lastName || '',
+    fullName: safeUser.fullName || '',
+    state: safeUser.state || '',
+    alumniProfilePicture: safeUser.alumniProfilePicture || '',
     education: {
-      course: user.education.course,
-      college: user.education.college,
-      yearGraduated: user.education.yearGraduated,
+      course: safeEducation.course || '',
+      college: safeEducation.college || '',
+      yearGraduated: safeEducation.yearGraduated || '',
     },
     service: {
-      serviceName: user.service.serviceName,
-      serviceLogo: user.service.serviceLogo,
-      serviceUrl: user.service.serviceUrl,
+      serviceName: safeService.serviceName || '',
+      serviceLogo: safeService.serviceLogo || '',
+      serviceUrl: safeService.serviceUrl || '',
     },
   }
 }
@@ -93,9 +97,12 @@ const getUsers = async (
   { searchQuery = '', page = 1, limit = 10 },
   isAuthenticated,
 ) => {
-  let matchCriteria = {}
+  let matchCriteria = {
+    $and: [{ hideProfile: false }],
+  }
+
   if (searchQuery.length >= 3) {
-    matchCriteria = {
+    matchCriteria.$and.push({
       $or: [
         { firstName: { $regex: searchQuery, $options: 'i' } },
         { lastName: { $regex: searchQuery, $options: 'i' } },
@@ -109,7 +116,10 @@ const getUsers = async (
         { 'service.serviceName': { $regex: searchQuery, $options: 'i' } },
         { 'service.serviceUrl': { $regex: searchQuery, $options: 'i' } },
       ],
-    }
+    })
+  } else {
+    // If no searchQuery, just ensure hideProfile: false is the only criteria
+    matchCriteria = { hideProfile: false }
   }
 
   let skip = (page - 1) * limit
@@ -143,6 +153,13 @@ const getUsers = async (
 }
 
 const getUserProfile = async (userId, isAuthenticated) => {
+  // check that the user has not set their profile to be hidden
+  const user = await User.findById(userId).exec()
+
+  if (!user || user.hideProfile) {
+    return null
+  }
+
   const userDetails = await getUserById(userId)
 
   // based on the authentication status, filter out some fields
