@@ -263,6 +263,13 @@ const getUserProfile = catchAsync(async (req, res) => {
 
   const userDetails = await UserService.getUserProfile(userId, isAuthenticated)
 
+  if (!userDetails) {
+    return res.status(404).json({
+      status: 'Error',
+      message: 'User not found',
+    })
+  }
+
   res.status(200).json({
     status: 'OK',
     message: 'User retrieved successfully',
