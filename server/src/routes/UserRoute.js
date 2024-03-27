@@ -4,6 +4,7 @@ const {
   signupValidation,
   loginValidation,
   emailValidation,
+  changePasswordValidation,
   handleValidationResult,
 } = require('../middleware/validationMiddlewares')
 const { verifyToken } = require('../middleware/verifyToken')
@@ -12,6 +13,8 @@ const { authenticationStatus } = require('../middleware/authenticationStatus')
 const router = express.Router()
 
 router.get('/', authenticationStatus, UserController.getUsers)
+
+router.delete('/me', verifyToken, UserController.deleteMe)
 
 router.get('/me', verifyToken, UserController.me)
 
@@ -41,7 +44,13 @@ router.patch(
   UserController.updateEducationInformation,
 )
 
-router.patch('/profile/password', verifyToken, UserController.updatePassword)
+router.patch(
+  '/profile/password',
+  changePasswordValidation,
+  handleValidationResult,
+  verifyToken,
+  UserController.updatePassword,
+)
 
 router.post(
   '/signup',

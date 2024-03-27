@@ -1,12 +1,12 @@
-import SettingsForm from './SettingsForm'
 import SectionHeading from '../ProfileSectionHeading'
 import ChangePassword from './ChangePassword'
+import DeleteAccount from './DeleteAccount'
 const ProfileSettings = () => {
   return (
     <div className="">
       <SectionHeading>Settings</SectionHeading>
       <ChangePassword />
-      <SettingsForm />
+      <DeleteAccount />
     </div>
   )
 }

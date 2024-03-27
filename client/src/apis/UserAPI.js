@@ -166,6 +166,24 @@ const updatePassword = async (passwordData, token) => {
   }
 }
 
+const deleteAccount = async token => {
+  const deleteAccountURL = `${usersURL}/me`
+
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+
+    const response = await api.delete(deleteAccountURL, config)
+    return response.data
+  } catch (error) {
+    console.error('Deleting account', error)
+    throw error
+  }
+}
+
 export const UserAPI = {
   searchUsers,
   login,
@@ -179,6 +197,7 @@ export const UserAPI = {
   updateService,
   updateEducation,
   updatePassword,
+  deleteAccount,
 }
 
 // defining the cancel API object for UserAPI

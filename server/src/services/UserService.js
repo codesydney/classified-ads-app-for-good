@@ -40,6 +40,17 @@ const getUserById = async id => {
   return userObject
 }
 
+// Need to return a mongoose doc to run .verifyPassword() and password field
+const getUserByIdMongooseDoc = async id => {
+  const user = await User.findById(id).select('+password')
+
+  if (!user) {
+    return null
+  }
+
+  return user
+}
+
 const updateAlumniProfile = async (userId, profileUpdates) => {
   const updatedUser = await User.findByIdAndUpdate(
     userId,
@@ -159,6 +170,16 @@ const getUserProfile = async (userId, isAuthenticated) => {
   }
 }
 
+const deleteUserProfile = async userId => {
+  const deletedUser = await User.findByIdAndDelete(userId)
+
+  if (!deletedUser) {
+    return null
+  }
+
+  return deletedUser
+}
+
 module.exports = {
   getUserById,
   updateAlumniProfile,
@@ -167,4 +188,6 @@ module.exports = {
   findUserByEmailWithPassword,
   getUsers,
   getUserProfile,
+  getUserByIdMongooseDoc,
+  deleteUserProfile,
 }
