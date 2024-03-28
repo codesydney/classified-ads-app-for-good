@@ -52,7 +52,7 @@ const getUserByIdMongooseDoc = async id => {
 }
 
 const updateAlumniProfile = async (userId, profileUpdates) => {
-  const updatedUser = await User.findByIdAndUpdate(
+  const user = await User.findByIdAndUpdate(
     userId,
     { $set: profileUpdates },
     {
@@ -61,24 +61,21 @@ const updateAlumniProfile = async (userId, profileUpdates) => {
     },
   ).exec()
 
-  if (!updatedUser) {
+  if (!user) {
     return null
   }
 
-  const userObject = updatedUser.toObject()
-
-  userObject.id = userObject._id
-  delete userObject._id
+  const userObject = user.toObject()
 
   // Check for the presence and non-emptiness of specific fields to determine if the profile is complete
   const requiredFields = [
     'firstName',
     'lastName',
     'email',
-    'state',
+    'suburb',
     'postcode',
     'story',
-    'alumniProfilePicture',
+    // @TODO Add alumni picture as the required fields for photo complete
     'education.college',
     'education.course',
     'education.yearGraduated',
@@ -108,9 +105,19 @@ const updateAlumniProfile = async (userId, profileUpdates) => {
   }
 
   // Update the isProfileComplete status based on the fields check
-  await User.findByIdAndUpdate(userId, { $set: { isProfileComplete } }).exec()
+  const returnedUser = await User.findByIdAndUpdate(
+    userId,
+    { $set: { isProfileComplete } },
+    { new: true },
+  ).exec()
 
-  return userObject
+  const newReturnedUser = returnedUser.toObject()
+
+  newReturnedUser.id = newReturnedUser._id
+  delete newReturnedUser._id
+  delete newReturnedUser.__v
+
+  return newReturnedUser
 }
 
 const findUserByEmail = email => {
