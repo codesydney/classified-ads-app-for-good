@@ -10,7 +10,7 @@ const constructUnauthenticatedUsersResponse = user => {
     firstName: safeUser.firstName || '',
     lastName: safeUser.lastName || '',
     fullName: safeUser.fullName || '',
-    state: safeUser.state || '',
+    suburb: safeUser.suburb || '',
     alumniProfilePicture: safeUser.alumniProfilePicture || '',
     education: {
       course: safeEducation.course || '',
@@ -52,7 +52,7 @@ const getUserByIdMongooseDoc = async id => {
 }
 
 const updateAlumniProfile = async (userId, profileUpdates) => {
-  const updatedUser = await User.findByIdAndUpdate(
+  const user = await User.findByIdAndUpdate(
     userId,
     { $set: profileUpdates },
     {
@@ -61,15 +61,63 @@ const updateAlumniProfile = async (userId, profileUpdates) => {
     },
   ).exec()
 
-  if (!updatedUser) {
+  if (!user) {
     return null
   }
 
-  const userObject = updatedUser.toObject()
-  userObject.id = userObject._id
-  delete userObject._id
+  const userObject = user.toObject()
 
-  return userObject
+  // Check for the presence and non-emptiness of specific fields to determine if the profile is complete
+  const requiredFields = [
+    'firstName',
+    'lastName',
+    'email',
+    'suburb',
+    'postcode',
+    'story',
+    // @TODO Add alumni picture as the required fields for photo complete
+    'education.college',
+    'education.course',
+    'education.yearGraduated',
+  ]
+  let isProfileComplete = true
+
+  for (const field of requiredFields) {
+    const fieldParts = field.split('.')
+    let fieldValue = userObject
+
+    for (const part of fieldParts) {
+      fieldValue = fieldValue[part]
+      if (fieldValue === undefined) {
+        // If the field is missing at any level, set isProfileComplete to false and break out of the loop
+        isProfileComplete = false
+        break
+      }
+    }
+
+    // If the field value is empty, set isProfileComplete to false
+    if (isProfileComplete && (fieldValue === '' || fieldValue === null)) {
+      isProfileComplete = false
+    }
+
+    // If isProfileComplete has been set to false, no need to check further fields
+    if (!isProfileComplete) break
+  }
+
+  // Update the isProfileComplete status based on the fields check
+  const returnedUser = await User.findByIdAndUpdate(
+    userId,
+    { $set: { isProfileComplete } },
+    { new: true },
+  ).exec()
+
+  const newReturnedUser = returnedUser.toObject()
+
+  newReturnedUser.id = newReturnedUser._id
+  delete newReturnedUser._id
+  delete newReturnedUser.__v
+
+  return newReturnedUser
 }
 
 const findUserByEmail = email => {
@@ -98,7 +146,7 @@ const getUsers = async (
   isAuthenticated,
 ) => {
   let matchCriteria = {
-    $and: [{ hideProfile: false }],
+    $and: [{ hideProfile: false }, { isProfileComplete: true }],
   }
 
   if (searchQuery.length >= 3) {
