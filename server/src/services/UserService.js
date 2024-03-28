@@ -10,7 +10,7 @@ const constructUnauthenticatedUsersResponse = user => {
     firstName: safeUser.firstName || '',
     lastName: safeUser.lastName || '',
     fullName: safeUser.fullName || '',
-    state: safeUser.state || '',
+    suburb: safeUser.suburb || '',
     alumniProfilePicture: safeUser.alumniProfilePicture || '',
     education: {
       course: safeEducation.course || '',
