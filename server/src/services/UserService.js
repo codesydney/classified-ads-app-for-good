@@ -146,7 +146,7 @@ const getUsers = async (
   isAuthenticated,
 ) => {
   let matchCriteria = {
-    $and: [{ hideProfile: false }],
+    $and: [{ hideProfile: false }, { isProfileComplete: true }],
   }
 
   if (searchQuery.length >= 3) {
