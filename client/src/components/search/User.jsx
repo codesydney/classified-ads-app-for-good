@@ -9,19 +9,19 @@ const User = ({ user }) => {
         alumniProfilePicture={user?.alumniProfilePicture}
       />
       <div className="p-2 px-4 flex flex-col flex-grow">
-        <h2 className="font-semibold text-xl mt-2">{user.fullName}</h2>
+        <h2 className="font-bold text-xl mt-2">{user.fullName}</h2>
         {user?.suburb && <h2>{user.suburb}</h2>}
 
         {user?.education && (
-          <div className="mt-[10px]">
-            <h2>{user.education.college}</h2>
+          <div className="my-[16px]">
+            <h2 className="font-semibold">{user.education.college}</h2>
             <h2>{user.education.course}</h2>
             <h2>{user.education.yearGraduated}</h2>
           </div>
         )}
 
         {user.service && (
-          <div className="mt-[10px] w-[100%] flex flex-wrap mb-[10px]">
+          <div className="mt-[10px] w-[100%] flex flex-wrap mb-[16px]">
             <div
               style={{
                 overflowWrap: 'break-word',
