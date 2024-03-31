@@ -1,4 +1,6 @@
 const User = require('../models/User')
+const { uploadImageToS3 } = require('./ImageUploadService')
+require('dotenv').config()
 
 const constructUnauthenticatedUsersResponse = user => {
   const safeUser = user || {}
@@ -228,26 +230,29 @@ const deleteUserProfile = async userId => {
   return deletedUser
 }
 
-const updateProfileImage = async (userId, imageUrl) => {
-  const user = await User.findByIdAndUpdate(
-    userId,
-    { $set: { alumniProfilePicture: imageUrl } },
-    {
-      new: true,
-      select: '-__v -isAutomated',
-    },
-  ).exec()
+const updateProfileImage = async (userId, file) => {
+  try {
+    const imageUrl = await uploadImageToS3(file, process.env.AWS_BUCKET_NAME)
 
-  if (!user) {
-    return null
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { $set: { alumniProfilePicture: imageUrl } },
+      { new: true, select: '-__v -isAutomated' },
+    ).exec()
+
+    if (!user) {
+      throw new Error('User not found')
+    }
+
+    const userObject = user.toObject()
+    userObject.id = userObject._id
+    delete userObject._id
+
+    return userObject
+  } catch (err) {
+    console.error('Error updating profile image:', err)
+    throw err
   }
-
-  const userObject = user.toObject()
-
-  userObject.id = userObject._id
-  delete userObject._id
-
-  return userObject
 }
 
 module.exports = {
