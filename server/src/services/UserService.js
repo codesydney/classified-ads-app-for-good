@@ -231,28 +231,23 @@ const deleteUserProfile = async userId => {
 }
 
 const updateProfileImage = async (userId, file) => {
-  try {
-    const imageUrl = await uploadImageToS3(file, process.env.AWS_BUCKET_NAME)
+  const imageUrl = await uploadImageToS3(file, process.env.AWS_BUCKET_NAME)
 
-    const user = await User.findByIdAndUpdate(
-      userId,
-      { $set: { alumniProfilePicture: imageUrl } },
-      { new: true, select: '-__v -isAutomated' },
-    ).exec()
+  const user = await User.findByIdAndUpdate(
+    userId,
+    { $set: { alumniProfilePicture: imageUrl } },
+    { new: true, select: '-__v -isAutomated' },
+  ).exec()
 
-    if (!user) {
-      throw new Error('User not found')
-    }
-
-    const userObject = user.toObject()
-    userObject.id = userObject._id
-    delete userObject._id
-
-    return userObject
-  } catch (err) {
-    console.error('Error updating profile image:', err)
-    throw err
+  if (!user) {
+    return null
   }
+
+  const userObject = user.toObject()
+  userObject.id = userObject._id
+  delete userObject._id
+
+  return userObject
 }
 
 module.exports = {

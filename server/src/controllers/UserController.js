@@ -329,9 +329,16 @@ const deleteMe = catchAsync(async (req, res) => {
   })
 })
 
-const updateProfileImage = catchAsync(async (req, res) => {
+const updateProfileImage = catchAsync(async (req, res, next) => {
   const { id } = req.user
   const { file } = req
+
+  if (!file) {
+    return res.status(400).json({
+      status: 'Error',
+      message: 'No file uploaded',
+    })
+  }
 
   const updatedUser = await UserService.updateProfileImage(id, file)
 
@@ -344,7 +351,7 @@ const updateProfileImage = catchAsync(async (req, res) => {
 
   return res.status(200).json({
     status: 'OK',
-    message: 'User profile image updated',
+    message: 'User profile image updated successfully',
     user: updatedUser,
   })
 })
