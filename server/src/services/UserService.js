@@ -228,12 +228,35 @@ const deleteUserProfile = async userId => {
   return deletedUser
 }
 
+const updateProfileImage = async (userId, imageUrl) => {
+  const user = await User.findByIdAndUpdate(
+    userId,
+    { $set: { alumniProfilePicture: imageUrl } },
+    {
+      new: true,
+      select: '-__v -isAutomated',
+    },
+  ).exec()
+
+  if (!user) {
+    return null
+  }
+
+  const userObject = user.toObject()
+
+  userObject.id = userObject._id
+  delete userObject._id
+
+  return userObject
+}
+
 module.exports = {
   getUserById,
   updateAlumniProfile,
   findUserByEmail,
   createUser,
   findUserByEmailWithPassword,
+  updateProfileImage,
   getUsers,
   getUserProfile,
   getUserByIdMongooseDoc,

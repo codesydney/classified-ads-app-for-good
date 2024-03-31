@@ -291,7 +291,6 @@ const updatePassword = catchAsync(async (req, res) => {
       message: 'User not found',
     })
   }
-  console.log(user)
   // check user entered valid current password.
   const validPassword = await user.verifyPassword(currentPassword)
 
@@ -330,6 +329,26 @@ const deleteMe = catchAsync(async (req, res) => {
   })
 })
 
+const updateProfileImage = catchAsync(async (req, res) => {
+  const { id } = req.user
+  const { file } = req
+
+  const updatedUser = await UserService.updateProfileImage(id, file)
+
+  if (!updatedUser) {
+    return res.status(404).json({
+      status: 'Error',
+      message: 'User not found',
+    })
+  }
+
+  return res.status(200).json({
+    status: 'OK',
+    message: 'User profile image updated',
+    user: updatedUser,
+  })
+})
+
 module.exports = {
   signup,
   login,
@@ -337,6 +356,7 @@ module.exports = {
   resetPassword,
   getUsers,
   me,
+  updateProfileImage,
   updateAlumniProfile,
   updateServiceInformation,
   updateEducationInformation,

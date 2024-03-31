@@ -26,6 +26,8 @@ router.get(
 
 router.patch('/profile/me', verifyToken, UserController.updateAlumniProfile)
 
+router.patch('/profile/image', verifyToken, UserController.updateProfileImage)
+
 router.patch(
   '/profile/general',
   verifyToken,
