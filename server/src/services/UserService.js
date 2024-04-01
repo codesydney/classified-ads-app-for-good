@@ -77,7 +77,7 @@ const updateAlumniProfile = async (userId, profileUpdates) => {
     'suburb',
     'postcode',
     'story',
-    // @TODO Add alumni picture as the required fields for photo complete
+    'alumniProfilePicture',
     'education.college',
     'education.course',
     'education.yearGraduated',
