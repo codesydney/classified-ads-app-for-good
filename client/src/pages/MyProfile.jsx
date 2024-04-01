@@ -21,7 +21,7 @@ const MyProfile = () => {
     story: '',
     alumniProfilePicture: '',
     education: { course: '', college: '', yearGraduated: '' },
-    service: { serviceName: '', serviceLogo: '', serviceUrl: '' },
+    service: { serviceName: '', serviceDescription: '', serviceUrl: '' },
   })
 
   useEffect(() => {
@@ -44,7 +44,7 @@ const MyProfile = () => {
         },
         service: currentUser.service || {
           serviceName: '',
-          serviceLogo: '',
+          serviceDescription: '',
           serviceUrl: '',
         },
       })
@@ -226,14 +226,11 @@ const MyProfile = () => {
             />
           </label>
           <label className="block">
-            <span className="text-gray-700">
-              Service Logo (to be replaced with real image drop and upload to S3
-              to get url)
-            </span>
+            <span className="text-gray-700">Service Description</span>
             <input
               type="text"
-              name="service.serviceLogo"
-              value={profile.service.serviceLogo}
+              name="service.serviceDescription"
+              value={profile.service.serviceDescription}
               onChange={handleChange}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             />

@@ -143,9 +143,9 @@
  *             serviceName:
  *               type: string
  *               example: 'Web Development'
- *             serviceLogo:
+ *             serviceDescription:
  *               type: string
- *               example: 'logo.png'
+ *               example: 'We provide the best service.'
  *             serviceUrl:
  *               type: string
  *               example: 'https://example.com'
