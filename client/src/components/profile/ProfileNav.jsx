@@ -24,7 +24,7 @@ const ProfileNav = () => {
         <img
           src={
             currentUser?.alumniProfilePicture
-              ? currentUser.almniProfilePicture
+              ? currentUser.alumniProfilePicture
               : profileImg
           }
           alt="Avatarimg"
