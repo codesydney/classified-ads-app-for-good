@@ -21,7 +21,7 @@ const constructUnauthenticatedUsersResponse = user => {
     },
     service: {
       serviceName: safeService.serviceName || '',
-      serviceLogo: safeService.serviceLogo || '',
+      serviceDescription: safeService.serviceDescription || '',
       serviceUrl: safeService.serviceUrl || '',
     },
   }
@@ -164,6 +164,9 @@ const getUsers = async (
         { 'education.course': { $regex: searchQuery, $options: 'i' } },
         { 'education.college': { $regex: searchQuery, $options: 'i' } },
         { 'service.serviceName': { $regex: searchQuery, $options: 'i' } },
+        {
+          'service.serviceDescription': { $regex: searchQuery, $options: 'i' },
+        },
         { 'service.serviceUrl': { $regex: searchQuery, $options: 'i' } },
       ],
     })

@@ -84,8 +84,8 @@ const generateUser = async () => ({
   },
   service: {
     serviceName: faker.helpers.arrayElement(serviceNames),
-    serviceLogo: faker.image.avatar(),
-    serviceUrl: faker.image.avatar(),
+    serviceDescription: 'We provide the best services',
+    serviceUrl: 'https://www.example.com',
   },
   isAutomated: true,
   isOfficer: false,

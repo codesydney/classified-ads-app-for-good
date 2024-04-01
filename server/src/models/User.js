@@ -102,7 +102,7 @@ const UserSchema = new Schema(
         trim: true,
         minLength: [3, 'Service name must be at least 3 characters long'],
       },
-      serviceLogo: {
+      serviceDescription: {
         type: String,
         trim: true,
       },

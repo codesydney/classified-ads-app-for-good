@@ -1,8 +1,4 @@
-import {
-  createBrowserRouter,
-  RouterProvider,
-  useRouteError,
-} from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import App from '../App'
 import ProtectedRoute from './ProtectedRoute.jsx'
 import Home from '../pages/Home'
@@ -13,7 +9,6 @@ import Signup from '../pages/Signup'
 import RequestPasswordReset from '../pages/RequestPasswordReset'
 import ErrorComponent from '../components/errors/ErrorComponent.jsx'
 import ResetPassword from '../pages/ResetPassword'
-import MyProfile from '../pages/MyProfile.jsx'
 import ProfileLayout from '../components/profile/ProfileLayout.jsx'
 import ProfileGeneral from '../components/profile/general/ProfileGeneral.jsx'
 import ProfileService from '../components/profile/service/ProfileService.jsx'
@@ -57,16 +52,6 @@ const Router = () => {
           path: '/reset-password',
           element: <ResetPassword />,
         },
-        // {
-        //   path: '/profile/me',
-        //   element: <ProtectedRoute />,
-        //   children: [
-        //     {
-        //       index: true,
-        //       element: <MyProfile />,
-        //     },
-        //   ],
-        // },
         {
           path: '/profile/:userId',
           element: <UserProfile />,
@@ -96,14 +81,6 @@ const Router = () => {
               element: <ProfileSettings />,
             },
           ],
-        },
-        {
-          path: '/profile/me',
-          element: (
-            <ProtectedRoute>
-              <MyProfile />
-            </ProtectedRoute>
-          ),
         },
       ],
     },
