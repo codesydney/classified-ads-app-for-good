@@ -91,6 +91,7 @@ const updateProfile = createAsyncThunk(
   async (profileData, { getState, rejectWithValue }) => {
     try {
       const token = localStorage.getItem('accessToken')
+
       const response = await UserAPI.updateProfile(profileData, token)
       return response.data
     } catch (error) {
