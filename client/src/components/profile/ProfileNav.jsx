@@ -28,7 +28,7 @@ const ProfileNav = () => {
               : profileImg
           }
           alt="Avatarimg"
-          className="rounded-full w-[50px] h-[50px] md:w-[70px] md:h-[70px]"
+          className="rounded-full w-[50px] h-[50px] md:w-[70px] md:h-[70px] object-cover"
         />
         <p>Hello, {currentUser?.fullName}</p>
       </div>
