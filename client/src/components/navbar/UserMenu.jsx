@@ -76,9 +76,9 @@ const UserMenu = ({ currentUser }) => {
             transition
             cursor-pointer
           "
-          onClick={() => navigate('/about')}
+          onClick={() => navigate('/officers')}
         >
-          About
+          Officers
         </div>
         <div
           className="
@@ -93,9 +93,9 @@ const UserMenu = ({ currentUser }) => {
             transition
             cursor-pointer
           "
-          onClick={() => navigate('/contact')}
+          onClick={() => navigate('/developers')}
         >
-          Contact
+          Developers
         </div>
         <div
           onClick={toggleOpen}
@@ -165,12 +165,12 @@ const UserMenu = ({ currentUser }) => {
                     onClick={() => handleNavigate('/profile')}
                   />
                   <MenuItem
-                    label="About"
-                    onClick={() => handleNavigate('/about')}
+                    label="Officers"
+                    onClick={() => handleNavigate('/officers')}
                   />
                   <MenuItem
-                    label="Contact"
-                    onClick={() => handleNavigate('/contact')}
+                    label="Developers"
+                    onClick={() => handleNavigate('/developers')}
                   />
                 </div>
                 <hr />
@@ -188,12 +188,12 @@ const UserMenu = ({ currentUser }) => {
                 <div className="md:hidden">
                   <MenuItem label="Home" onClick={() => handleNavigate('/')} />
                   <MenuItem
-                    label="About"
-                    onClick={() => handleNavigate('/about')}
+                    label="Officers"
+                    onClick={() => handleNavigate('/officers')}
                   />
                   <MenuItem
-                    label="Contact"
-                    onClick={() => handleNavigate('/contact')}
+                    label="Developers"
+                    onClick={() => handleNavigate('/developers')}
                   />
                 </div>
                 <MenuItem
