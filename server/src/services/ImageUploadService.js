@@ -13,7 +13,7 @@ const s3Client = new S3Client({
 const uploadImageToS3 = async (file, bucketName) => {
   const uploadParams = {
     Bucket: bucketName,
-    Key: `uploads/${Date.now()}_${file.originalname}`,
+    Key: `images/${Date.now()}_${file.originalname}`,
     Body: file.buffer,
     ContentType: file.mimetype,
   }
