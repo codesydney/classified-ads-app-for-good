@@ -23,7 +23,7 @@ const EducationForm = () => {
     resolver: yupResolver(educationSchema),
   })
   const { currentUser, loading: isLoading } = useSelector(state => state.auth)
-  console.log(currentUser)
+
   useEffect(() => {
     if (currentUser) {
       const defaultVals = {
