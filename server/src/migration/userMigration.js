@@ -65,6 +65,8 @@ const universities = [
   'Macquarie University',
 ]
 
+const state = ['NSW', 'VIC', 'QLD', 'SA', 'WA', 'TAS', 'NT', 'ACT']
+
 // Function to generate a random user with the password 'hello123'
 const generateUser = async () => ({
   email: faker.internet.email(),
@@ -72,6 +74,7 @@ const generateUser = async () => ({
   firstName: faker.person.firstName(),
   lastName: faker.person.lastName(),
   phone: '0411222333',
+  state: faker.helpers.arrayElement(state),
   suburb: faker.location.city(),
   postcode: faker.location.zipCode('####'),
   facebookName: faker.internet.userName(),
