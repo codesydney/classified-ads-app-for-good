@@ -46,6 +46,12 @@ const UserSchema = new Schema(
         message: 'Invalid phone number format',
       },
     },
+    state: {
+      type: String,
+      trim: true,
+      minLength: [2, 'State must be at least 2 characters long'],
+      maxLength: [3, 'State must be at most 3 characters long'],
+    },
     suburb: {
       type: String,
       trim: true,
@@ -180,6 +186,7 @@ UserSchema.index({
   'education.course': 'text',
   'education.college': 'text',
   'service.serviceName': 'text',
+  'service.serviceDescription': 'text',
   'service.serviceUrl': 'text',
 })
 
