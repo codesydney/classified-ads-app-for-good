@@ -179,6 +179,7 @@ UserSchema.index({
   firstName: 'text',
   lastName: 'text',
   email: 'text',
+  state: 'text',
   suburb: 'text',
   postcode: 'text',
   facebookName: 'text',
