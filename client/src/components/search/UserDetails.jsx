@@ -29,7 +29,7 @@ const UserDetails = ({ userProfile }) => {
         )}
 
         <div className=" mt-4">
-          <h2 className="font-semibold">MyStory: </h2>
+          <h2 className="font-semibold">My Story: </h2>
           <p>{userProfile?.story}</p>
         </div>
 
@@ -44,11 +44,6 @@ const UserDetails = ({ userProfile }) => {
         {userProfile?.service && (
           <div className="mt-[10px] w-[100%] flex flex-wrap mb-[16px]">
             <div className=" flex flex-col gap-2">
-              <img
-                className=" w-[35px] h-[35px] rounded-full"
-                src={userProfile?.service?.serviceLogoUrl || defaultUserLogo}
-                alt={userProfile?.service?.serviceName}
-              />
               <div className=" break-words hyphens-auto whitespace-pre break-all">
                 <a
                   href={`${userProfile?.service?.serviceUrl}`}
