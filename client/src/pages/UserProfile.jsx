@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-hot-toast'
 import { useAppDispatch } from '../store.js'
 import { getUserProfile } from '../features/users/usersAction.js'
+import UserDetails from './../components/search/UserDetails'
 
 const UserProfile = () => {
   const params = useParams()
@@ -24,12 +25,7 @@ const UserProfile = () => {
     fetchUserProfile()
   }, [userId])
 
-  return (
-    <div className="mt-[30px]">
-      User Profile Page: {userId}
-      <pre>{JSON.stringify(userProfile, null, 4)}</pre>
-    </div>
-  )
+  return <UserDetails userProfile={userProfile} />
 }
 
 export default UserProfile
