@@ -64,9 +64,12 @@ const UserDetails = ({ userProfile }) => {
         )}
 
         <div className="flex gap-4 justify-center my-4">
-          <button className=" w-full sm:max-w-[50%] py-2 px-4 bg-primary text-white rounded flex-grow text-center border-primary border-2 hover:bg-primary/70 hover:border-transparent">
-            <Link to={`/`}>Go back</Link>
-          </button>
+          <Link
+            to={`/`}
+            className=" w-full py-2 px-4 bg-primary text-white rounded flex-grow text-center border-primary border-2 hover:bg-primary/70 hover:border-transparent"
+          >
+            <button>Go back</button>
+          </Link>
         </div>
       </div>
     </div>
