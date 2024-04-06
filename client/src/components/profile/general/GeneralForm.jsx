@@ -45,6 +45,18 @@ const GeneralForm = () => {
     }
   }, [currentUser])
 
+  const stateOptions = [
+    { value: '', label: 'Please select a state' },
+    { value: 'act', label: 'ACT' },
+    { value: 'nsw', label: 'NSW' },
+    { value: 'nt', label: 'NT' },
+    { value: 'qld', label: 'QLD' },
+    { value: 'sa', label: 'SA' },
+    { value: 'tas', label: 'TAS' },
+    { value: 'vic', label: 'VIC' },
+    { value: 'wa', label: 'WA' },
+  ]
+
   const onSubmit = async formData => {
     try {
       const fieldsToUpdate = formatDirtyFields(dirtyFields, formData)
@@ -137,13 +149,14 @@ const GeneralForm = () => {
         </div>
         <div className="sm:grid md:block lg:grid grid-cols-2 gap-10">
           <InputGroup
-            name="suburb"
-            label="Suburb"
-            type="text"
+            name="state"
+            label="State"
+            type="select"
             errors={errors}
             register={register}
             setFocus={setFocus}
             tooltip="This is a tooltip for the input"
+            options={stateOptions}
           />
           <InputGroup
             name="postcode"
