@@ -152,6 +152,8 @@ const getUsers = async (
     $and: [{ hideProfile: false }, { isProfileComplete: true }],
   }
 
+  let addRandomisation = false
+
   if (searchQuery.length >= 3) {
     matchCriteria.$and.push({
       $or: [
@@ -173,19 +175,36 @@ const getUsers = async (
       ],
     })
   } else {
-    // If no searchQuery, just ensure hideProfile: false is the only criteria
-    matchCriteria = { hideProfile: false }
+    addRandomisation = true
   }
 
   let skip = (page - 1) * limit
   limit = parseInt(limit)
 
   try {
-    const users = await User.find(matchCriteria).skip(skip).limit(limit)
+    const aggregationPipeline = [{ $match: matchCriteria }]
+
+    if (addRandomisation) {
+      aggregationPipeline.push(
+        { $addFields: { randomField: { $rand: {} } } },
+        { $sort: { randomField: 1 } },
+      )
+    }
+
+    aggregationPipeline.push(
+      { $skip: skip },
+      { $limit: limit },
+      {
+        $addFields: {
+          fullName: { $concat: ['$firstName', ' ', '$lastName'] },
+        },
+      },
+    )
+
+    const users = await User.aggregate(aggregationPipeline)
     const total = await User.countDocuments(matchCriteria)
     const totalPages = Math.ceil(total / limit)
 
-    // based on the authentication status, filter out some fields
     const usersResponse = isAuthenticated
       ? users
       : users.map(userDetails =>
