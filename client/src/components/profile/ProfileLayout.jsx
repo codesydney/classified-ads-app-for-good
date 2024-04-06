@@ -1,5 +1,6 @@
 import ProfileNav from './ProfileNav'
 import Header from './Header'
+import Consent from '../Consent.jsx'
 import { Outlet } from 'react-router-dom'
 
 const ProfileLayout = () => {
@@ -13,6 +14,10 @@ const ProfileLayout = () => {
           <Header />
           <div className="bg-white shadow-md rounded-md p-4">
             <Outlet />
+          </div>
+
+          <div className="mt-[25px]">
+            <Consent />
           </div>
         </div>
       </div>
