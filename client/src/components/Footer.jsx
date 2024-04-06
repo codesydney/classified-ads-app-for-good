@@ -1,5 +1,7 @@
 import { FaFacebookSquare } from 'react-icons/fa'
 import Logo from '../assets/logo.jpeg'
+import PrivacyPolicy from '../assets/pdf/Code.Sydney_Website_Privacy_Policy_2024.pdf'
+import Terms from '../assets/pdf/Code.Sydney_Client_Terms_2024.pdf'
 
 const Footer = () => {
   const year = new Date().getFullYear()
@@ -14,9 +16,32 @@ const Footer = () => {
         />
         <p className="font-bold">Connecting Thomasians Down Under</p>
         <p>Copyright © {year} - All right reserved</p>
+
+        <div>
+          <a
+            href={PrivacyPolicy}
+            className="hover:text-primary hover:underline"
+            target="_blank"
+          >
+            Privacy Policy 2024
+          </a>{' '}
+          |{' '}
+          <a
+            href={Terms}
+            className="hover:text-primary hover:underline"
+            target="_blank"
+          >
+            Terms 2024
+          </a>
+        </div>
+
         <p className="mt-[5px]">
           Web Development by{' '}
-          <a href="https://www.code.sydney/" className="hover:text-primary">
+          <a
+            href="https://www.code.sydney/"
+            className="hover:text-primary hover:underline"
+            target="_blank"
+          >
             Code.Sydney
           </a>
         </p>
