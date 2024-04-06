@@ -1,4 +1,4 @@
-import profileImg from '../../assets/placeholder.jpg'
+import profileImg from '../../../assets/placeholder.jpg'
 import EditAvatarModal from './EditAvatarModal'
 import { MdOutlineEdit } from 'react-icons/md'
 import { useState } from 'react'
@@ -25,7 +25,9 @@ const ProfileAvatar = ({ currentUser }) => {
         <MdOutlineEdit className="w-6 h-6 text-white" />
       </button>
       <p className="md:mt-6">Hello, {currentUser?.fullName}</p>
-      {modalOpen && <EditAvatarModal setModalOpen={setModalOpen} />}
+      {modalOpen && (
+        <EditAvatarModal profileImg={profileImg} setModalOpen={setModalOpen} />
+      )}
     </div>
   )
 }

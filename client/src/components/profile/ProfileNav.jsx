@@ -1,5 +1,5 @@
 import NavItem from './ProfileNavItem'
-import ProfileAvatar from './ProfileAvatar'
+import ProfileAvatar from './avatar/ProfileAvatar'
 import { PiCertificate } from 'react-icons/pi'
 import { RiAccountCircleLine } from 'react-icons/ri'
 import { MdOutlineBusinessCenter } from 'react-icons/md'
