@@ -78,7 +78,8 @@ const updateAlumniProfile = async (userId, profileUpdates) => {
     'state',
     'postcode',
     'story',
-    'alumniProfilePicture',
+    // @TODO turn this back on when the front end is ready
+    // 'alumniProfilePicture',
     'education.college',
     'education.course',
     'education.yearGraduated',
