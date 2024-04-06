@@ -35,6 +35,7 @@ const GeneralForm = () => {
         lastName: currentUser?.lastName || '',
         email: currentUser?.email || '',
         phone: currentUser?.phone || '',
+        state: currentUser?.state || '',
         suburb: currentUser?.suburb || '',
         postcode: currentUser?.postcode || '',
         facebookName: currentUser?.facebookName || '',
@@ -43,6 +44,18 @@ const GeneralForm = () => {
       reset(defaultVals)
     }
   }, [currentUser])
+
+  const stateOptions = [
+    { value: '', label: 'Please select a state' },
+    { value: 'act', label: 'ACT' },
+    { value: 'nsw', label: 'NSW' },
+    { value: 'nt', label: 'NT' },
+    { value: 'qld', label: 'QLD' },
+    { value: 'sa', label: 'SA' },
+    { value: 'tas', label: 'TAS' },
+    { value: 'vic', label: 'VIC' },
+    { value: 'wa', label: 'WA' },
+  ]
 
   const onSubmit = async formData => {
     try {
@@ -114,16 +127,16 @@ const GeneralForm = () => {
           setFocus={setFocus}
           tooltip="This is a tooltip for the input"
         />
-        <InputGroup
-          name="phone"
-          label="Phone Number"
-          type="text"
-          errors={errors}
-          register={register}
-          setFocus={setFocus}
-          tooltip="This is a tooltip for the input"
-        />
         <div className="sm:grid md:block lg:grid grid-cols-2 gap-10">
+          <InputGroup
+            name="phone"
+            label="Phone Number"
+            type="text"
+            errors={errors}
+            register={register}
+            setFocus={setFocus}
+            tooltip="This is a tooltip for the input"
+          />
           <InputGroup
             name="suburb"
             label="Suburb"
@@ -132,6 +145,18 @@ const GeneralForm = () => {
             register={register}
             setFocus={setFocus}
             tooltip="This is a tooltip for the input"
+          />
+        </div>
+        <div className="sm:grid md:block lg:grid grid-cols-2 gap-10">
+          <InputGroup
+            name="state"
+            label="State"
+            type="select"
+            errors={errors}
+            register={register}
+            setFocus={setFocus}
+            tooltip="This is a tooltip for the input"
+            options={stateOptions}
           />
           <InputGroup
             name="postcode"

@@ -20,18 +20,20 @@ const UserDetails = ({ userProfile }) => {
           <div className=" flex flex-col gap-1">
             <span>{userProfile?.email}</span>
             <span>{userProfile?.phone}</span>
-            <span>{userProfile?.state}</span>
+            <span>{userProfile?.state.toUpperCase()}</span>
             <span>{userProfile?.suburb}</span>
             <span>{userProfile?.postcode}</span>
           </div>
         ) : (
-          <span>{userProfile?.state}</span>
+          <span>{userProfile?.state.toUpperCase()}</span>
         )}
 
-        <div className=" mt-4">
-          <h2 className="font-semibold">My Story: </h2>
-          <p>{userProfile?.story}</p>
-        </div>
+        {userProfile?.story && (
+          <div className=" mt-4">
+            <h2 className="font-semibold">My Story: </h2>
+            <p>{userProfile?.story}</p>
+          </div>
+        )}
 
         {userProfile?.education && (
           <div className="my-[16px]">

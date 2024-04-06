@@ -65,7 +65,7 @@ const universities = [
   'Macquarie University',
 ]
 
-const state = ['NSW', 'VIC', 'QLD', 'SA', 'WA', 'TAS', 'NT', 'ACT']
+const state = ['act', 'nsw', 'nt', 'qld', 'sa', 'tas', 'vic', 'wa']
 
 // Function to generate a random user with the password 'hello123'
 const generateUser = async () => ({
@@ -78,7 +78,7 @@ const generateUser = async () => ({
   suburb: faker.location.city(),
   postcode: faker.location.zipCode('####'),
   facebookName: faker.internet.userName(),
-  story: 'love it',
+  story: faker.lorem.sentences({ min: 2, max: 6 }),
   alumniProfilePicture: faker.image.avatar(),
   education: {
     course: faker.helpers.arrayElement(educationCourses),
@@ -87,8 +87,8 @@ const generateUser = async () => ({
   },
   service: {
     serviceName: faker.helpers.arrayElement(serviceNames),
-    serviceDescription: 'We provide the best services',
-    serviceUrl: 'https://www.example.com',
+    serviceDescription: faker.lorem.sentences({ min: 2, max: 6 }),
+    serviceUrl: faker.internet.url(),
   },
   isAutomated: true,
   isOfficer: false,

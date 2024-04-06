@@ -106,6 +106,12 @@ const generalInformationSchema = yup.object({
     .transform((curr, orig) => (orig === '' ? null : curr))
     .min(3, 'Suburb must be at least 3 character')
     .max(50, 'Suburb cannot exceed 50 characters'),
+  state: yup
+    .string()
+    .nullable()
+    .transform((curr, orig) => (orig === '' ? null : curr))
+    .min(2, 'State must be at least 2 characters long')
+    .max(3, 'State must be at most 3 characters long'),
   postcode: yup
     .string()
     .nullable()
