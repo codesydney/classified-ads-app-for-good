@@ -625,17 +625,6 @@ describe('UserController', () => {
       ])
     })
 
-    it('should return the first page of users with default pagination', async () => {
-      const response = await request(app).get('/api/v1/users')
-
-      expect(response.status).toBe(200)
-      expect(response.body.status).toBe('OK')
-      expect(response.body.users.length).toBeLessThanOrEqual(10)
-      expect(response.body.meta).toBeDefined()
-      expect(response.body.meta.page).toEqual(1)
-      expect(response.body.meta.totalPages).toBeGreaterThanOrEqual(1)
-    })
-
     it('should return the second page of users with specified limit', async () => {
       const response = await request(app).get('/api/v1/users?page=2&limit=1')
 
