@@ -195,8 +195,6 @@ const getUsers = async (
           constructUnauthenticatedUsersResponse(userDetails),
         )
 
-    console.log('users', users)
-
     return {
       data: usersResponse,
       meta: {
