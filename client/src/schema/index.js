@@ -127,8 +127,8 @@ const generalInformationSchema = yup.object({
     .string()
     .nullable()
     .transform((curr, orig) => (orig === '' ? null : curr))
-    .min(3, 'Facebook story name must be at least 3 character')
-    .max(500, 'Facebook story name cannot exceed 50 characters'),
+    .min(3, 'Bio must be at least 3 character')
+    .max(500, 'Bio cannot exceed 500 characters'),
 })
 
 const serviceSchema = yup.object({

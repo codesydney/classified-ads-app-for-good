@@ -20,12 +20,12 @@ const UserDetails = ({ userProfile }) => {
           <div className=" flex flex-col gap-1">
             <span>{userProfile?.email}</span>
             <span>{userProfile?.phone}</span>
-            <span>{userProfile?.state.toUpperCase()}</span>
+            <span>{userProfile?.state?.toUpperCase()}</span>
             <span>{userProfile?.suburb}</span>
             <span>{userProfile?.postcode}</span>
           </div>
         ) : (
-          <span>{userProfile?.state.toUpperCase()}</span>
+          <span>{userProfile?.state?.toUpperCase()}</span>
         )}
 
         {userProfile?.story && (

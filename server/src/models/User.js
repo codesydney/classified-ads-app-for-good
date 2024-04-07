@@ -111,6 +111,14 @@ const UserSchema = new Schema(
       serviceDescription: {
         type: String,
         trim: true,
+        minLength: [
+          3,
+          'Service Description must be at least 3 characters long',
+        ],
+        maxLength: [
+          500,
+          'Service Description must be at most 500 characters long',
+        ],
       },
       serviceUrl: {
         type: String,

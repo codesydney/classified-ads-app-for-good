@@ -114,7 +114,7 @@ const GeneralForm = () => {
             errors={errors}
             register={register}
             setFocus={setFocus}
-            tooltip="This is a tooltip for the input"
+            // tooltip="This is a tooltip for the input"
           />
         </div>
         <InputGroup
@@ -125,7 +125,7 @@ const GeneralForm = () => {
           errors={errors}
           register={register}
           setFocus={setFocus}
-          tooltip="This is a tooltip for the input"
+          // tooltip="This is a tooltip for the input"
         />
         <div className="sm:grid md:block lg:grid grid-cols-2 gap-10">
           <InputGroup
@@ -135,7 +135,7 @@ const GeneralForm = () => {
             errors={errors}
             register={register}
             setFocus={setFocus}
-            tooltip="This is a tooltip for the input"
+            // tooltip="This is a tooltip for the input"
           />
           <InputGroup
             name="suburb"
@@ -144,7 +144,7 @@ const GeneralForm = () => {
             errors={errors}
             register={register}
             setFocus={setFocus}
-            tooltip="This is a tooltip for the input"
+            // tooltip="This is a tooltip for the input"
           />
         </div>
         <div className="sm:grid md:block lg:grid grid-cols-2 gap-10">
@@ -165,7 +165,7 @@ const GeneralForm = () => {
             errors={errors}
             register={register}
             setFocus={setFocus}
-            tooltip="This is a tooltip for the input"
+            // tooltip="This is a tooltip for the input"
           />
         </div>
         <div className="">
@@ -176,7 +176,7 @@ const GeneralForm = () => {
             errors={errors}
             register={register}
             setFocus={setFocus}
-            tooltip="This is a tooltip for the input"
+            // tooltip="This is a tooltip for the input"
           />
           <InputGroup
             name="story"
@@ -185,7 +185,7 @@ const GeneralForm = () => {
             errors={errors}
             register={register}
             setFocus={setFocus}
-            tooltip="This is a tooltip for the input"
+            // tooltip="This is a tooltip for the input"
           />
         </div>
         <FormButton isDirty={isDirty} isLoading={isLoading}>
