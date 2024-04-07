@@ -4,8 +4,14 @@ import ModalButton from './ModalButton'
 const DeleteSubModal = ({ setDeleteSubModalOpen }) => {
   return (
     <>
-      <div className="w-full h-full absolute top-0 left-0 z-10 bg-black/70 rounded"></div>
-      <div className="max-w-[350px] w-full shadow-md absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] height-[30px] bg-white rounded z-20">
+      <div
+        className="w-full h-full fixed top-0 left-0 z-10 bg-black/70 rounded"
+        onClick={() => setDeleteSubModalOpen(false)}
+      ></div>
+      <div
+        className="max-w-[350px] w-full shadow-md absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] height-[30px] bg-white rounded z-20"
+        onClick={event => event.stopPropagation()}
+      >
         <button
           onClick={() => setDeleteSubModalOpen(false)}
           className="absolute top-2 right-2"

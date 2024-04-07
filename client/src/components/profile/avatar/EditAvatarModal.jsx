@@ -1,14 +1,15 @@
-import { IoIosClose } from 'react-icons/io'
-import ModalButtonWithIcon from './ModalButtonWithIcon'
+import MainModalBody from './MainModalBody'
+import AddPhotoModalBody from './AddPhotoModalBody'
+import EditPhotoModalBody from './EditPhotoModalBody'
 import DeleteSubModal from './DeleteSubModal'
+import { useSelector } from 'react-redux'
 import { useRef, useState } from 'react'
-import { MdOutlineEdit } from 'react-icons/md'
-import { IoCamera } from 'react-icons/io5'
-import { FaTrashAlt } from 'react-icons/fa'
 
 const EditAvatarModal = ({ setModalOpen, profileImg }) => {
   const [imgSrc, setImgSrc] = useState(null)
   const [deleteSubModalOpen, setDeleteSubModalOpen] = useState(false)
+  const [currentTab, setCurrentTab] = useState('main')
+  const { currentUser } = useSelector(state => state.auth)
 
   const onSelectFile = event => {
     const file = event.target.files?.[0]
@@ -34,36 +35,34 @@ const EditAvatarModal = ({ setModalOpen, profileImg }) => {
         onClick={event => event.stopPropagation()}
         className="w-[100%] max-w-[600px] bg-white rounded relative mx-2"
       >
-        {deleteSubModalOpen && (
-          <DeleteSubModal setDeleteSubModalOpen={setDeleteSubModalOpen} />
+        {currentTab === 'main' && (
+          <MainModalBody
+            setDeleteSubModalOpen={setDeleteSubModalOpen}
+            setModalOpen={setModalOpen}
+            setCurrentTab={setCurrentTab}
+            currentUser={currentUser}
+          />
         )}
-
-        <button
-          onClick={() => setModalOpen(false)}
-          className="absolute top-2 right-2"
-        >
-          <IoIosClose className="w-6 h-6" />
-        </button>
-        <div className="p-8 flex justify-center">
-          <img src={imgSrc || profileImg} width="350" height="350" />
-        </div>
-        <div className="flex items-center gap-10 px-8 py-4 border-t-[1px]">
-          <ModalButtonWithIcon>
-            <MdOutlineEdit className="w-[25px] h-[25px] mb-2" />
-            <span className="font-bold">Edit</span>
-          </ModalButtonWithIcon>
-          <ModalButtonWithIcon>
-            <IoCamera className="w-[25px] h-[25px] mb-2" />
-            <span className="font-bold">Add Photo</span>
-          </ModalButtonWithIcon>
-          <div className="ml-auto">
-            <ModalButtonWithIcon onClick={() => setDeleteSubModalOpen(true)}>
-              <FaTrashAlt className="w-[25px] h-[25px] mb-2" />
-              <span className="font-bold ">Delete</span>
-            </ModalButtonWithIcon>
-          </div>
-        </div>
+        {currentTab === 'add' && (
+          <AddPhotoModalBody
+            setCurrentTab={setCurrentTab}
+            currentUser={currentUser}
+          />
+        )}
+        {currentTab === 'edit' && (
+          <EditPhotoModalBody
+            setCurrentTab={setCurrentTab}
+            currentUser={currentUser}
+          />
+        )}
       </div>
+
+      {deleteSubModalOpen && (
+        <DeleteSubModal
+          setDeleteSubModalOpen={setDeleteSubModalOpen}
+          currentUser={currentUser}
+        />
+      )}
     </div>
   )
 }
