@@ -1,8 +1,6 @@
 import PlaceHolder from '../assets/placeholder.jpg'
 
 const Avatar = ({ src }) => {
-  console.log('src', src)
-
   return (
     <img
       className="rounded-full"
