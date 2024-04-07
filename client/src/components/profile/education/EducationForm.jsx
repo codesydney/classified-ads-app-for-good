@@ -79,7 +79,7 @@ const EducationForm = () => {
         errors={errors}
         register={register}
         setFocus={setFocus}
-        tooltip="This is a tooltip for the input"
+        // tooltip="This is a tooltip for the input"
       />
       <InputGroup
         name="college"
@@ -88,7 +88,7 @@ const EducationForm = () => {
         errors={errors}
         register={register}
         setFocus={setFocus}
-        tooltip="This is a tooltip for the input"
+        // tooltip="This is a tooltip for the input"
       />
       <InputGroup
         name="yearGraduated"
@@ -97,7 +97,7 @@ const EducationForm = () => {
         errors={errors}
         register={register}
         setFocus={setFocus}
-        tooltip="This is a tooltip for the input"
+        // tooltip="This is a tooltip for the input"
       />
       <FormButton isDirty={isDirty} isLoading={isLoading}>
         Update Education
