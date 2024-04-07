@@ -129,6 +129,8 @@ const authSlice = createSlice({
       state.loading = false
       state.error = action.payload
       state.currentUser = null
+      localStorage.removeItem('accessToken')
+      state.isAuthenticated = false
     })
 
     // Update Profile

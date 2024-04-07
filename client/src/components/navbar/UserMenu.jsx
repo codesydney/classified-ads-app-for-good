@@ -63,40 +63,40 @@ const UserMenu = ({ currentUser }) => {
         >
           Home
         </div>
-        <div
-          className="
-            hidden
-            md:block
-            text-sm
-            font-semibold
-            py-3
-            px-4
-            rounded-full
-            hover:bg-neutral-100
-            transition
-            cursor-pointer
-          "
-          onClick={() => navigate('/officers')}
-        >
-          Officers
-        </div>
-        <div
-          className="
-            hidden
-            md:block
-            text-sm
-            font-semibold
-            py-3
-            px-4
-            rounded-full
-            hover:bg-neutral-100
-            transition
-            cursor-pointer
-          "
-          onClick={() => navigate('/developers')}
-        >
-          Developers
-        </div>
+        {/*<div*/}
+        {/*  className="*/}
+        {/*    hidden*/}
+        {/*    md:block*/}
+        {/*    text-sm*/}
+        {/*    font-semibold*/}
+        {/*    py-3*/}
+        {/*    px-4*/}
+        {/*    rounded-full*/}
+        {/*    hover:bg-neutral-100*/}
+        {/*    transition*/}
+        {/*    cursor-pointer*/}
+        {/*  "*/}
+        {/*  onClick={() => navigate('/officers')}*/}
+        {/*>*/}
+        {/*  Officers*/}
+        {/*</div>*/}
+        {/*<div*/}
+        {/*  className="*/}
+        {/*    hidden*/}
+        {/*    md:block*/}
+        {/*    text-sm*/}
+        {/*    font-semibold*/}
+        {/*    py-3*/}
+        {/*    px-4*/}
+        {/*    rounded-full*/}
+        {/*    hover:bg-neutral-100*/}
+        {/*    transition*/}
+        {/*    cursor-pointer*/}
+        {/*  "*/}
+        {/*  onClick={() => navigate('/developers')}*/}
+        {/*>*/}
+        {/*  Developers*/}
+        {/*</div>*/}
         <div
           onClick={toggleOpen}
           className="
@@ -164,14 +164,14 @@ const UserMenu = ({ currentUser }) => {
                     label="Account"
                     onClick={() => handleNavigate('/profile')}
                   />
-                  <MenuItem
-                    label="Officers"
-                    onClick={() => handleNavigate('/officers')}
-                  />
-                  <MenuItem
-                    label="Developers"
-                    onClick={() => handleNavigate('/developers')}
-                  />
+                  {/*<MenuItem*/}
+                  {/*  label="Officers"*/}
+                  {/*  onClick={() => handleNavigate('/officers')}*/}
+                  {/*/>*/}
+                  {/*<MenuItem*/}
+                  {/*  label="Developers"*/}
+                  {/*  onClick={() => handleNavigate('/developers')}*/}
+                  {/*/>*/}
                 </div>
                 <hr />
                 <MenuItem
@@ -187,14 +187,14 @@ const UserMenu = ({ currentUser }) => {
               <>
                 <div className="md:hidden">
                   <MenuItem label="Home" onClick={() => handleNavigate('/')} />
-                  <MenuItem
-                    label="Officers"
-                    onClick={() => handleNavigate('/officers')}
-                  />
-                  <MenuItem
-                    label="Developers"
-                    onClick={() => handleNavigate('/developers')}
-                  />
+                  {/*<MenuItem*/}
+                  {/*  label="Officers"*/}
+                  {/*  onClick={() => handleNavigate('/officers')}*/}
+                  {/*/>*/}
+                  {/*<MenuItem*/}
+                  {/*  label="Developers"*/}
+                  {/*  onClick={() => handleNavigate('/developers')}*/}
+                  {/*/>*/}
                 </div>
                 <MenuItem
                   label="Login"

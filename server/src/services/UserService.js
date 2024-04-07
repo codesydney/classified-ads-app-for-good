@@ -175,7 +175,9 @@ const getUsers = async (
     })
   } else {
     // If no searchQuery, just ensure hideProfile: false is the only criteria
-    matchCriteria = { hideProfile: false }
+    matchCriteria = {
+      $and: [{ hideProfile: false }, { isProfileComplete: true }],
+    }
   }
 
   let skip = (page - 1) * limit
