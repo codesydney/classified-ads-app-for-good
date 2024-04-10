@@ -380,7 +380,10 @@ const deleteProfileImage = catchAsync(async (req, res) => {
     })
   }
 
-  await deleteImageFromS3(userProfileImage, process.env.AWS_BUCKET_NAME)
+  const deleted = await deleteImageFromS3(
+    userProfileImage,
+    process.env.AWS_BUCKET_NAME,
+  )
 
   // Delete value from user doc and save user
   user.alumniProfilePicture = undefined

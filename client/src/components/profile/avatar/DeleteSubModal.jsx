@@ -2,9 +2,30 @@ import { IoIosClose } from 'react-icons/io'
 import ModalButton from './ModalButton'
 import { useAppDispatch } from '../../../store'
 import { useSelector } from 'react-redux'
-import { updateImage } from '../../../features/auth/authAction'
+import { deleteProfileImage } from '../../../features/auth/authAction'
+import { toast } from 'react-hot-toast'
 
 const DeleteSubModal = ({ setDeleteSubModalOpen }) => {
+  const dispatch = useAppDispatch()
+  const { loading: isLoading } = useSelector(state => state.auth)
+
+  const handleDeleteImage = async () => {
+    try {
+      const response = await dispatch(deleteProfileImage())
+
+      if (response.type === 'auth/deleteProfileImage/rejected') {
+        toast.error('Error! Could not delete profile image')
+        return setDeleteSubModalOpen(false)
+      }
+
+      toast.success('Success! Profile image deleted')
+      setDeleteSubModalOpen(false)
+    } catch (error) {
+      toast.error('Error! Could not delete profile image')
+      setDeleteSubModalOpen(false)
+    }
+  }
+
   return (
     <>
       <div
@@ -18,6 +39,7 @@ const DeleteSubModal = ({ setDeleteSubModalOpen }) => {
         <button
           onClick={() => setDeleteSubModalOpen(false)}
           className="absolute top-2 right-2"
+          disabled={isLoading}
         >
           <IoIosClose className="w-6 h-6" />
         </button>
@@ -31,12 +53,14 @@ const DeleteSubModal = ({ setDeleteSubModalOpen }) => {
           <ModalButton
             onClick={() => setDeleteSubModalOpen(false)}
             variant="normal"
+            disabled={isLoading}
           >
             Cancel
           </ModalButton>
           <ModalButton
             variant="hollow"
-            onClick={() => alert('Maybe I will delete the image?')}
+            onClick={handleDeleteImage}
+            disabled={isLoading}
           >
             Delete
           </ModalButton>
