@@ -12,6 +12,7 @@ import {
   updatePassword,
   deleteAccount,
   updateImage,
+  deleteProfileImage,
 } from './authAction'
 
 const initialState = {
@@ -248,6 +249,24 @@ const authSlice = createSlice({
       state.currentUser = action.payload.user
     })
     builder.addCase(updateImage.rejected, (state, action) => {
+      state.loading = false
+      state.error = action.payload
+      state.success = false
+    })
+
+    // Delete Profile Image
+    builder.addCase(deleteProfileImage.pending, state => {
+      state.loading = true
+      state.error = null
+      state.success = false
+    })
+    builder.addCase(deleteProfileImage.fulfilled, (state, action) => {
+      state.loading = false
+      state.error = false
+      state.success = true
+      state.currentUser = action.payload.user
+    })
+    builder.addCase(deleteProfileImage.rejected, (state, action) => {
       state.loading = false
       state.error = action.payload
       state.success = false
