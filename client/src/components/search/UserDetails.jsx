@@ -30,7 +30,6 @@ const UserDetails = ({ userProfile }) => {
 
         {userProfile?.story && (
           <div className=" mt-4">
-            <h2 className="font-semibold">My Story: </h2>
             <p>{userProfile?.story}</p>
           </div>
         )}
