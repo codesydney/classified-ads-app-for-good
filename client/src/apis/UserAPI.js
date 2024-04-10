@@ -202,6 +202,24 @@ const updateImage = async (formData, token) => {
   }
 }
 
+const deleteProfileImage = async token => {
+  const deleteProfileImageURL = `${usersURL}/profile/image`
+
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+
+    const response = await api.delete(deleteProfileImageURL, config)
+    return response.data
+  } catch (error) {
+    console.error('Error updating password', error)
+    throw error
+  }
+}
+
 export const UserAPI = {
   searchUsers,
   login,
@@ -217,6 +235,7 @@ export const UserAPI = {
   updatePassword,
   deleteAccount,
   updateImage,
+  deleteProfileImage,
 }
 
 // defining the cancel API object for UserAPI
