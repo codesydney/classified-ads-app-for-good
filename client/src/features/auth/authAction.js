@@ -196,6 +196,42 @@ const deleteAccount = createAsyncThunk(
   },
 )
 
+const updateImage = createAsyncThunk(
+  'auth/updateImage',
+  async (formData, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem('accessToken')
+      const response = await UserAPI.updateImage(formData, token)
+
+      return response
+    } catch (error) {
+      if (error.response && error.response.data.error) {
+        return rejectWithValue(error.response.data.error)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  },
+)
+
+const deleteProfileImage = createAsyncThunk(
+  'auth/deleteProfileImage',
+  async (_, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem('accessToken')
+      const response = await UserAPI.deleteProfileImage(token)
+
+      return response
+    } catch (error) {
+      if (error.response && error.response.data.error) {
+        return rejectWithValue(error.response.data.error)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  },
+)
+
 export {
   login,
   signUp,
@@ -208,4 +244,6 @@ export {
   updateEducation,
   updatePassword,
   deleteAccount,
+  updateImage,
+  deleteProfileImage,
 }

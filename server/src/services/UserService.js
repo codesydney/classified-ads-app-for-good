@@ -1,5 +1,5 @@
 const User = require('../models/User')
-const { uploadImageToS3 } = require('./ImageUploadService')
+const { uploadImageToS3, deleteImageFromS3 } = require('./ImageUploadService')
 require('dotenv').config()
 
 const constructUnauthenticatedUsersResponse = user => {
@@ -247,8 +247,36 @@ const updateProfileImage = async (userId, file) => {
     { new: true, select: '-__v -isAutomated' },
   ).exec()
 
+  // Should delete image if no user?
   if (!user) {
     return null
+  }
+
+  const userObject = user.toObject()
+  userObject.id = userObject._id
+  delete userObject._id
+
+  return userObject
+}
+
+const updateProfileImageV2 = async (userId, file) => {
+  const user = await User.findById(userId).select('-__v -isAutomated').exec()
+
+  if (!user) {
+    return null
+  }
+
+  const oldImageUrl = user?.alumniProfilePicture
+
+  const imageUrl = await uploadImageToS3(file, process.env.AWS_BUCKET_NAME)
+  user.alumniProfilePicture = imageUrl
+  const updatedUser = await user.save()
+
+  // If old image exists, delete it. Dont wait. Don't throw error if there is one.
+  if (oldImageUrl) {
+    deleteImageFromS3(oldImageUrl, process.env.AWS_BUCKET_NAME)
+      .then(() => console.log('delete successfully'))
+      .catch(error => console.error('Error deleting olde image', error))
   }
 
   const userObject = user.toObject()
@@ -269,4 +297,5 @@ module.exports = {
   getUserProfile,
   getUserByIdMongooseDoc,
   deleteUserProfile,
+  updateProfileImageV2,
 }
