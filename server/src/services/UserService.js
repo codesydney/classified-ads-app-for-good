@@ -12,7 +12,8 @@ const constructUnauthenticatedUsersResponse = user => {
     firstName: safeUser.firstName || '',
     lastName: safeUser.lastName || '',
     fullName: safeUser.fullName || '',
-    suburb: safeUser.suburb || '',
+    state: safeUser.state || '',
+    story: safeUser.story || '',
     alumniProfilePicture: safeUser.alumniProfilePicture || '',
     education: {
       course: safeEducation.course || '',
@@ -74,10 +75,11 @@ const updateAlumniProfile = async (userId, profileUpdates) => {
     'firstName',
     'lastName',
     'email',
-    'suburb',
+    'state',
     'postcode',
     'story',
-    'alumniProfilePicture',
+    // @TODO turn this back on when the front end is ready
+    // 'alumniProfilePicture',
     'education.college',
     'education.course',
     'education.yearGraduated',
@@ -157,6 +159,7 @@ const getUsers = async (
         { firstName: { $regex: searchQuery, $options: 'i' } },
         { lastName: { $regex: searchQuery, $options: 'i' } },
         { email: { $regex: searchQuery, $options: 'i' } },
+        { state: { $regex: searchQuery, $options: 'i' } },
         { suburb: { $regex: searchQuery, $options: 'i' } },
         { postcode: { $regex: searchQuery, $options: 'i' } },
         { facebookName: { $regex: searchQuery, $options: 'i' } },
@@ -172,7 +175,9 @@ const getUsers = async (
     })
   } else {
     // If no searchQuery, just ensure hideProfile: false is the only criteria
-    matchCriteria = { hideProfile: false }
+    matchCriteria = {
+      $and: [{ hideProfile: false }, { isProfileComplete: true }],
+    }
   }
 
   let skip = (page - 1) * limit

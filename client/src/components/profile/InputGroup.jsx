@@ -10,6 +10,7 @@ const InputGroup = ({
   tooltip,
   register,
   setFocus,
+  options,
 }) => {
   const tooltipRef = useRef(null)
 
@@ -21,6 +22,43 @@ const InputGroup = ({
     }
 
     setFocus(name)
+  }
+
+  if (type === 'select' && options) {
+    return (
+      <label
+        className="form-control w-full mb-2"
+        onClick={preventTooltipPropagation}
+      >
+        <div className="label">
+          <span className="label-text text-[15px] font-semibold">
+            {label} <span className="text-red-500">{required ? '*' : ''}</span>
+          </span>
+          {tooltip && <Tooltip tooltipRef={tooltipRef}>{tooltip}</Tooltip>}
+        </div>
+        <select
+          {...register(name)}
+          className={`select select-bordered w-full ${
+            errors[name]
+              ? 'border-red-500 focus:outline-red-500'
+              : 'border-gray-300 focus:outline-primary'
+          }`}
+        >
+          {options.map(option => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+        {errors[name] && (
+          <div className="label">
+            <span className="label-text-alt text-red-500">
+              {errors[name].message}
+            </span>
+          </div>
+        )}
+      </label>
+    )
   }
 
   if (type === 'textarea') {

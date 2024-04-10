@@ -10,7 +10,7 @@ const User = ({ user }) => {
       />
       <div className="p-2 px-4 flex flex-col flex-grow">
         <h2 className="font-bold text-xl mt-2">{user.fullName}</h2>
-        {user?.suburb && <h2>{user.suburb}</h2>}
+        {user?.state && <h2>{user.state?.toUpperCase()}</h2>}
 
         {user?.education && (
           <div className="my-[16px]">

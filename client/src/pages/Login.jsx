@@ -1,4 +1,5 @@
 import LoginForm from '../components/LoginForm.jsx'
+import Consent from '../components/Consent.jsx'
 import { Link } from 'react-router-dom'
 import LoginHeroPic from '../assets/ust-login.jpeg'
 
@@ -27,6 +28,10 @@ const Login = () => {
             here
           </Link>
         </p>
+
+        <div className="w-full px-6 sm:px-8 md:px-16 lg:px-32 xl:px-40 mt-[25px]">
+          <Consent />
+        </div>
       </div>
     </div>
   )
