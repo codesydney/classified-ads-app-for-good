@@ -340,7 +340,7 @@ const updateProfileImage = catchAsync(async (req, res, next) => {
     })
   }
 
-  const updatedUser = await UserService.updateProfileImage(id, file)
+  const updatedUser = await UserService.updateProfileImageV2(id, file)
 
   if (!updatedUser) {
     return res.status(404).json({
