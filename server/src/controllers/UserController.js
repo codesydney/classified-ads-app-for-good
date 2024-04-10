@@ -5,6 +5,8 @@ const passwordResetTokenUtils = require('../utils/resetTokens')
 const { sendResetEmail } = require('../utils/mail')
 const catchAsync = require('../utils/catchAsync')
 const buildNestedQuery = require('../utils/buildNestedUpdateQuery')
+const { deleteImageFromS3 } = require('../services/ImageUploadService')
+require('dotenv').config()
 
 const signup = catchAsync(async (req, res, next) => {
   const { firstName, lastName, email, password } = req.body
@@ -356,6 +358,41 @@ const updateProfileImage = catchAsync(async (req, res, next) => {
   })
 })
 
+const deleteProfileImage = catchAsync(async (req, res) => {
+  const { id } = req.user
+
+  const user = await UserService.getUserByIdMongooseDoc(id)
+
+  if (!user) {
+    return res.status(404).json({
+      status: 'Error',
+      message: 'User not found',
+    })
+  }
+  const userProfileImage = user?.alumniProfilePicture
+
+  // False positive
+  if (!userProfileImage) {
+    return res.status(200).json({
+      status: 'OK',
+      message: 'User profile image deleted successfully',
+      user: updatedUser,
+    })
+  }
+
+  await deleteImageFromS3(userProfileImage, process.env.AWS_BUCKET_NAME)
+
+  // Delete value from user doc and save user
+  user.alumniProfilePicture = undefined
+  const updatedUser = await user.save()
+
+  return res.status(200).json({
+    status: 'OK',
+    message: 'User profile image deleted successfully',
+    user: updatedUser,
+  })
+})
+
 module.exports = {
   signup,
   login,
@@ -370,4 +407,5 @@ module.exports = {
   getUserProfile,
   updatePassword,
   deleteMe,
+  deleteProfileImage,
 }

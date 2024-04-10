@@ -35,6 +35,8 @@ router.patch(
   UserController.updateProfileImage,
 )
 
+router.delete('/profile/image', verifyToken, UserController.deleteProfileImage)
+
 router.patch(
   '/profile/general',
   verifyToken,
