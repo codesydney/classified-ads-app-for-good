@@ -1,3 +1,4 @@
+// Takes image ref, canvas ref, and croped image state and draws cropped image onto canvas (The canvas is hidden)
 const setCanvasPreview = (image, canvas, crop) => {
   const ctx = canvas.getContext('2d')
 

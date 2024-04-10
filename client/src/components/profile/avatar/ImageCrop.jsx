@@ -11,21 +11,21 @@ import { useAppDispatch } from '../../../store'
 import { updateImage } from '../../../features/auth/authAction'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-hot-toast'
+import dataURLtoBlob from './dataUrlToBlob'
 
 const MIN_WIDTH = 150
 const ASPECT_RATIO = 4 / 3
 
 const ImageCrop = ({ src, closeCrop, setCurrentTab, fileName }) => {
-  const [loading, setLoading] = useState(false)
   const [crop, setCrop] = useState()
   const imageRef = useRef(null)
   const canvasRef = useRef(null)
   const dispatch = useAppDispatch()
-  const { currentUser, loading: isLoading } = useSelector(state => state.auth)
+  const { loading: isLoading } = useSelector(state => state.auth)
 
+  // When image loads in, set crop in state
   const onImageLoad = event => {
     const { width, height } = event.currentTarget
-    console.log('onimage load')
     const crop = makeAspectCrop(
       {
         unit: '%',
@@ -43,33 +43,24 @@ const ImageCrop = ({ src, closeCrop, setCurrentTab, fileName }) => {
 
   const handleCropChange = (pixelCrop, percentCrop) => setCrop(percentCrop)
 
-  function dataURLtoBlob(dataURL) {
-    const arr = dataURL.split(',')
-    const mime = arr[0].match(/:(.*?);/)[1]
-    const bstr = atob(arr[1]) // Decode Base64
-    let n = bstr.length
-    const u8arr = new Uint8Array(n)
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n)
-    }
-    return new Blob([u8arr], { type: mime })
-  }
-
+  // Save cropped image and send to backend
   const handleCropSave = async () => {
-    setLoading(true)
-
+    // draw cropped image onto canvas
     setCanvasPreview(
       imageRef.current,
       canvasRef.current,
       convertToPixelCrop(crop, imageRef.current.width, imageRef.current.height),
     )
-    console.log('woro')
+
+    // extract cropped image from canvas as dataUrl
     const dataURL = canvasRef.current.toDataURL()
 
+    // Format data for api
     const blob = dataURLtoBlob(dataURL)
     const formData = new FormData()
     formData.append('image', blob, fileName)
 
+    // Send 'form data' to api.
     try {
       const response = await dispatch(updateImage(formData))
 
@@ -82,21 +73,19 @@ const ImageCrop = ({ src, closeCrop, setCurrentTab, fileName }) => {
     } catch (error) {
       toast.error('Could not update image')
     }
-    setLoading(false)
+    // go back to main tab.
     setCurrentTab('main')
   }
 
   return (
-    <>
-      <div className="loader"></div>
+    <div className="relative">
+      {isLoading && (
+        <div className="p-6 absolute w-full h-full flex justify-center items-center bg-black/30 z-10">
+          <div className="border-4 w-[50px] h-[50px] rounded-full border-gray-300 border-t-primary animate-spin"></div>
+        </div>
+      )}
+
       <div className="p-6 flex flex-col items-center relative">
-        {loading && (
-          <div className="w-full h-full absolute top-0 left-0 bg-black/70 z-20 flex justify-center items-center">
-            <div role="status">
-              <span className="sr-only">Loading...</span>
-            </div>
-          </div>
-        )}
         <ReactCrop
           crop={crop}
           onChange={handleCropChange}
@@ -112,23 +101,26 @@ const ImageCrop = ({ src, closeCrop, setCurrentTab, fileName }) => {
           />
         </ReactCrop>
       </div>
+
       <div className="p-6 flex justify-end gap-4">
-        <ModalButton variant="hollow" onClick={closeCrop} disabled={loading}>
+        <ModalButton variant="hollow" onClick={closeCrop} disabled={isLoading}>
           Cancel
         </ModalButton>
+
         <ModalButton
           variant="normal"
           onClick={() => {
             setLoading(true)
             handleCropSave()
           }}
-          disabled={loading}
+          disabled={isLoading}
         >
           Save Photo
         </ModalButton>
       </div>
+
       {crop && <canvas className="hidden" ref={canvasRef} />}
-    </>
+    </div>
   )
 }
 

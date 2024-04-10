@@ -3,28 +3,12 @@ import AddPhotoModalBody from './AddPhotoModalBody'
 import EditPhotoModalBody from './EditPhotoModalBody'
 import DeleteSubModal from './DeleteSubModal'
 import { useSelector } from 'react-redux'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 
-const EditAvatarModal = ({ setModalOpen, profileImg }) => {
-  const [imgSrc, setImgSrc] = useState(null)
+const EditAvatarModal = ({ setModalOpen }) => {
   const [deleteSubModalOpen, setDeleteSubModalOpen] = useState(false)
   const [currentTab, setCurrentTab] = useState('main')
   const { currentUser } = useSelector(state => state.auth)
-
-  const onSelectFile = event => {
-    const file = event.target.files?.[0]
-    if (!file) return
-
-    const reader = new FileReader()
-
-    reader.addEventListener('load', () => {
-      const imageURL = reader.result?.toString() || ''
-      console.log(imageURL)
-      setImgSrc(imageURL)
-    })
-
-    reader.readAsDataURL(file)
-  }
 
   return (
     <div
@@ -33,7 +17,7 @@ const EditAvatarModal = ({ setModalOpen, profileImg }) => {
     >
       <div
         onClick={event => event.stopPropagation()}
-        className="w-[100%] max-w-[600px] bg-white rounded relative mx-2"
+        className="w-[100%] max-w-[600px] bg-white rounded relative mx-2 overflow-hidden"
       >
         {currentTab === 'main' && (
           <MainModalBody

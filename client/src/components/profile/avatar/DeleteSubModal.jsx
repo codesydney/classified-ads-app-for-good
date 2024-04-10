@@ -1,5 +1,8 @@
 import { IoIosClose } from 'react-icons/io'
 import ModalButton from './ModalButton'
+import { useAppDispatch } from '../../../store'
+import { useSelector } from 'react-redux'
+import { updateImage } from '../../../features/auth/authAction'
 
 const DeleteSubModal = ({ setDeleteSubModalOpen }) => {
   return (

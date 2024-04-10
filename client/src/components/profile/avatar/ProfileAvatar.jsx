@@ -25,9 +25,7 @@ const ProfileAvatar = ({ currentUser }) => {
         <MdOutlineEdit className="w-6 h-6 text-white" />
       </button>
       <p className="md:mt-6">Hello, {currentUser?.fullName}</p>
-      {modalOpen && (
-        <EditAvatarModal profileImg={profileImg} setModalOpen={setModalOpen} />
-      )}
+      {modalOpen && <EditAvatarModal setModalOpen={setModalOpen} />}
     </div>
   )
 }

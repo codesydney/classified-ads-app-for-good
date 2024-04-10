@@ -1,7 +1,7 @@
 import ModalHeader from './ModalHeader'
 import ModalButton from './ModalButton'
 import profileImg from '../../../assets/placeholder.jpg'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import ImageCrop from './ImageCrop'
 
 const AddPhotoModalBody = ({ setCurrentTab, currentUser }) => {
@@ -14,9 +14,8 @@ const AddPhotoModalBody = ({ setCurrentTab, currentUser }) => {
 
     if (!file) return
 
-    // Check file size
+    // Check file size is less than 1mb
     const fileSize = file.size / 1024 / 1024
-
     if (fileSize > 1) {
       setImgSrc('')
       return setFileUploadError('Image must be under 1Mb in size.')
@@ -30,6 +29,7 @@ const AddPhotoModalBody = ({ setCurrentTab, currentUser }) => {
       const imageUrl = reader.result?.toString() || ''
       imageElement.src = imageUrl
 
+      // Do some size validation in here if required
       imageElement.addEventListener('load', event => {
         const { naturalWidth, naturalHeight } = event.target
 
@@ -45,8 +45,7 @@ const AddPhotoModalBody = ({ setCurrentTab, currentUser }) => {
     reader.readAsDataURL(file)
   }
 
-  const uploadCroppedPhoto = async (imgSrc, fileName) => {}
-
+  // close crop but not add photo modal
   const closeCrop = () => {
     setImgSrc('')
   }
@@ -72,14 +71,17 @@ const AddPhotoModalBody = ({ setCurrentTab, currentUser }) => {
             </span>
             , lets get you a profile photo.
           </p>
+
           <img
             src={currentUser?.alumniProfilePicture || profileImg}
             className="w-[100px] h-[100px] rounded-full"
-          ></img>
+          />
+
           <p className="text-center text-sm">
             Take a picture, or upload an existing one. Then edit with our
             cropping tool to make the perfect profile picture.
           </p>
+
           {fileUploadError && (
             <p className="text-center text-md text-red-500">
               {fileUploadError}
@@ -93,8 +95,10 @@ const AddPhotoModalBody = ({ setCurrentTab, currentUser }) => {
           <ModalButton variant="hollow" onClick={() => setCurrentTab('main')}>
             Cancel
           </ModalButton>
+
           <label className="px-6 flex items-center justify-content py-2 border-[1px] border-primary rounded-full font-semibold w-fit transition duration-200 text-white bg-primary hover:bg-primary/70">
             <span className="">Upload Photo</span>
+
             <input
               type="file"
               accept="image/*"

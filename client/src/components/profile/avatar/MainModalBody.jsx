@@ -16,6 +16,7 @@ const MainModalBody = ({
       <ModalHeader handleClose={() => setModalOpen(false)}>
         Profile photo
       </ModalHeader>
+
       <div className="px-8 pb-4 flex justify-center items-center min-h-[150px]">
         {currentUser?.alumniProfilePicture ? (
           <img
@@ -33,6 +34,7 @@ const MainModalBody = ({
         )}
       </div>
       <div className="flex justify-end items-center gap-10 px-8 py-4 border-t-[1px]">
+        {/* Edit button -> opens the edit modal which will edit CURRENT profile photo */}
         {/* {currentUser?.alumniProfilePicture && (
           <ModalButtonWithIcon onClick={() => setCurrentTab('edit')}>
             <MdOutlineEdit className="w-[25px] h-[25px] mb-2" />
@@ -43,6 +45,7 @@ const MainModalBody = ({
           <IoCamera className="w-[25px] h-[25px] mb-2" />
           <span className="font-bold">Add Photo</span>
         </ModalButtonWithIcon>
+
         {currentUser?.alumniProfilePicture && (
           <div className="ml-auto">
             <ModalButtonWithIcon onClick={() => setDeleteSubModalOpen(true)}>
