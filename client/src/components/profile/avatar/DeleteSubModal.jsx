@@ -31,7 +31,12 @@ const DeleteSubModal = ({ setDeleteSubModalOpen }) => {
           >
             Cancel
           </ModalButton>
-          <ModalButton variant="hollow">Delete</ModalButton>
+          <ModalButton
+            variant="hollow"
+            onClick={() => alert('Maybe I will delete the image?')}
+          >
+            Delete
+          </ModalButton>
         </div>
       </div>
     </>

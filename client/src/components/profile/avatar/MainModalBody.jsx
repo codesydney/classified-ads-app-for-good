@@ -4,8 +4,6 @@ import ModalHeader from './ModalHeader'
 import { MdOutlineEdit } from 'react-icons/md'
 import { IoCamera } from 'react-icons/io5'
 import { FaTrashAlt } from 'react-icons/fa'
-import { IoIosClose } from 'react-icons/io'
-import profileImg from '../../../assets/placeholder.jpg'
 
 const MainModalBody = ({
   setDeleteSubModalOpen,
@@ -19,9 +17,9 @@ const MainModalBody = ({
         Profile photo
       </ModalHeader>
       <div className="px-8 pb-4 flex justify-center items-center min-h-[150px]">
-        {currentUser?.alumniProfilePhoto ? (
+        {currentUser?.alumniProfilePicture ? (
           <img
-            src={currentUser.alumniProfilePhoto}
+            src={currentUser.alumniProfilePicture}
             className="max-w-[100%] object-contain"
           />
         ) : (
@@ -34,23 +32,25 @@ const MainModalBody = ({
           </div>
         )}
       </div>
-      <div className="flex items-center gap-10 px-8 py-4 border-t-[1px]">
-        {currentUser?.alumniProfilePhoto && (
+      <div className="flex justify-end items-center gap-10 px-8 py-4 border-t-[1px]">
+        {/* {currentUser?.alumniProfilePicture && (
           <ModalButtonWithIcon onClick={() => setCurrentTab('edit')}>
             <MdOutlineEdit className="w-[25px] h-[25px] mb-2" />
             <span className="font-bold">Edit</span>
           </ModalButtonWithIcon>
-        )}
+        )} */}
         <ModalButtonWithIcon onClick={() => setCurrentTab('add')}>
           <IoCamera className="w-[25px] h-[25px] mb-2" />
           <span className="font-bold">Add Photo</span>
         </ModalButtonWithIcon>
-        <div className="ml-auto">
-          <ModalButtonWithIcon onClick={() => setDeleteSubModalOpen(true)}>
-            <FaTrashAlt className="w-[25px] h-[25px] mb-2" />
-            <span className="font-bold ">Delete</span>
-          </ModalButtonWithIcon>
-        </div>
+        {currentUser?.alumniProfilePicture && (
+          <div className="ml-auto">
+            <ModalButtonWithIcon onClick={() => setDeleteSubModalOpen(true)}>
+              <FaTrashAlt className="w-[25px] h-[25px] mb-2" />
+              <span className="font-bold">Delete</span>
+            </ModalButtonWithIcon>
+          </div>
+        )}
       </div>
     </>
   )
