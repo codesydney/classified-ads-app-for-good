@@ -241,7 +241,7 @@ const authSlice = createSlice({
       state.error = null
       state.success = false
     })
-    builder.addCase(updateImage.fulfilled, state => {
+    builder.addCase(updateImage.fulfilled, (state, action) => {
       state.loading = false
       state.error = false
       state.success = true

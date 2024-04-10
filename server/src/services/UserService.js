@@ -1,5 +1,5 @@
 const User = require('../models/User')
-const { uploadImageToS3 } = require('./ImageUploadService')
+const { uploadImageToS3, deleteImageFromS3 } = require('./ImageUploadService')
 require('dotenv').config()
 
 const constructUnauthenticatedUsersResponse = user => {

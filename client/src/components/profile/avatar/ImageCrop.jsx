@@ -63,7 +63,7 @@ const ImageCrop = ({ src, closeCrop, setCurrentTab, fileName }) => {
     // Send 'form data' to api.
     try {
       const response = await dispatch(updateImage(formData))
-
+      console.log(response)
       if (response.type === 'auth/updateImage/rejected') {
         setCurrentTab('main')
         return toast.error('Could not update image')
@@ -71,6 +71,7 @@ const ImageCrop = ({ src, closeCrop, setCurrentTab, fileName }) => {
 
       toast.success('Your image has been updated!')
     } catch (error) {
+      console.log(error)
       toast.error('Could not update image')
     }
     // go back to main tab.
@@ -109,10 +110,7 @@ const ImageCrop = ({ src, closeCrop, setCurrentTab, fileName }) => {
 
         <ModalButton
           variant="normal"
-          onClick={() => {
-            setLoading(true)
-            handleCropSave()
-          }}
+          onClick={handleCropSave}
           disabled={isLoading}
         >
           Save Photo

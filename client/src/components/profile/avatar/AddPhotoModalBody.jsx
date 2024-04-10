@@ -74,7 +74,7 @@ const AddPhotoModalBody = ({ setCurrentTab, currentUser }) => {
 
           <img
             src={currentUser?.alumniProfilePicture || profileImg}
-            className="w-[100px] h-[100px] rounded-full"
+            className="w-[100px] h-[100px] rounded-full object-cover"
           />
 
           <p className="text-center text-sm">
