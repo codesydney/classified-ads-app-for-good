@@ -79,7 +79,7 @@ const ImageCrop = ({ src, closeCrop, setCurrentTab, fileName }) => {
   }
 
   return (
-    <div className="relative">
+    <div className="relative ">
       {isLoading && (
         <div className="p-6 absolute w-full h-full flex justify-center items-center bg-black/30 z-10">
           <div className="border-4 w-[50px] h-[50px] rounded-full border-gray-300 border-t-primary animate-spin"></div>
@@ -93,12 +93,14 @@ const ImageCrop = ({ src, closeCrop, setCurrentTab, fileName }) => {
           keepSelection
           aspect={ASPECT_RATIO}
           minWidth={MIN_WIDTH}
+          className="max-h-[550px]"
         >
           <img
             src={src}
             alt="Image you are editing"
             onLoad={onImageLoad}
             ref={imageRef}
+            className="object-contain"
           />
         </ReactCrop>
       </div>

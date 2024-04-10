@@ -7,15 +7,13 @@ import { FaTrashAlt } from 'react-icons/fa'
 
 const MainModalBody = ({
   setDeleteSubModalOpen,
-  setModalOpen,
+  handleModalClose,
   setCurrentTab,
   currentUser,
 }) => {
   return (
     <>
-      <ModalHeader handleClose={() => setModalOpen(false)}>
-        Profile photo
-      </ModalHeader>
+      <ModalHeader handleClose={handleModalClose}>Profile photo</ModalHeader>
 
       <div className="px-8 pb-4 flex justify-center items-center min-h-[150px]">
         {currentUser?.alumniProfilePicture ? (

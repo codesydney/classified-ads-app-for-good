@@ -5,15 +5,15 @@ import DeleteSubModal from './DeleteSubModal'
 import { useSelector } from 'react-redux'
 import { useState } from 'react'
 
-const EditAvatarModal = ({ setModalOpen }) => {
+const EditAvatarModal = ({ handleModalClose }) => {
   const [deleteSubModalOpen, setDeleteSubModalOpen] = useState(false)
   const [currentTab, setCurrentTab] = useState('main')
   const { currentUser } = useSelector(state => state.auth)
 
   return (
     <div
-      onClick={() => setModalOpen(false)}
-      className="fixed w-screen h-screen top-0 left-0 bg-gray-800/20 z-10 flex items-center justify-center"
+      onClick={handleModalClose}
+      className="fixed w-screen h-screen top-0 left-0 bg-gray-800/20 z-10 flex items-center justify-center overflow-y-scroll"
     >
       <div
         onClick={event => event.stopPropagation()}
@@ -22,7 +22,7 @@ const EditAvatarModal = ({ setModalOpen }) => {
         {currentTab === 'main' && (
           <MainModalBody
             setDeleteSubModalOpen={setDeleteSubModalOpen}
-            setModalOpen={setModalOpen}
+            handleModalClose={handleModalClose}
             setCurrentTab={setCurrentTab}
             currentUser={currentUser}
           />

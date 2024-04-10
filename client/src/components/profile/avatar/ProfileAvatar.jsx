@@ -6,6 +6,16 @@ import { useState } from 'react'
 const ProfileAvatar = ({ currentUser }) => {
   const [modalOpen, setModalOpen] = useState(false)
 
+  const handleModalOpen = () => {
+    document.body.style.overflow = 'hidden'
+    setModalOpen(true)
+  }
+
+  const handleModalClose = () => {
+    document.body.style.overflow = 'auto'
+    setModalOpen(false)
+  }
+
   return (
     <div className="flex items-center gap-[10px] mb-6 md:mb-16 md:flex-col relative">
       <img
@@ -20,12 +30,12 @@ const ProfileAvatar = ({ currentUser }) => {
       <button
         className="w-8 h-8 rounded-full items-center justify-center flex absolute left-[25px] -translate-x-1/2 -translate-y-1/2 top-[50px] md:left-auto md:translate-x-0 md:top-[80px] bg-gray-800 hover:bg-gray-600 transition duration-300"
         aria-label="edit profile picture"
-        onClick={() => setModalOpen(true)}
+        onClick={handleModalOpen}
       >
         <MdOutlineEdit className="w-6 h-6 text-white" />
       </button>
       <p className="md:mt-6">Hello, {currentUser?.fullName}</p>
-      {modalOpen && <EditAvatarModal setModalOpen={setModalOpen} />}
+      {modalOpen && <EditAvatarModal handleModalClose={handleModalClose} />}
     </div>
   )
 }
