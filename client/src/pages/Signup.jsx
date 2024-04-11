@@ -1,4 +1,5 @@
 import SignUpForm from '../components/SignUpForm'
+import Consent from '../components/Consent'
 import { Link } from 'react-router-dom'
 import SignUpHeroPic from '../assets/ust-sign-up.jpeg'
 
@@ -27,6 +28,10 @@ const Signup = () => {
             here
           </Link>
         </p>
+
+        <div className="w-full px-6 sm:px-8 md:px-16 lg:px-32 xl:px-40 mt-[25px]">
+          <Consent />
+        </div>
       </div>
     </div>
   )

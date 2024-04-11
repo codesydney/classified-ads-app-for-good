@@ -17,18 +17,16 @@ const SearchBar = () => {
   }
 
   return (
-    <div className="w-full max-w-sm mx-auto my-8">
-      <input
-        id="search-bar"
-        aria-label="Search"
-        type="search"
-        placeholder="Search"
-        className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-        value={value}
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
-      />
-    </div>
+    <input
+      id="search-bar"
+      aria-label="Search Alumni"
+      type="search"
+      placeholder="Search Alumni"
+      className="w-full px-4 py-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent my-8"
+      value={value}
+      onChange={handleChange}
+      onKeyDown={handleKeyDown}
+    />
   )
 }
 

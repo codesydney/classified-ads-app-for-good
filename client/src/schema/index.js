@@ -106,6 +106,12 @@ const generalInformationSchema = yup.object({
     .transform((curr, orig) => (orig === '' ? null : curr))
     .min(3, 'Suburb must be at least 3 character')
     .max(50, 'Suburb cannot exceed 50 characters'),
+  state: yup
+    .string()
+    .nullable()
+    .transform((curr, orig) => (orig === '' ? null : curr))
+    .min(2, 'State must be at least 2 characters long')
+    .max(3, 'State must be at most 3 characters long'),
   postcode: yup
     .string()
     .nullable()
@@ -121,8 +127,8 @@ const generalInformationSchema = yup.object({
     .string()
     .nullable()
     .transform((curr, orig) => (orig === '' ? null : curr))
-    .min(3, 'Facebook story name must be at least 3 character')
-    .max(500, 'Facebook story name cannot exceed 50 characters'),
+    .min(3, 'Bio must be at least 3 character')
+    .max(500, 'Bio cannot exceed 500 characters'),
 })
 
 const serviceSchema = yup.object({
@@ -162,6 +168,23 @@ const educationSchema = yup.object({
     .matches(yearRegex, 'Please enter a valid year (1950 - now)'),
 })
 
+const changePasswordSchema = yup
+  .object({
+    currentPassword: yup
+      .string()
+      .required('Current password is required')
+      .min(8, 'Invalid credentials'),
+    newPassword: yup
+      .string()
+      .required('New password is required')
+      .min(8, 'New password must be at least 8 characters'),
+    newPasswordConfirm: yup
+      .string()
+      .required()
+      .oneOf([yup.ref('newPassword'), null], 'Passwords must match.'),
+  })
+  .required()
+
 const contactFormSchema = yup
   .object({
     name: yup
@@ -186,5 +209,6 @@ export {
   generalInformationSchema,
   serviceSchema,
   educationSchema,
+  changePasswordSchema,
   contactFormSchema,
 }

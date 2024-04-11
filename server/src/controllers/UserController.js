@@ -5,6 +5,8 @@ const passwordResetTokenUtils = require('../utils/resetTokens')
 const { sendResetEmail } = require('../utils/mail')
 const catchAsync = require('../utils/catchAsync')
 const buildNestedQuery = require('../utils/buildNestedUpdateQuery')
+const { deleteImageFromS3 } = require('../services/ImageUploadService')
+require('dotenv').config()
 
 const signup = catchAsync(async (req, res, next) => {
   const { firstName, lastName, email, password } = req.body
@@ -263,10 +265,134 @@ const getUserProfile = catchAsync(async (req, res) => {
 
   const userDetails = await UserService.getUserProfile(userId, isAuthenticated)
 
+  if (!userDetails) {
+    return res.status(404).json({
+      status: 'Error',
+      message: 'User not found',
+    })
+  }
+
   res.status(200).json({
     status: 'OK',
     message: 'User retrieved successfully',
     user: userDetails,
+  })
+})
+
+// Update password for authenticated user
+const updatePassword = catchAsync(async (req, res) => {
+  const { id } = req.user
+  const { currentPassword, newPassword } = req.body
+  console.log(currentPassword)
+  // Fetch user
+  const user = await UserService.getUserByIdMongooseDoc(id)
+
+  if (!user) {
+    return res.status(404).json({
+      status: 'Error',
+      message: 'User not found',
+    })
+  }
+  // check user entered valid current password.
+  const validPassword = await user.verifyPassword(currentPassword)
+
+  if (!validPassword) {
+    return res.status(401).json({
+      status: 'Error',
+      message: 'Invalid Credentials',
+    })
+  }
+
+  // Update password in db
+  user.password = newPassword
+  await user.save()
+
+  res.status(200).json({
+    status: 'OK',
+    message: 'User password successfully changed',
+  })
+})
+
+const deleteMe = catchAsync(async (req, res) => {
+  const { id } = req.user
+
+  const deletedUser = await UserService.deleteUserProfile(id)
+
+  if (!deletedUser) {
+    return res.status(404).json({
+      status: 'Error',
+      message: 'User not found',
+    })
+  }
+
+  return res.status(204).json({
+    status: 'OK',
+    message: 'User ',
+  })
+})
+
+const updateProfileImage = catchAsync(async (req, res, next) => {
+  const { id } = req.user
+  const { file } = req
+
+  if (!file) {
+    return res.status(400).json({
+      status: 'Error',
+      message: 'No file uploaded',
+    })
+  }
+
+  const updatedUser = await UserService.updateProfileImageV2(id, file)
+
+  if (!updatedUser) {
+    return res.status(404).json({
+      status: 'Error',
+      message: 'User not found',
+    })
+  }
+
+  return res.status(200).json({
+    status: 'OK',
+    message: 'User profile image updated successfully',
+    user: updatedUser,
+  })
+})
+
+const deleteProfileImage = catchAsync(async (req, res) => {
+  const { id } = req.user
+
+  const user = await UserService.getUserByIdMongooseDoc(id)
+
+  if (!user) {
+    return res.status(404).json({
+      status: 'Error',
+      message: 'User not found',
+    })
+  }
+  const userProfileImage = user?.alumniProfilePicture
+
+  // False positive
+  if (!userProfileImage) {
+    return res.status(200).json({
+      status: 'OK',
+      message: 'User profile image deleted successfully',
+      user: updatedUser,
+    })
+  }
+
+  const deleted = await deleteImageFromS3(
+    userProfileImage,
+    process.env.AWS_BUCKET_NAME,
+  )
+
+  // Delete value from user doc and save user
+  user.alumniProfilePicture = undefined
+  const updatedUser = await user.save()
+
+  return res.status(200).json({
+    status: 'OK',
+    message: 'User profile image deleted successfully',
+    user: updatedUser,
   })
 })
 
@@ -277,8 +403,12 @@ module.exports = {
   resetPassword,
   getUsers,
   me,
+  updateProfileImage,
   updateAlumniProfile,
   updateServiceInformation,
   updateEducationInformation,
   getUserProfile,
+  updatePassword,
+  deleteMe,
+  deleteProfileImage,
 }

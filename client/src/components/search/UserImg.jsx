@@ -1,11 +1,11 @@
-import defaultServiceLogo from '../../assets/serviceImgPlaceholder.svg'
-import style from './userImg.module.css'
-const ServiceImg = ({ serviceName, serviceLogo }) => {
+import defaultUserLogo from '../../assets/serviceImgPlaceholder.svg'
+
+const UserImg = ({ fullName, alumniProfilePicture }) => {
   return (
     <div style={{ aspectRatio: 4 / 3 }}>
       <img
-        src={serviceLogo || defaultServiceLogo}
-        alt={`${serviceName} Logo`}
+        src={alumniProfilePicture || defaultUserLogo}
+        alt={`${fullName} profile picture`}
         className="w-full aspect-ratio-4/3 overflow-hidden"
         style={{ objectFit: 'contain', aspectRatio: '4/3' }}
       />
@@ -13,4 +13,4 @@ const ServiceImg = ({ serviceName, serviceLogo }) => {
   )
 }
 
-export default ServiceImg
+export default UserImg

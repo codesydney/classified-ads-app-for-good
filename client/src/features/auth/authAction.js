@@ -91,6 +91,7 @@ const updateProfile = createAsyncThunk(
   async (profileData, { getState, rejectWithValue }) => {
     try {
       const token = localStorage.getItem('accessToken')
+
       const response = await UserAPI.updateProfile(profileData, token)
       return response.data
     } catch (error) {
@@ -160,6 +161,77 @@ const updateEducation = createAsyncThunk(
   },
 )
 
+const updatePassword = createAsyncThunk(
+  'auth/updatePassword',
+  async (passwordData, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem('accessToken')
+      const response = await UserAPI.updatePassword(passwordData, token)
+
+      return response
+    } catch (error) {
+      if (error.response && error.response.data.error) {
+        return rejectWithValue(error.response.data.error)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  },
+)
+
+const deleteAccount = createAsyncThunk(
+  'auth/deleteAccount',
+  async (_, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem('accessToken')
+      const response = await UserAPI.deleteAccount(token)
+      return response
+    } catch (error) {
+      if (error.response && error.response.data.error) {
+        return rejectWithValue(error.response.data.error)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  },
+)
+
+const updateImage = createAsyncThunk(
+  'auth/updateImage',
+  async (formData, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem('accessToken')
+      const response = await UserAPI.updateImage(formData, token)
+
+      return response
+    } catch (error) {
+      if (error.response && error.response.data.error) {
+        return rejectWithValue(error.response.data.error)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  },
+)
+
+const deleteProfileImage = createAsyncThunk(
+  'auth/deleteProfileImage',
+  async (_, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem('accessToken')
+      const response = await UserAPI.deleteProfileImage(token)
+
+      return response
+    } catch (error) {
+      if (error.response && error.response.data.error) {
+        return rejectWithValue(error.response.data.error)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  },
+)
+
 export {
   login,
   signUp,
@@ -170,4 +242,8 @@ export {
   updateGeneral,
   updateService,
   updateEducation,
+  updatePassword,
+  deleteAccount,
+  updateImage,
+  deleteProfileImage,
 }

@@ -14,7 +14,8 @@
     "server:test:unit": "cd server && npm run test:unit",
     "clean": "find . -name node_modules -type d -prune -exec rm -rf '{}' +",
     "prettier:check": "prettier --check \"./**/*.{js,ts,jsx,tsx,json}\"",
-    "prettier:write": "prettier --write \"./**/*.{js,ts,jsx,tsx,json}\""
+    "prettier:write": "prettier --write \"./**/*.{js,ts,jsx,tsx,json}\"",
+    "prettier": "prettier --write \"./**/*.{js,ts,jsx,tsx,json}\""
   },
   "keywords": [],
   "author": "CodeSydney",
@@ -29,6 +30,7 @@
   ],
   "dependencies": {
     "@emailjs/browser": "^4.3.3",
-    "pino-pretty": "^10.3.1"
+    "pino-pretty": "^10.3.1",
+    "react-image-crop": "^11.0.5"
   }
 }

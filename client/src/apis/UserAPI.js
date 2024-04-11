@@ -148,6 +148,78 @@ const updateEducation = async (profileData, token) => {
   }
 }
 
+const updatePassword = async (passwordData, token) => {
+  const updatePasswordURL = `${usersURL}/profile/password`
+
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+
+    const response = await api.patch(updatePasswordURL, passwordData, config)
+    return response.data
+  } catch (error) {
+    console.error('Error updating password', error)
+    throw error
+  }
+}
+
+const deleteAccount = async token => {
+  const deleteAccountURL = `${usersURL}/me`
+
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+
+    const response = await api.delete(deleteAccountURL, config)
+    return response.data
+  } catch (error) {
+    console.error('Deleting account', error)
+    throw error
+  }
+}
+
+const updateImage = async (formData, token) => {
+  const updateImageURL = `${usersURL}/profile/image`
+
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+
+    const response = await api.patch(updateImageURL, formData, config)
+    return response.data
+  } catch (error) {
+    console.error('Error updating image', error)
+    throw error
+  }
+}
+
+const deleteProfileImage = async token => {
+  const deleteProfileImageURL = `${usersURL}/profile/image`
+
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+
+    const response = await api.delete(deleteProfileImageURL, config)
+    return response.data
+  } catch (error) {
+    console.error('Error delete profile image', error)
+    throw error
+  }
+}
+
 export const UserAPI = {
   searchUsers,
   login,
@@ -160,6 +232,10 @@ export const UserAPI = {
   updateGeneral,
   updateService,
   updateEducation,
+  updatePassword,
+  deleteAccount,
+  updateImage,
+  deleteProfileImage,
 }
 
 // defining the cancel API object for UserAPI

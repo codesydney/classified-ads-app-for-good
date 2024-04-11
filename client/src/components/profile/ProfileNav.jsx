@@ -1,9 +1,10 @@
 import NavItem from './ProfileNavItem'
+import ProfileAvatar from './avatar/ProfileAvatar'
 import { PiCertificate } from 'react-icons/pi'
 import { RiAccountCircleLine } from 'react-icons/ri'
 import { MdOutlineBusinessCenter } from 'react-icons/md'
 import { IoSettingsOutline } from 'react-icons/io5'
-import profileImg from '../../assets/placeholder.jpg'
+
 import { useNavigate } from 'react-router-dom'
 import withLogout from '../shared/withLogout'
 import { useSelector } from 'react-redux'
@@ -20,18 +21,7 @@ const ProfileNav = () => {
   ))
   return (
     <div className="p-5">
-      <div className="flex items-center gap-[10px] mb-6 md:mb-16 md:flex-col">
-        <img
-          src={
-            currentUser?.alumniProfilePicture
-              ? currentUser.almniProfilePicture
-              : profileImg
-          }
-          alt="Avatarimg"
-          className="rounded-full w-[50px] h-[50px] md:w-[70px] md:h-[70px]"
-        />
-        <p>Hello, {currentUser?.fullName}</p>
-      </div>
+      <ProfileAvatar currentUser={currentUser} />
       <nav className="md:mb-20">
         <ul className="flex justify-between items-center md:flex-col md:items-stretch md:gap-4">
           <NavItem

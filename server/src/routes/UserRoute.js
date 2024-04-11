@@ -1,17 +1,22 @@
 const express = require('express')
+const multer = require('multer')
 const UserController = require('../controllers/UserController')
 const {
   signupValidation,
   loginValidation,
   emailValidation,
+  changePasswordValidation,
   handleValidationResult,
 } = require('../middleware/validationMiddlewares')
 const { verifyToken } = require('../middleware/verifyToken')
 const { authenticationStatus } = require('../middleware/authenticationStatus')
 
 const router = express.Router()
+const upload = multer({ storage: multer.memoryStorage() })
 
 router.get('/', authenticationStatus, UserController.getUsers)
+
+router.delete('/me', verifyToken, UserController.deleteMe)
 
 router.get('/me', verifyToken, UserController.me)
 
@@ -22,6 +27,15 @@ router.get(
 )
 
 router.patch('/profile/me', verifyToken, UserController.updateAlumniProfile)
+
+router.patch(
+  '/profile/image',
+  verifyToken,
+  upload.single('image'),
+  UserController.updateProfileImage,
+)
+
+router.delete('/profile/image', verifyToken, UserController.deleteProfileImage)
 
 router.patch(
   '/profile/general',
@@ -39,6 +53,14 @@ router.patch(
   '/profile/education',
   verifyToken,
   UserController.updateEducationInformation,
+)
+
+router.patch(
+  '/profile/password',
+  changePasswordValidation,
+  handleValidationResult,
+  verifyToken,
+  UserController.updatePassword,
 )
 
 router.post(
