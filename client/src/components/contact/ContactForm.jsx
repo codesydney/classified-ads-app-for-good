@@ -20,15 +20,14 @@ const ContactForm = () => {
 
   // Email js required 3rd param to be html form el
   const onSubmit = async (formData, event) => {
-    console.log('formWorking', formData)
     const formEl = event.target
     try {
       setIsLoading(true)
 
       await emailjs.sendForm(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        formEl,
+        'service_yyexm0g',
+        'template_rl4e2gy',
+        'user_nEmQ6yi4aBPvlCKCkUAfK',
         {
           publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
         },
@@ -95,7 +94,7 @@ const ContactForm = () => {
         errors={errors}
         register={register}
         setFocus={setFocus}
-        tooltip="A first name will be sufficient"
+        // tooltip="A first name will be sufficient"
       />
       <InputGroup
         name="email"
@@ -104,7 +103,7 @@ const ContactForm = () => {
         errors={errors}
         register={register}
         setFocus={setFocus}
-        tooltip="Provide you email so we can get back to you."
+        tooltip="Provide your email so we can get back to you."
       />
       <InputGroup
         name="message"

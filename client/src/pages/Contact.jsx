@@ -10,9 +10,8 @@ const Contact = () => {
             Contact Us
           </h1>
           <p className="text-center mb-10">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores
-            omnis cum harum aliquid qui perspiciatis. Dolor voluptate odit
-            mollitia nostrum aliquid dignissimos officia at et.
+            Fill out the form to get in touch with us or email us at
+            info@ustaa.org.au.
           </p>
           <img
             src={contactIllustration}
