@@ -38,6 +38,10 @@ jobs:
             server/package.json
             server/dist
           retention-days: 2
+      - name: Print Environment Variables
+        run: |
+          echo "PORT=$PORT"
+          echo "AWS_REGIONL=$AWS_REGION"
 
 #  prettier-check:
 #    needs: build
