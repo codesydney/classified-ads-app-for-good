@@ -7,6 +7,8 @@ const mongoURI =
     ? process.env.TEST_MONGO_URI || 'mongodb://localhost:27017/integration'
     : process.env.MONGO_URI || 'mongodb://localhost:27017/caafg'
 
+console.log('mongoURI', mongoURI)
+
 const Mongoose = () => {
   const initialiseMongoConnection = () => {
     return new Promise((resolve, reject) => {
