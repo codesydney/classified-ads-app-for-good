@@ -194,7 +194,12 @@ const updateImage = async (formData, token) => {
       },
     }
 
+    console.log('updateImageURL', updateImageURL)
+
     const response = await api.patch(updateImageURL, formData, config)
+
+    console.log('response', response)
+
     return response.data
   } catch (error) {
     console.error('Error updating password', error)
