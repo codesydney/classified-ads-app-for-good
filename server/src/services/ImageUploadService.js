@@ -2,8 +2,6 @@ const { S3Client, DeleteObjectCommand } = require('@aws-sdk/client-s3')
 const { Upload } = require('@aws-sdk/lib-storage')
 require('dotenv').config()
 
-console.log('BEFORE: process.env.AWS_REGION', process.env.AWS_REGION)
-
 const s3Client = new S3Client({
   region: process.env.AWS_REGION,
   credentials: {
@@ -12,10 +10,7 @@ const s3Client = new S3Client({
   },
 })
 
-console.log('process.env.AWS_REGION', process.env.AWS_REGION)
-console.log('process.env.AWS_ACCESS_KEY_ID', process.env.AWS_ACCESS_KEY_ID)
-console.log('process.env.AWS_SECRET', process.env.AWS_SECRET_ACCESS_KEY)
-console.log('process.env.AWS_BUCKET_NAME', process.env.AWS_BUCKET_NAME)
+console.log(JSON.stringify(process.env))
 
 const uploadImageToS3 = async (file, bucketName) => {
   const uploadParams = {
