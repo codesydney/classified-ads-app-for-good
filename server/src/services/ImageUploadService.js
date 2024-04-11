@@ -18,6 +18,8 @@ const uploadImageToS3 = async (file, bucketName) => {
     ContentType: file.mimetype,
   }
 
+  console.log('uploadParams', uploadParams)
+
   try {
     const parallelUploads3 = new Upload({
       client: s3Client,
@@ -25,6 +27,9 @@ const uploadImageToS3 = async (file, bucketName) => {
     })
 
     const result = await parallelUploads3.done()
+
+    console.log('result', result)
+
     return result.Location
   } catch (err) {
     console.error('Error uploading file to S3', err)
