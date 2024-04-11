@@ -5,6 +5,17 @@ on: [push, workflow_dispatch]
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      PORT: ${{ secrets.PORT }}
+      MONGO_URI: ${{ secrets.MONGO_URI }}
+      TEST_MONGO_URI: ${{ secrets.TEST_MONGO_URI }}
+      SENDGRID_EMAIL: ${{ secrets.SENDGRID_EMAIL }}
+      CLIENT_URL: ${{ secrets.CLIENT_URL }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     steps:
       - name: Get Code
         uses: actions/checkout@v4
@@ -20,16 +31,16 @@ jobs:
         run: npm run build
       - name: Create .env file in server directory
         run: |
-          echo "PORT=${{ secret.PORT }}" > server/.env
-          echo "MONGO_URI=${{ secret.MONGO_URI }}" >> server/.env
-          echo "TEST_MONGO_URI=${{ secret.TEST_MONGO_URI }}" >> server/.env
-          echo "SENDGRID_EMAIL=${{ secret.SENDGRID_EMAIL}}" >> server/.env
-          echo "CLIENT_URL=${{ secret.CLIENT_URL }}" >> server/.env
-          echo "JWT_SECRET=${{ secret.JWT_SECRET }}" >> server/.env
-          echo "AWS_ACCESS_KEY_ID=${{ secret.AWS_ACCESS_KEY_ID }}" >> server/.env
-          echo "AWS_BUCKET_NAME=${{ secret.AWS_BUCKET_NAME }}" >> server/.env
-          echo "AWS_REGION=${{ secret.AWS_REGION }}" >> server/.env
-          echo "AWS_SECRET_ACCESS_KEY=${{ secret.AWS_SECRET_ACCESS_KEY }}" >> server/.env
+          echo "PORT=${PORT}" > server/.env
+          echo "MONGO_URI=${MONGO_URI}" >> server/.env
+          echo "TEST_MONGO_URI=${TEST_MONGO_URI}" >> server/.env
+          echo "SENDGRID_EMAIL=${SENDGRID_EMAIL}" >> server/.env
+          echo "CLIENT_URL=${CLIENT_URL}" >> server/.env
+          echo "JWT_SECRET=${JWT_SECRET}" >> server/.env
+          echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" >> server/.env
+          echo "AWS_BUCKET_NAME=${AWS_BUCKET_NAME}" >> server/.env
+          echo "AWS_REGION=${AWS_REGION}" >> server/.env
+          echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" >> server/.env
       - name: Upload dist artifacts
         uses: actions/upload-artifact@v4
         with:
