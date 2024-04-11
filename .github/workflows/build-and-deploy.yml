@@ -25,7 +25,7 @@ jobs:
           node-version: '20'
       - name: Clean install dependencies
         run: |
-          rm -rf node_modules package-lock.json
+          rm -rf node_modules package-lock.json client/dist server/dist server/package-lock.json
           npm install
       - name: Run build
         run: npm run build
@@ -41,7 +41,7 @@ jobs:
       - name: Print Environment Variables
         run: |
           echo "PORT=$PORT"
-          echo "AWS_REGIONL=$AWS_REGION"
+          echo "AWS_REGION=$AWS_REGION"
 
 #  prettier-check:
 #    needs: build
