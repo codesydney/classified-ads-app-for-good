@@ -197,7 +197,7 @@ const updateImage = async (formData, token) => {
     const response = await api.patch(updateImageURL, formData, config)
     return response.data
   } catch (error) {
-    console.error('Error updating password', error)
+    console.error('Error updating image', error)
     throw error
   }
 }
@@ -215,7 +215,7 @@ const deleteProfileImage = async token => {
     const response = await api.delete(deleteProfileImageURL, config)
     return response.data
   } catch (error) {
-    console.error('Error updating password', error)
+    console.error('Error delete profile image', error)
     throw error
   }
 }
