@@ -63,6 +63,23 @@ const UserMenu = ({ currentUser }) => {
         >
           Home
         </div>
+        <div
+          className="
+            hidden
+            md:block
+            text-sm
+            font-semibold
+            py-3
+            px-4
+            rounded-full
+            hover:bg-neutral-100
+            transition
+            cursor-pointer
+          "
+          onClick={() => navigate('/contact')}
+        >
+          Contact
+        </div>
         {/*<div*/}
         {/*  className="*/}
         {/*    hidden*/}
