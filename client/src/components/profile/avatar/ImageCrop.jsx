@@ -91,7 +91,7 @@ const ImageCrop = ({ src, closeCrop, setCurrentTab, fileName }) => {
           crop={crop}
           onChange={handleCropChange}
           keepSelection
-          aspect={ASPECT_RATIO}
+          // aspect={ASPECT_RATIO}
           minWidth={MIN_WIDTH}
           className="max-h-[550px]"
         >

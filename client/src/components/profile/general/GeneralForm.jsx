@@ -155,7 +155,7 @@ const GeneralForm = () => {
             errors={errors}
             register={register}
             setFocus={setFocus}
-            tooltip="This is a tooltip for the input"
+            // tooltip="This is a tooltip for the input"
             options={stateOptions}
           />
           <InputGroup
