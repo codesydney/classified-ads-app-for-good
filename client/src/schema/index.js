@@ -185,6 +185,22 @@ const changePasswordSchema = yup
   })
   .required()
 
+const contactFormSchema = yup
+  .object({
+    name: yup
+      .string()
+      .required('Email is required')
+      .min(2, 'Name must be at least 2 characters')
+      .max(50, 'Name must be at most 50 characters'),
+    email: yup.string().required('Email is required').email('Invalid email'),
+    message: yup
+      .string()
+      .required('Message is required')
+      .min(20, 'Message must be at least 20 characters')
+      .max(500, 'Message must be at most 500 characters'),
+  })
+  .required()
+
 export {
   signUpSchema,
   loginSchema,
@@ -194,4 +210,5 @@ export {
   serviceSchema,
   educationSchema,
   changePasswordSchema,
+  contactFormSchema,
 }

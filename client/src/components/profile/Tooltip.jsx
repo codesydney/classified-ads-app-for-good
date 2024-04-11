@@ -6,7 +6,7 @@ const Tooltip = ({ children, tooltipRef }) => {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <div className="flex items-center relative" ref={tooltipRef}>
+    <div className="flex items-center relative z-10" ref={tooltipRef}>
       <button
         type="button"
         className=""

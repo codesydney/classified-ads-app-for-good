@@ -15,6 +15,7 @@ import ProfileService from '../components/profile/service/ProfileService.jsx'
 import ProfileEducation from '../components/profile/education/ProfileEducation.jsx'
 import ProfileSettings from '../components/profile/settings/ProfileSettings.jsx'
 import UserProfile from '../pages/UserProfile.jsx'
+import Contact from '../pages/Contact.jsx'
 
 const Router = () => {
   // const error = useRouteError()
@@ -35,6 +36,10 @@ const Router = () => {
         {
           path: '/developers',
           element: <Developers />,
+        },
+        {
+          path: '/contact',
+          element: <Contact />,
         },
         {
           path: '/login',
