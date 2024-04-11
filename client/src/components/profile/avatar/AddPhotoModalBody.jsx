@@ -16,9 +16,9 @@ const AddPhotoModalBody = ({ setCurrentTab, currentUser }) => {
 
     // Check file size is less than 1mb
     const fileSize = file.size / 1024 / 1024
-    if (fileSize > 1) {
+    if (fileSize > 3) {
       setImgSrc('')
-      return setFileUploadError('Image must be under 1Mb in size.')
+      return setFileUploadError('Image must be under 3Mb in size.')
     }
     setFileName(file.name)
 
