@@ -12,7 +12,7 @@ const Footer = () => {
         <img
           src={Logo}
           alt="UST Alumnai Australia Logo"
-          className="w-[120px] h-[70px] md:w-[180px] md:h-[120px]"
+          className="w-[120px] h-[70px]"
         />
         <p className="font-bold">Connecting Thomasians Down Under</p>
         <p>Copyright © {year} - All right reserved</p>

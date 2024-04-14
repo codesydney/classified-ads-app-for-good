@@ -92,11 +92,16 @@ const AddPhotoModalBody = ({ setCurrentTab, currentUser }) => {
 
       {!imgSrc && (
         <div className="p-6 flex justify-end gap-4">
-          <ModalButton variant="hollow" onClick={() => setCurrentTab('main')}>
+          <ModalButton
+            extraClasses={
+              ' !text-red-400 hover:!text-white bg-transparent border-red-500 hover:border-red-500 hover:bg-red-500'
+            }
+            onClick={() => setCurrentTab('main')}
+          >
             Cancel
           </ModalButton>
 
-          <label className="px-6 flex items-center justify-content py-2 border-[1px] border-primary rounded-full font-semibold w-fit transition duration-200 text-white bg-primary hover:bg-primary/70">
+          <label className="px-6 flex items-center justify-content py-2 border-2 border-primary rounded-md font-semibold w-fit transition duration-200 text-primary hover:text-white bg-transparent hover:bg-primary">
             <span className="">Upload Photo</span>
 
             <input

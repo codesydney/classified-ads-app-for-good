@@ -25,7 +25,11 @@ const UserProfile = () => {
     fetchUserProfile()
   }, [userId])
 
-  return <UserDetails userProfile={userProfile} />
+  return (
+    <div className="m-auto max-w-[1200px]">
+      <UserDetails userProfile={userProfile} />
+    </div>
+  )
 }
 
 export default UserProfile

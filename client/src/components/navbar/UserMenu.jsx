@@ -8,6 +8,7 @@ import { logout } from '../../features/auth/authSlice.js'
 
 import Avatar from '../Avatar.jsx'
 import MenuItem from './MenuItem.jsx'
+import MenuButton from './MenuButton.jsx'
 
 const UserMenu = ({ currentUser }) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -42,44 +43,19 @@ const UserMenu = ({ currentUser }) => {
     },
     [navigate],
   )
-
   return (
     <div className="relative" ref={menuRef}>
       <div className="flex flex-row items-center gap-3">
-        <div
-          className="
-            hidden
-            md:block
-            text-sm
-            font-semibold
-            py-3
-            px-4
-            rounded-full
-            hover:bg-neutral-100
-            transition
-            cursor-pointer
-          "
-          onClick={() => navigate('/')}
-        >
-          Home
-        </div>
-        <div
-          className="
-            hidden
-            md:block
-            text-sm
-            font-semibold
-            py-3
-            px-4
-            rounded-full
-            hover:bg-neutral-100
-            transition
-            cursor-pointer
-          "
-          onClick={() => navigate('/contact')}
-        >
-          Contact
-        </div>
+        <MenuButton
+          label={'Home'}
+          navigate={() => navigate('/')}
+          extraClasses={' hover:text-[#FCBF15] font-extra-bold'}
+        />
+        <MenuButton
+          label={'Contact'}
+          navigate={() => navigate('/contact')}
+          extraClasses={' hover:text-[#FCBF15] font-extra-bold'}
+        />
         {/*<div*/}
         {/*  className="*/}
         {/*    hidden*/}
@@ -120,13 +96,15 @@ const UserMenu = ({ currentUser }) => {
           p-4
           md:py-1
           md:px-2
-          border-[1px]
-          border-neutral-200
+          border-2
+          border-neutral
+          hover:border-sky-400
+          hover:text-sky-400
           flex
           flex-row
           items-center
           gap-3
-          rounded-full
+          rounded-md
           cursor-pointer
           hover:shadow-md
           transition

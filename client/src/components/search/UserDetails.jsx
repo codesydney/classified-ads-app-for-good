@@ -1,19 +1,17 @@
 import { Link } from 'react-router-dom'
-import UserImg from '../../components/search/UserImg.jsx'
 import defaultUserLogo from '../../assets/serviceImgPlaceholder.svg'
 
 const UserDetails = ({ userProfile }) => {
   const isOfficer = userProfile?.isOfficer
   return (
-    <div className="flex flex-col self-stretch items-center justify-center sm:w-full max-w-[780px] shadow-lg m-2 sm:m-auto sm:my-10">
-      <div className="min-w-[350px]">
-        <UserImg
-          fullName={userProfile?.fullName}
-          alumniProfilePicture={userProfile?.alumniProfilePicture}
-        />
-      </div>
+    <div className="flex flex-col md:flex-row self-stretch sm:gap-4 sm:w-full m-2 sm:my-10 shadow-md rounded-md">
+      <img
+        src={userProfile?.alumniProfilePicture || defaultUserLogo}
+        alt={`${userProfile?.fullName} profile picture`}
+        className=" md:w-1/2 aspect-ratio-4/3 object-fit rounded-t-md sm:rounded-tr-none sm:rounded-l-md"
+      />
 
-      <div className="p-2 px-4 flex flex-col flex-grow">
+      <div className="p-4 flex flex-col flex-grow">
         <h2 className="font-bold text-xl mt-2">{userProfile?.fullName}</h2>
 
         {isOfficer ? (
@@ -43,26 +41,28 @@ const UserDetails = ({ userProfile }) => {
         )}
 
         {userProfile?.service && (
-          <div className="mt-[10px] w-[100%] flex flex-wrap mb-[16px]">
-            <div className=" flex flex-col gap-2">
+          <div className="w-full md:w-3/5 flex gap-4 my-4">
+            <div className=" w-full flex flex-col gap-2">
+              <p>{userProfile?.service?.serviceDescription}</p>
               <div className=" break-words hyphens-auto whitespace-pre break-all">
                 <a
                   href={`${userProfile?.service?.serviceUrl}`}
                   target="_blank"
-                  className="hover:underline hover:text-blue-500 flex-wrap text-[14px]"
+                  className="hover:underline hover:text-white flex-wrap"
                 >
-                  {userProfile?.service?.serviceName}
+                  <button className="w-full p-2 border-2 bg-white capitalize border-sky-400 hover:bg-sky-400 rounded-md ease-in-out duration-300">
+                    {userProfile?.service?.serviceName}
+                  </button>
                 </a>
               </div>
-              <p>{userProfile?.service?.serviceDescription}</p>
             </div>
           </div>
         )}
 
-        <div className="flex gap-4 justify-center my-4">
+        <div className="w-full md:w-3/5 flex gap-4">
           <Link
             to={`/`}
-            className=" w-full py-2 px-4 bg-primary text-white rounded flex-grow text-center border-primary border-2 hover:bg-primary/70 hover:border-transparent"
+            className="py-2 px-4 text-primary hover:text-white rounded flex-grow text-center border-primary border-2 bg-white hover:bg-primary ease-in-out duration-300"
           >
             <button>Go back</button>
           </Link>

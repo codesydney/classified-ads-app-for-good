@@ -8,10 +8,10 @@ const Logo = () => {
     <img
       src={BrandLogo}
       alt="UST Alumni Australia Logo"
-      width="150"
-      height="150"
+      width="100"
+      height="100"
       onClick={() => navigate('/')}
-      className="md:block cursor-pointer"
+      className="md:block cursor-pointer rounded-md shadow-sm border-2 border-sky-400/10 hover:border-sky-400"
     />
   )
 }

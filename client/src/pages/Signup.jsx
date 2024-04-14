@@ -6,7 +6,7 @@ import SignUpHeroPic from '../assets/ust-sign-up.jpeg'
 const Signup = () => {
   return (
     <div className="flex w-full">
-      <div className="hidden md:block relative h-[950px]">
+      <div className="hidden md:block relative h-[95vh]">
         <img
           src={SignUpHeroPic}
           alt="nature"
@@ -29,7 +29,7 @@ const Signup = () => {
           </Link>
         </p>
 
-        <div className="w-full px-6 sm:px-8 md:px-16 lg:px-32 xl:px-40 mt-[25px]">
+        <div className="w-full px-6 sm:px-8 md:px-16 lg:px-32 xl:px-40 mt-[25px] mb-[25px]">
           <Consent />
         </div>
       </div>

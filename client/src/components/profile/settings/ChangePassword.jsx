@@ -28,10 +28,7 @@ const ChangePassword = () => {
 
   const onSubmit = async formData => {
     try {
-      console.log('wooohooo')
-
       const response = await dispatch(updatePassword(formData))
-      console.log('respnese', response)
       if (response.type === 'auth/updatePassword/rejected') {
         return setErrorMessage(response.payload)
       }
@@ -108,7 +105,7 @@ const ChangePassword = () => {
                 Change Password
               </FormButton>
               <button
-                className="btn btn-squre w-fit py-2 bg-red-400 hover:bg-red-500 text-white mt-[15px]"
+                className="w-fit p-2 bg-transparent hover:bg-red-500 text-red-500 hover:text-white border-2 border-red-500 rounded-md duration-300 ease-in-out mt-[15px]"
                 type="button"
                 onClick={e => {
                   e.preventDefault()
@@ -122,7 +119,7 @@ const ChangePassword = () => {
           </form>
         ) : (
           <button
-            className="btn btn-squre w-fit py-2 bg-primary hover:bg-primary text-white mt-[15px]"
+            className="w-full sm:w-fit py-2 bg-transparent hover:bg-primary text-primary hover:font-semibold hover:text-white border-2 border-primary p-2 rounded-md duration-200 ease-in-out mt-[15px]"
             onClick={() => setFormOpen(true)}
           >
             Change Password

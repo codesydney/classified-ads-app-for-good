@@ -28,7 +28,7 @@ const ProfileAvatar = ({ currentUser }) => {
         className="rounded-full w-[50px] h-[50px] md:w-[80px] md:h-[80px] object-cover"
       />
       <button
-        className="w-8 h-8 rounded-full items-center justify-center flex absolute left-[25px] -translate-x-1/2 -translate-y-1/2 top-[50px] md:left-auto md:translate-x-0 md:top-[80px] bg-gray-800 hover:bg-gray-600 transition duration-300"
+        className="w-8 h-8 rounded-full items-center justify-center flex absolute left-[25px] -translate-x-1/2 -translate-y-1/2 top-[50px] md:left-auto md:translate-x-0 md:top-[80px] bg-gray-800 hover:bg-primary transition duration-300"
         aria-label="edit profile picture"
         onClick={handleModalOpen}
       >

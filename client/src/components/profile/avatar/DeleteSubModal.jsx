@@ -38,10 +38,9 @@ const DeleteSubModal = ({ setDeleteSubModalOpen }) => {
       >
         <button
           onClick={() => setDeleteSubModalOpen(false)}
-          className="absolute top-2 right-2"
-          disabled={isLoading}
+          className=" absolute top-2 right-2 w-fit h-fit rounded-full border-[1px] transition duration-200 hover:bg-gray-200 hover:text-red-500"
         >
-          <IoIosClose className="w-6 h-6" />
+          <IoIosClose className="w-6 h-6 md:w-8 md:h-8" />
         </button>
         <h2 className="p-6 border-b-[1px] text-lg font-bold">
           Delete profile photo
@@ -52,7 +51,8 @@ const DeleteSubModal = ({ setDeleteSubModalOpen }) => {
         <div className="p-6 flex justify-end gap-4">
           <ModalButton
             onClick={() => setDeleteSubModalOpen(false)}
-            variant="normal"
+            extraClasses={'border-red-500 text-red-500 hover:bg-red-500'}
+            variant="hollow"
             disabled={isLoading}
           >
             Cancel

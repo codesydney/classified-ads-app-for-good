@@ -46,7 +46,10 @@ const MainModalBody = ({
 
         {currentUser?.alumniProfilePicture && (
           <div className="ml-auto">
-            <ModalButtonWithIcon onClick={() => setDeleteSubModalOpen(true)}>
+            <ModalButtonWithIcon
+              extraClasses={'hover:text-red-500'}
+              onClick={() => setDeleteSubModalOpen(true)}
+            >
               <FaTrashAlt className="w-[25px] h-[25px] mb-2" />
               <span className="font-bold">Delete</span>
             </ModalButtonWithIcon>

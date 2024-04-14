@@ -40,8 +40,8 @@ const InputGroup = ({
           {...register(name)}
           className={`select select-bordered w-full ${
             errors[name]
-              ? 'border-red-500 focus:outline-red-500'
-              : 'border-gray-300 focus:outline-primary'
+              ? 'border-2 border-red-500 focus:border-transparent focus:outline-red-500 focus:ring-2 focus:ring-red-500'
+              : 'border-2 border-gray-300 focus:border-transparent focus:ring-2 focus:ring-primary'
           }`}
         >
           {options.map(option => (
@@ -78,8 +78,8 @@ const InputGroup = ({
           {...register(name)}
           className={`textarea textarea-bordered w-full ${
             errors[name]
-              ? 'border-red-500 focus:outline-red-500'
-              : 'border-gray-300 focus:outline-primary'
+              ? 'border-2 border-red-500 focus:border-transparent focus:outline-red-500 focus:ring-2 focus:ring-red-500'
+              : 'border-2 border-gray-300 focus:border-transparent focus:ring-2 focus:ring-primary'
           } focus:outline-primary`}
         />
 
@@ -110,8 +110,8 @@ const InputGroup = ({
         // {}
         className={`input input-bordered w-full ${
           errors[name]
-            ? 'border-red-500 focus:outline-red-500'
-            : 'border-gray-300 focus:outline-primary'
+            ? 'border-2 border-red-500 focus:border-transparent focus:outline-red-500 focus:ring-2 focus:ring-red-500'
+            : 'border-2 border-gray-300 focus:border-transparent focus:ring-2 focus:ring-primary'
         } focus:outline-primary`}
       />
 

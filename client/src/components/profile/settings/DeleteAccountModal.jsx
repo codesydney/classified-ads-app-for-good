@@ -46,7 +46,7 @@ const DeleteAccountModal = ({ setModalOpen }) => {
         </p>
         <div className="flex flex-wrap gap-4 mt-4">
           <button
-            className="btn btn-squre w-fit py-2 bg-white hover:bg-red-500 hover:text-white text-red-500 border-red-500 mt-[15px]"
+            className="w-full sm:w-fit p-2 bg-transparent hover:bg-red-500  text-red-500 border-red-500 hover:text-white border-2 rounded-md ease-in-out duration-300 mt-[15px]"
             onClick={handleClick}
             disabled={isLoading}
           >
@@ -57,7 +57,7 @@ const DeleteAccountModal = ({ setModalOpen }) => {
             )}
           </button>
           <button
-            className="btn btn-squre w-fit py-2 bg-primary hover:bg-primary text-white mt-[15px]"
+            className="w-full sm:w-fit p-2 bg-transparent hover:bg-primary text-primary hover:text-white hover:font-semibold border-2 border-primary rounded-md ease-in-out duration-300 mt-[15px]"
             onClick={() => setModalOpen(false)}
             disabled={isLoading}
           >
