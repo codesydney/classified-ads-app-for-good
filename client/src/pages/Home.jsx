@@ -4,7 +4,7 @@ import SearchResults from '../components/search/SearchResults'
 const Home = () => {
   return (
     <div>
-      <div className="mx-auto max-w-6xl px-4 w-full">
+      <div className="mx-auto max-w-6xl px-4">
         <SearchBar />
       </div>
       <SearchResults />
