@@ -1,8 +1,14 @@
-const ModalButton = ({ children, variant, onClick, disabled }) => {
+const ModalButton = ({
+  children,
+  variant,
+  onClick,
+  disabled,
+  extraClasses,
+}) => {
   return (
     <button
       onClick={event => onClick(event)}
-      className={`px-6 py-2 border-[1px] border-primary rounded-full font-semibold w-fit transition duration-200 ${variant === 'hollow' ? 'text-primary hover:text-white hover:bg-primary' : 'text-white bg-primary hover:bg-primary/70'}`}
+      className={`${extraClasses} px-6 py-2 border-2 border-primary rounded-md font-semibold w-fit transition duration-300 ease-in-out ${variant === 'hollow' ? 'text-primary hover:text-white hover:bg-primary' : 'text-white bg-primary hover:bg-primary/70'}`}
       disabled={disabled}
     >
       {children}

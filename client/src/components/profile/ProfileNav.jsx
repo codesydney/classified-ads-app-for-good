@@ -13,7 +13,7 @@ const ProfileNav = () => {
   const { currentUser } = useSelector(state => state.auth)
   const LogoutButton = withLogout(({ handleLogout }) => (
     <button
-      className="hidden md:block py-2 px-4 border-2 w-full border-primary text-primary rounded text-center hover:bg-primary hover:border-transparent hover:text-white"
+      className="hidden md:block py-2 px-4 border-2 w-full border-red-500 text-red-500 rounded text-center hover:bg-red-500 hover:border-transparent hover:text-white hover:font-semibold ease-in-out duration-300"
       onClick={handleLogout}
     >
       Logout

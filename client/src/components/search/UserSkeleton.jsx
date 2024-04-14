@@ -1,8 +1,8 @@
 const UserSkeleton = ({}) => {
   return (
-    <div className="self-stretch justify-center flex flex-col max-w-[450px]   shadow-lg">
+    <div className="self-stretch justify-center flex flex-col max-w-[450px] shadow-lg rounded-md">
       <div
-        className="w-full animate-pulse bg-neutral/20"
+        className="w-full animate-pulse bg-neutral/20 rounded-t-md"
         style={{ aspectRatio: 4 / 3 }}
       ></div>
 

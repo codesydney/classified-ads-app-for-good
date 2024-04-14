@@ -22,7 +22,7 @@ const SearchBar = () => {
       aria-label="Search Alumni"
       type="search"
       placeholder="Search Alumni"
-      className="w-full px-4 py-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent my-8"
+      className="w-full px-4 py-4 border-2 border-gray-300 hover:border-primary/70 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent my-8 ease-in-out duration-300"
       value={value}
       onChange={handleChange}
       onKeyDown={handleKeyDown}

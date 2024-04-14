@@ -25,7 +25,7 @@ const SearchResults = () => {
   }, [])
 
   return (
-    <div className="mx-auto max-w-6xl px-4">
+    <div className="w-full sm:mx-auto sm:max-w-6xl px-2 sm:px-4">
       <div className="grid grid-cols-auto-fit-minmax gap-x-10 gap-y-12">
         {loading ? (
           SearchResultsLoading()

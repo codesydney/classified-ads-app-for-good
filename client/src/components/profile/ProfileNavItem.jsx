@@ -8,11 +8,9 @@ const NavItem = ({ location, icon, children }) => {
     <li className="flex-grow">
       <Link
         to={location}
-        className={`flex rounded-md items-center justify-center gap-4 p-3 flex-grow md:justify-start bg lg:px-6 py-4 hover:bg-slate-50/70 hover:text-primary ${isActive ? 'bg-primary/10 md:border-r-4 md:border-r-primary' : ''}`}
+        className={`flex rounded-md items-center justify-center gap-4 p-3 flex-grow md:justify-start bg lg:px-6 py-4 hover:bg-slate-50/70 text-neutral/70 hover:text-primary ${isActive ? 'text-primary bg-primary/10 md:border-r-4 md:border-r-primary ease-in-out duration-300' : ''}`}
       >
-        <span className={`text-neutral/70 ${isActive ? 'text-primary' : ''}`}>
-          {icon}
-        </span>
+        {icon}
         <span className="hidden sm:inline">{children}</span>
       </Link>
     </li>

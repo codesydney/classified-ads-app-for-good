@@ -10,7 +10,7 @@ const DeleteAccount = () => {
         Once you delete your account, there is no going back. Please be certain.
       </p>
       <button
-        className="btn btn-squre w-fit py-2 bg-white hover:bg-red-500 hover:text-white text-red-500 border-red-500 mt-[15px]"
+        className=" w-full sm:w-fit p-2 bg-transparent hover:bg-red-500 text-red-500 hover:text-white border-2 rounded-md border-red-500 hover:font-semibold duration-300 ease-in-out mt-[15px]"
         onClick={() => setModalOpen(true)}
       >
         Delete Account

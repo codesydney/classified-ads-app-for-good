@@ -1,7 +1,7 @@
 import { useLocation, Link } from 'react-router-dom'
 
 const linkClass =
-  'underline text-sm text-semibold py-2 px-4 rounded-full shadow bg-white hover:text-bold'
+  'underline text-sm text-semibold capitalize py-2 px-4 rounded-md shadow bg-white hover:text-bold'
 
 const Breadcrumbs = () => {
   const { pathname } = useLocation()
