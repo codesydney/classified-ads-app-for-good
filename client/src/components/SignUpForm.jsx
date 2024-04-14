@@ -80,8 +80,8 @@ const SignUpForm = () => {
               {...register('firstName')}
               className={`input input-bordered w-full ${
                 errors.firstName
-                  ? 'border-red-500 focus:outline-red-500'
-                  : 'border-gray-300 focus:outline-primary'
+                  ? 'border-2 border-red-500 focus:border-transparent focus:outline-red-500 focus:ring-2 focus:ring-red-500'
+                  : 'border-2 border-gray-300 focus:border-transparent focus:ring-2 focus:ring-primary'
               } focus:outline-primary`}
             />
 
@@ -105,8 +105,8 @@ const SignUpForm = () => {
               {...register('lastName')}
               className={`input input-bordered w-full ${
                 errors.lastName
-                  ? 'border-red-500 focus:outline-red-500'
-                  : 'border-gray-300 focus:outline-primary'
+                  ? 'border-2 border-red-500 focus:border-transparent focus:outline-red-500 focus:ring-2 focus:ring-red-500'
+                  : 'border-2 border-gray-300 focus:border-transparent focus:ring-2 focus:ring-primary'
               } focus:outline-primary`}
             />
 
@@ -130,8 +130,8 @@ const SignUpForm = () => {
               {...register('email')}
               className={`input input-bordered w-full ${
                 errors.email
-                  ? 'border-red-500 focus:outline-red-500'
-                  : 'border-gray-300 focus:outline-primary'
+                  ? 'border-2 border-red-500 focus:border-transparent focus:outline-red-500 focus:ring-2 focus:ring-red-500'
+                  : 'border-2 border-gray-300 focus:border-transparent focus:ring-2 focus:ring-primary'
               } focus:outline-primary`}
             />
 
@@ -155,8 +155,8 @@ const SignUpForm = () => {
               {...register('password')}
               className={`input input-bordered w-full ${
                 errors.password
-                  ? 'border-red-500 focus:outline-red-500'
-                  : 'border-gray-300 focus:outline-primary'
+                  ? 'border-2 border-red-500 focus:border-transparent focus:outline-red-500 focus:ring-2 focus:ring-red-500'
+                  : 'border-2 border-gray-300 focus:border-transparent focus:ring-2 focus:ring-primary'
               } focus:outline-primary`}
             />
 
@@ -180,8 +180,8 @@ const SignUpForm = () => {
               {...register('passwordConfirm')}
               className={`input input-bordered w-full ${
                 errors.passwordConfirm
-                  ? 'border-red-500 focus:outline-red-500'
-                  : 'border-gray-300 focus:outline-primary'
+                  ? 'border-2 border-red-500 focus:border-transparent focus:outline-red-500 focus:ring-2 focus:ring-red-500'
+                  : 'border-2 border-gray-300 focus:border-transparent focus:ring-2 focus:ring-primary'
               } focus:outline-primary`}
             />
 
@@ -195,7 +195,7 @@ const SignUpForm = () => {
           </label>
 
           <button
-            className="btn btn-squre w-full py-2 bg-primary hover:bg-primary text-white mt-[15px]"
+            className=" w-full py-2 bg-primary bg-transparent hover:bg-primary text-primary hover:font-semibold hover:text-white mt-[15px] rounded-md border-2 border-primary ease-in-out duration-300"
             type="submit"
           >
             {isLoading ? (

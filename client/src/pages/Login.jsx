@@ -6,7 +6,7 @@ import LoginHeroPic from '../assets/ust-login.jpeg'
 const Login = () => {
   return (
     <div className="flex">
-      <div className="hidden md:block relative h-[950px]">
+      <div className="hidden md:block relative h-[95vh]">
         <img
           src={LoginHeroPic}
           alt="nature"
