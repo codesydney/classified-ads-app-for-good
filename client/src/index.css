@@ -7,3 +7,27 @@
 * {
   font-family: 'Comfortaa', sans-serif;
 }
+
+::-webkit-scrollbar {
+  height: 12px;
+  width: 16px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border: 4px solid #fff;
+  border-radius: 50px;
+}
+
+.dark .overflow-y-auto::-webkit-scrollbar-thumb {
+  background: hsla(0, 0%, 100%, 0.2);
+  border: 4px solid #121927;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #fcbf15;
+}
