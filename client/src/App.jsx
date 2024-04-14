@@ -8,7 +8,7 @@ function App() {
       <Navbar />
 
       <div className="flex flex-col min-h-screen">
-        <div className="mt-[120px] flex-grow flex flex-col">
+        <div className="mt-[100px] flex flex-col">
           <Outlet />
         </div>
         <div>
