@@ -8,7 +8,7 @@ const UserDetails = ({ userProfile }) => {
       <img
         src={userProfile?.alumniProfilePicture || defaultUserLogo}
         alt={`${userProfile?.fullName} profile picture`}
-        className=" md:w-1/2 aspect-ratio-4/3 object-fit rounded-t-md sm:rounded-t-none sm:rounded-l-md"
+        className=" md:w-1/2 aspect-ratio-4/3 object-fit rounded-t-md sm:rounded-tr-none sm:rounded-l-md"
       />
 
       <div className="p-4 flex flex-col flex-grow">
