@@ -24,14 +24,9 @@ const ContactForm = () => {
     try {
       setIsLoading(true)
 
-      await emailjs.sendForm(
-        'service_yyexm0g',
-        'template_rl4e2gy',
-        'user_nEmQ6yi4aBPvlCKCkUAfK',
-        {
-          publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
-        },
-      )
+      await emailjs.sendForm('service_yyexm0g', 'template_rl4e2gy', formEl, {
+        publicKey: 'user_nEmQ6yi4aBPvlCKCkUAfK',
+      })
 
       setErrorMessage('')
       setSuccessMessage('You will hear from our team shortly.')

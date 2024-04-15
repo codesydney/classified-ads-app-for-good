@@ -45,15 +45,17 @@ const UserDetails = ({ userProfile }) => {
             <div className=" w-full flex flex-col gap-2">
               <p>{userProfile?.service?.serviceDescription}</p>
               <div className=" break-words hyphens-auto whitespace-pre break-all">
-                <a
-                  href={`${userProfile?.service?.serviceUrl}`}
-                  target="_blank"
-                  className="hover:underline hover:text-white flex-wrap"
-                >
-                  <button className="w-full p-2 border-2 bg-white capitalize border-sky-400 hover:bg-sky-400 rounded-md ease-in-out duration-300">
-                    {userProfile?.service?.serviceName}
-                  </button>
-                </a>
+                {userProfile?.service?.serviceUrl && (
+                  <a
+                    href={`${userProfile?.service?.serviceUrl}`}
+                    target="_blank"
+                    className="hover:underline hover:text-white flex-wrap"
+                  >
+                    <button className="w-full p-2 border-2 bg-white capitalize border-sky-400 hover:bg-sky-400 rounded-md ease-in-out duration-300">
+                      {userProfile?.service?.serviceName}
+                    </button>
+                  </a>
+                )}
               </div>
             </div>
           </div>
