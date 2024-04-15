@@ -45,7 +45,7 @@ const Header = () => {
   }
 
   function completedPercentage(incomplete, total) {
-    // Flipping the logic to found out how many fields are complete
+    // Flipping the logic to find out how many fields are complete
     const completedFields = total - incomplete
     return (completedFields / total).toPrecision(2) * 100
   }
@@ -65,9 +65,12 @@ const Header = () => {
         {!currentUser?.isProfileComplete && (
           <span className=" flex gap-2 py-2 px-4 border-2 mt-4 sm:mt-0 w-full sm:w-fit border-red-500 rounded-md text-red-500 text-center bg-red-200/50">
             {`Your profile is ${percentCompleted}% complete! Click for info`}
-            <Tooltip tooltipRef={tooltipRef} extraClasses={'-bottom-52'}>
-              <div className="flex flex-col justify-start items-start gap-2">
-                <span className=" text-left text-primary">
+            <Tooltip
+              tooltipRef={tooltipRef}
+              extraClasses={`${percentCompleted > 50 ? '!-bottom-[150%] sm:!-bottom-[350%]' : '!-bottom-[500%] sm:!-bottom-[650%]'}`}
+            >
+              <div className="flex flex-col justify-start items-start gap-2 bottom">
+                <span className=" text-left text-primary bottom">
                   Please complete those fields!
                 </span>
                 {incompleteRequiredFields.map((fields, index) => {

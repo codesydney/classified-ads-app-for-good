@@ -108,7 +108,7 @@ const ImageCrop = ({ src, closeCrop, setCurrentTab, fileName }) => {
       <div className="p-6 flex justify-end gap-4">
         <ModalButton
           extraClasses={
-            'text-red-500 hover:text-white bg-transparent border-red-500 hover:border-red-500 hover:bg-red-500'
+            '!text-red-500 hover:!text-white bg-transparent border-red-500 hover:border-red-500 hover:bg-red-500'
           }
           onClick={closeCrop}
           disabled={isLoading}
