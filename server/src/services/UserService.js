@@ -261,6 +261,8 @@ const updateProfileImage = async (userId, file) => {
 const updateProfileImageV2 = async (userId, file) => {
   const user = await User.findById(userId).select('-__v -isAutomated').exec()
 
+  console.log('user', user)
+
   if (!user) {
     return null
   }
@@ -269,7 +271,8 @@ const updateProfileImageV2 = async (userId, file) => {
 
   const imageUrl = await uploadImageToS3(file, process.env.AWS_BUCKET_NAME)
   user.alumniProfilePicture = imageUrl
-  const updatedUser = await user.save()
+
+  await user.save()
 
   // If old image exists, delete it. Dont wait. Don't throw error if there is one.
   if (oldImageUrl) {
