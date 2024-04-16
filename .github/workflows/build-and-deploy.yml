@@ -6,7 +6,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      PORT: ${{ secrets.PORT }}
       MONGO_URI: ${{ secrets.MONGO_URI }}
       TEST_MONGO_URI: ${{ secrets.TEST_MONGO_URI }}
       SENDGRID_EMAIL: ${{ secrets.SENDGRID_EMAIL }}
@@ -31,8 +30,7 @@ jobs:
         run: npm run build
       - name: Create .env file in server directory
         run: |
-          echo "PORT=${PORT}" > server/.env
-          echo "MONGO_URI=${MONGO_URI}" >> server/.env
+          echo "MONGO_URI=${MONGO_URI}" > server/.env
           echo "TEST_MONGO_URI=${TEST_MONGO_URI}" >> server/.env
           echo "SENDGRID_EMAIL=${SENDGRID_EMAIL}" >> server/.env
           echo "CLIENT_URL=${CLIENT_URL}" >> server/.env
