@@ -15,7 +15,7 @@ const Footer = () => {
           className="w-[120px] h-[70px]"
         />
         <p className="font-bold">Connecting Thomasians Down Under</p>
-        <p>Copyright © {year} - All right reserved</p>
+        <p>Copyright © {year} - All rights reserved</p>
 
         <div>
           <a
