@@ -4,8 +4,7 @@ const bcrypt = require('bcryptjs')
 
 const emailRegex =
   /^((([!#$%&'*+\-/=?^_`{|}~\w])|([!#$%&'*+\-/=?^_`{|}~\w][!#$%&'*+\-/=?^_`{|}~\.\w]{0,}[!#$%&'*+\-/=?^_`{|}~\w]))[@]\w+([-.]\w+)*\.\w+([-.]\w+)*)$/
-const phoneRegex =
-  /^\({0,1}((0|\+61)(2|4|3|7|8)){0,1}\){0,1}(\ |-){0,1}[0-9]{2}(\ |-){0,1}[0-9]{2}(\ |-){0,1}[0-9]{1}(\ |-){0,1}[0-9]{3}$/
+const phoneRegex = /^[0-9]{10}$/
 const postcodeRegex = /^[0-9]{4}$/
 const urlRegex = /^(https?:\/\/)[^\s/$.?#].[^\s]*$/
 
@@ -17,7 +16,7 @@ const UserSchema = new Schema(
       trim: true,
       unique: true,
       validate: {
-        validator: email => emailRegex.test(email),
+        validator: email => !email || emailRegex.test(email),
         message: 'Invalid email format',
       },
     },
@@ -42,7 +41,7 @@ const UserSchema = new Schema(
       type: String,
       trim: true,
       validate: {
-        validator: phone => phoneRegex.test(phone),
+        validator: phone => !phone || phoneRegex.test(phone),
         message: 'Invalid phone number format',
       },
     },

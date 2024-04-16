@@ -269,7 +269,8 @@ const updateProfileImageV2 = async (userId, file) => {
 
   const imageUrl = await uploadImageToS3(file, process.env.AWS_BUCKET_NAME)
   user.alumniProfilePicture = imageUrl
-  const updatedUser = await user.save()
+
+  await user.save()
 
   // If old image exists, delete it. Dont wait. Don't throw error if there is one.
   if (oldImageUrl) {
