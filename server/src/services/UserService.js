@@ -261,8 +261,6 @@ const updateProfileImage = async (userId, file) => {
 const updateProfileImageV2 = async (userId, file) => {
   const user = await User.findById(userId).select('-__v -isAutomated').exec()
 
-  console.log('user', user)
-
   if (!user) {
     return null
   }

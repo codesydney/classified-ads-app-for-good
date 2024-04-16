@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs')
 
 const emailRegex =
   /^((([!#$%&'*+\-/=?^_`{|}~\w])|([!#$%&'*+\-/=?^_`{|}~\w][!#$%&'*+\-/=?^_`{|}~\.\w]{0,}[!#$%&'*+\-/=?^_`{|}~\w]))[@]\w+([-.]\w+)*\.\w+([-.]\w+)*)$/
+const phoneRegex = /^[0-9]{10}$/
 const postcodeRegex = /^[0-9]{4}$/
 const urlRegex = /^(https?:\/\/)[^\s/$.?#].[^\s]*$/
 
