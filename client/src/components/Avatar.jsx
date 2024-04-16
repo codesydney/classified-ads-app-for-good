@@ -3,9 +3,7 @@ import PlaceHolder from '../assets/placeholder.jpg'
 const Avatar = ({ src }) => {
   return (
     <img
-      className="rounded-full"
-      height="30"
-      width="30"
+      className="rounded-full object-fit w-[30px] h-[30px]"
       alt="Avatar"
       src={src || PlaceHolder}
     />
