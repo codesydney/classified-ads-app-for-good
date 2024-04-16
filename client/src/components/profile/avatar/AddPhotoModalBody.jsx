@@ -94,7 +94,7 @@ const AddPhotoModalBody = ({ setCurrentTab, currentUser }) => {
         <div className="p-6 flex justify-end gap-4">
           <ModalButton
             extraClasses={
-              ' !text-red-400 hover:!text-white bg-transparent border-red-500 hover:border-red-500 hover:bg-red-500'
+              ' !text-red-500 hover:!text-white bg-transparent border-red-500 hover:border-red-500 hover:bg-red-500'
             }
             onClick={() => setCurrentTab('main')}
           >
