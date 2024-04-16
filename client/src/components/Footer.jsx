@@ -1,7 +1,7 @@
 import { FaFacebookSquare } from 'react-icons/fa'
 import Logo from '../assets/logo.jpeg'
-import PrivacyPolicy from '../assets/pdf/Code.Sydney_Website_Privacy_Policy_2024.pdf'
-import Terms from '../assets/pdf/Code.Sydney_Client_Terms_2024.pdf'
+import PrivacyPolicy from '../assets/pdf/USTAA_Privacy_Policy.pdf'
+import Terms from '../assets/pdf/USTAA_Terms.pdf'
 
 const Footer = () => {
   const year = new Date().getFullYear()
