@@ -3,6 +3,6 @@ import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: 'https://classifieds.code.sydney/',
+  base: 'https://www.ustaa.au/',
   plugins: [react()],
 })

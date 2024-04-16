@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=production nodemon src/index.js",
-    "start:prodserver": "NODE_ENV=production node dist/bundle.js",
+    "start:prodserver": "PORT=3001 NODE_ENV=production node dist/bundle.js",
     "dev": "cross-env NODE_ENV=development nodemon src/index.js",
     "build": "webpack --config webpack.config.js",
     "test": "jest",
