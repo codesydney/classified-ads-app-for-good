@@ -133,18 +133,18 @@ jobs:
       uses: appleboy/scp-action@v0.1.7
       with:
         host: ${{ secrets.CLOUD_HOST }}
-        username: classifieds
+        username: ustaa
         key: ${{ secrets.CLOUD_KEY }}
         port: 22
         source: distfiles/*
         rm: true
-        target: htdocs/classifieds.code.sydney/
+        target: htdocs/www.ustaa.au/
         strip_components: 1
     - name: Start Process manager
       uses: appleboy/ssh-action@v1.0.3
       with:
         host: ${{ secrets.CLOUD_HOST }}
-        username: classifieds
+        username: ustaa
         key: ${{ secrets.CLOUD_KEY }}
         port: 22
         script: cd staging && ./deploy
