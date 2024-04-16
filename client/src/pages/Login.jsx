@@ -1,7 +1,7 @@
 import LoginForm from '../components/LoginForm.jsx'
 import Consent from '../components/Consent.jsx'
 import { Link } from 'react-router-dom'
-import LoginHeroPic from '../assets/ust-login.jpeg'
+import LoginHeroPic from '../assets/ust-triahaec.jpeg'
 
 const Login = () => {
   return (
