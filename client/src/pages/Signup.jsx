@@ -1,7 +1,7 @@
 import SignUpForm from '../components/SignUpForm'
 import Consent from '../components/Consent'
 import { Link } from 'react-router-dom'
-import SignUpHeroPic from '../assets/ust-sign-up.jpeg'
+import SignUpHeroPic from '../assets/ust-triahaec.jpeg'
 
 const Signup = () => {
   return (

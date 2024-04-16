@@ -203,7 +203,7 @@ const UserMenu = ({ currentUser }) => {
                   label="Membership Fee Payment"
                   onClick={() =>
                     window.open(
-                      'https://buy.stripe.com/28o9CgfO917C51e28a',
+                      'https://buy.stripe.com/6oEbKo6dzdUoctG147',
                       '_blank',
                     )
                   }
