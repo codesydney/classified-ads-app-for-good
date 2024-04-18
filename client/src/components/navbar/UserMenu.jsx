@@ -182,6 +182,11 @@ const UserMenu = ({ currentUser }) => {
               <>
                 <div className="md:hidden">
                   <MenuItem label="Home" onClick={() => handleNavigate('/')} />
+                  <MenuItem
+                    label="Contact"
+                    onClick={() => handleNavigate('/contact')}
+                  />
+
                   {/*<MenuItem*/}
                   {/*  label="Officers"*/}
                   {/*  onClick={() => handleNavigate('/officers')}*/}
