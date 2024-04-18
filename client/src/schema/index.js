@@ -127,7 +127,7 @@ const generalInformationSchema = yup.object({
     .nullable()
     .transform((curr, orig) => (orig === '' ? null : curr))
     .min(3, 'Bio must be at least 3 character')
-    .max(500, 'Bio cannot exceed 500 characters'),
+    .max(3000, 'Bio cannot exceed 3000 characters'),
 })
 
 const serviceSchema = yup.object({
