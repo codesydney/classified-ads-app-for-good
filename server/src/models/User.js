@@ -75,7 +75,7 @@ const UserSchema = new Schema(
       type: String,
       trim: true,
       minLength: [3, 'Story must be at least 3 characters long'],
-      maxLength: [500, 'Story must be at most 500 characters long'],
+      maxLength: [3000, 'Story must be at most 3000 characters long'],
     },
     alumniProfilePicture: {
       type: String,
