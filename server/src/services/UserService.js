@@ -153,25 +153,32 @@ const getUsers = async (
   }
 
   if (searchQuery.length >= 3) {
-    matchCriteria.$and.push({
-      $or: [
-        { firstName: { $regex: searchQuery, $options: 'i' } },
-        { lastName: { $regex: searchQuery, $options: 'i' } },
-        { email: { $regex: searchQuery, $options: 'i' } },
-        { state: { $regex: searchQuery, $options: 'i' } },
-        { suburb: { $regex: searchQuery, $options: 'i' } },
-        { postcode: { $regex: searchQuery, $options: 'i' } },
-        { facebookName: { $regex: searchQuery, $options: 'i' } },
-        { story: { $regex: searchQuery, $options: 'i' } },
-        { 'education.course': { $regex: searchQuery, $options: 'i' } },
-        { 'education.college': { $regex: searchQuery, $options: 'i' } },
-        { 'service.serviceName': { $regex: searchQuery, $options: 'i' } },
-        {
-          'service.serviceDescription': { $regex: searchQuery, $options: 'i' },
-        },
-        { 'service.serviceUrl': { $regex: searchQuery, $options: 'i' } },
-      ],
-    })
+    const numericSearchQuery = parseInt(searchQuery, 10)
+    const isNumericSearch = !isNaN(numericSearchQuery)
+
+    const searchConditions = [
+      { firstName: { $regex: searchQuery, $options: 'i' } },
+      { lastName: { $regex: searchQuery, $options: 'i' } },
+      { email: { $regex: searchQuery, $options: 'i' } },
+      { state: { $regex: searchQuery, $options: 'i' } },
+      { suburb: { $regex: searchQuery, $options: 'i' } },
+      { postcode: { $regex: searchQuery, $options: 'i' } },
+      { facebookName: { $regex: searchQuery, $options: 'i' } },
+      { story: { $regex: searchQuery, $options: 'i' } },
+      { 'education.course': { $regex: searchQuery, $options: 'i' } },
+      { 'education.college': { $regex: searchQuery, $options: 'i' } },
+      { 'service.serviceName': { $regex: searchQuery, $options: 'i' } },
+      {
+        'service.serviceDescription': { $regex: searchQuery, $options: 'i' },
+      },
+      { 'service.serviceUrl': { $regex: searchQuery, $options: 'i' } },
+    ]
+
+    if (isNumericSearch) {
+      searchConditions.push({ 'education.yearGraduated': numericSearchQuery })
+    }
+
+    matchCriteria.$and.push({ $or: searchConditions })
   } else {
     // If no searchQuery, just ensure hideProfile: false is the only criteria
     matchCriteria = {

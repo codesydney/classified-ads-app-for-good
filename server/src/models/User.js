@@ -157,6 +157,12 @@ UserSchema.virtual('fullName').get(function () {
   return `${this.firstName} ${this.lastName}`
 })
 
+UserSchema.virtual('education.yearGraduatedStr').get(function () {
+  return this.education.yearGraduated
+    ? this.education.yearGraduated.toString()
+    : ''
+})
+
 UserSchema.pre('save', function (next) {
   if (!this.isModified('password')) return next()
 
@@ -193,6 +199,7 @@ UserSchema.index({
   story: 'text',
   'education.course': 'text',
   'education.college': 'text',
+  'education.yearGraduated': 'text',
   'service.serviceName': 'text',
   'service.serviceDescription': 'text',
   'service.serviceUrl': 'text',
