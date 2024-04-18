@@ -38,11 +38,16 @@ const UserMenu = ({ currentUser }) => {
 
   const handleNavigate = useCallback(
     path => {
-      navigate(path)
-      setIsOpen(false)
+      if (window.location.pathname === path) {
+        window.location.reload()
+      } else {
+        navigate(path)
+        setIsOpen(false)
+      }
     },
     [navigate],
   )
+
   return (
     <div className="relative" ref={menuRef}>
       <div className="flex flex-row items-center gap-3">
@@ -182,6 +187,11 @@ const UserMenu = ({ currentUser }) => {
               <>
                 <div className="md:hidden">
                   <MenuItem label="Home" onClick={() => handleNavigate('/')} />
+                  <MenuItem
+                    label="Contact"
+                    onClick={() => handleNavigate('/contact')}
+                  />
+
                   {/*<MenuItem*/}
                   {/*  label="Officers"*/}
                   {/*  onClick={() => handleNavigate('/officers')}*/}
