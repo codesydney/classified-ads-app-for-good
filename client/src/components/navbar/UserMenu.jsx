@@ -53,12 +53,12 @@ const UserMenu = ({ currentUser }) => {
       <div className="flex flex-row items-center gap-3">
         <MenuButton
           label={'Home'}
-          navigate={() => navigate('/')}
+          navigate={() => handleNavigate('/')}
           extraClasses={' hover:text-[#FCBF15] font-extra-bold'}
         />
         <MenuButton
           label={'Contact'}
-          navigate={() => navigate('/contact')}
+          navigate={() => handleNavigate('/contact')}
           extraClasses={' hover:text-[#FCBF15] font-extra-bold'}
         />
         {/*<div*/}
