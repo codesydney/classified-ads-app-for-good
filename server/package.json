@@ -13,7 +13,7 @@
     "test:unit": "jest --testPathPattern=.unit.test.js",
     "db:seed": "NUM_USERS=100 node src/migration/userMigration.js",
     "db:removeautomated": "node src/migration/removeAutomatedUsers.js",
-    "db:admin": "node src/migration/setIsAdminPriviledge.js",
+    "db:admin": "node src/migration/setIsAdminPriviledge.js"
   },
   "keywords": [],
   "author": "",
