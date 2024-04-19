@@ -12,7 +12,8 @@
     "test:integration": "cross-env NODE_ENV=test jest --testPathPattern=.int.test.js",
     "test:unit": "jest --testPathPattern=.unit.test.js",
     "db:seed": "NUM_USERS=100 node src/migration/userMigration.js",
-    "db:removeautomated": "node src/migration/removeAutomatedUsers.js"
+    "db:removeautomated": "node src/migration/removeAutomatedUsers.js",
+    "db:admin": "node src/migration/setIsAdminPriviledge.js",
   },
   "keywords": [],
   "author": "",
