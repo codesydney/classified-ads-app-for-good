@@ -16,6 +16,7 @@ import ProfileEducation from '../components/profile/education/ProfileEducation.j
 import ProfileSettings from '../components/profile/settings/ProfileSettings.jsx'
 import UserProfile from '../pages/UserProfile.jsx'
 import Contact from '../pages/Contact.jsx'
+import AdminPanel from '../pages/AdminPanel.jsx'
 
 const Router = () => {
   // const error = useRouteError()
@@ -86,6 +87,14 @@ const Router = () => {
               element: <ProfileSettings />,
             },
           ],
+        },
+        {
+          path: '/admin',
+          element: (
+            <ProtectedRoute>
+              <AdminPanel />
+            </ProtectedRoute>
+          ),
         },
       ],
     },
