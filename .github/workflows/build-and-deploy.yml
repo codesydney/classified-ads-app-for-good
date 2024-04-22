@@ -145,6 +145,4 @@ jobs:
         username: ustaa
         key: ${{ secrets.CLOUD_KEY }}
         port: 22
-        script: cd staging && ./deploy
-
-
+        script: cd staging && ./deploy.orig
