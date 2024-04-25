@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import App from '../App'
-import ProtectedRoute from './ProtectedRoute.jsx'
+import ProtectedRoute, { ProtectedRouteAdmin } from './ProtectedRoute.jsx'
 import Home from '../pages/Home'
 import Officers from '../pages/Officers.jsx'
 import Developers from '../pages/Developers.jsx'
@@ -92,7 +92,9 @@ const Router = () => {
           path: '/admin',
           element: (
             <ProtectedRoute>
-              <AdminPanel />
+              <ProtectedRouteAdmin>
+                <AdminPanel />
+              </ProtectedRouteAdmin>
             </ProtectedRoute>
           ),
         },
