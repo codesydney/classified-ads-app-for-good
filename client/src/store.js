@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import { useDispatch } from 'react-redux'
 import authReducer from './features/auth/authSlice'
 import usersReducer from './features/users/usersSlice'
+import adminReducer from './features/admin/adminSlice'
 
 export const store = configureStore({
   middleware: getDefaultMiddleware =>
@@ -11,6 +12,7 @@ export const store = configureStore({
   reducer: {
     auth: authReducer,
     users: usersReducer,
+    admin: adminReducer,
   },
 })
 
