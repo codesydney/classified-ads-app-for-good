@@ -5,7 +5,7 @@ import { useNavigate, Outlet } from 'react-router-dom'
 const ProtectedRouteReplacement = ({ children }) => {
   const { isAuthenticated, accessToken } = useSelector(state => state.auth)
   const navigate = useNavigate()
-  console.log('authenticated', isAuthenticated)
+
   useEffect(() => {
     if (!isAuthenticated) {
       navigate('/login')

@@ -4,7 +4,7 @@ const adminURL = '/admin/users'
 
 const adminSearchUsers = async ({}, token) => {
   const params = {}
-
+  console.log('admin api func running')
   try {
     const config = {
       headers: {
