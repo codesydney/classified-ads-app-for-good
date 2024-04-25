@@ -1,6 +1,13 @@
 const authenticateAdmin = (req, res, next) => {
-  const user = req.user
-  console.log('user', user)
+  const { isAdmin } = req.user
+
+  // if user doesn't have admin role.
+  if (!isAdmin) {
+    const error = new Error('Unauthorized')
+    error.statusCode = 401
+    throw error
+  }
+
   next()
 }
 

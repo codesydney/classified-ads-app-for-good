@@ -9,6 +9,10 @@ const { errorHandler, notFound } = require('./middleware/errorHandler')
 const app = express()
 
 app.use(express.json())
+
+// Will this line break any previous func?
+app.use(express.urlencoded())
+
 app.use(cors({ credentials: true }))
 
 app.use('/api/v1/health', HealthRoute)
