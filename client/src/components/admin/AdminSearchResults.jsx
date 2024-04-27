@@ -1,9 +1,16 @@
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { adminSearchUsers } from '../../features/admin/adminAction'
+
 import NoUserResults from './NoUserResults'
 import ResultsCount from './ResultsCount'
 import PaginationNavigation from '../search/PaginationNavigation'
 const AdminSearchResults = () => {
-  const { users, meta } = useSelector(state => state.admin)
+  const dispatch = useDispatch()
+  const { users, meta, searchQuery } = useSelector(state => state.admin)
+
+  const handlePageChange = async page => {
+    dispatch(adminSearchUsers({ ...searchQuery, page }))
+  }
 
   return (
     <div className="p-4 m-auto max-w-[1444px]">
@@ -21,10 +28,7 @@ const AdminSearchResults = () => {
           <NoUserResults />
         )}
       </div>
-      <PaginationNavigation
-        meta={meta}
-        handlePageChange={() => console.log('clicked')}
-      />
+      <PaginationNavigation meta={meta} handlePageChange={handlePageChange} />
     </div>
   )
 }
