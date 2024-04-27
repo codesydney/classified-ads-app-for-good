@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom'
-import defaultUserLogo from '../../assets/serviceImgPlaceholder.svg'
 
 const UserDetails = ({ userProfile }) => {
   const isOfficer = userProfile?.isOfficer
   return (
     <div className="flex flex-col md:flex-row self-stretch sm:gap-4 sm:w-full m-2 sm:my-10 shadow-md rounded-md">
       <img
-        src={userProfile?.alumniProfilePicture || defaultUserLogo}
+        src={
+          userProfile?.alumniProfilePicture ||
+          'https://ustaa.s3.ap-southeast-2.amazonaws.com/images/USTAA-Profile.png'
+        }
         alt={`${userProfile?.fullName} profile picture`}
         className=" md:w-1/2 aspect-ratio-4/3 object-cover rounded-t-md sm:rounded-tr-none sm:rounded-l-md"
       />
