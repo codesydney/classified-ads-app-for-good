@@ -1,12 +1,13 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { adminSearchUsers } from '../features/admin/adminAction.js'
 import { useEffect, useState } from 'react'
+import AdminSearchBar from '../components/admin/AdminSearchBar.jsx'
+import AdminSearchResults from '../components/admin/AdminSearchResults.jsx'
 
 const AdminPanel = () => {
   const dispatch = useDispatch()
   const { users, meta, loading } = useSelector(state => state.admin)
   const { currentUser } = useSelector(state => state.auth)
-  console.log(users)
   const fetchUsers = async () => {
     await dispatch(adminSearchUsers())
   }
@@ -18,11 +19,9 @@ const AdminPanel = () => {
 
   return (
     <div>
-      <div>Admin Panel Page</div>
-      {users &&
-        users.map((user, index) => {
-          return <div key={index}>{user.firstName}</div>
-        })}
+      <h1>Admin Panel</h1>
+      <AdminSearchBar />
+      <AdminSearchResults />
     </div>
   )
 }
