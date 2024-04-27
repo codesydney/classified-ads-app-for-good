@@ -1,4 +1,7 @@
-const sortOptions = [
+import { useSelector, useDispatch } from 'react-redux'
+import { updateSearchFilter } from '../../features/admin/adminSlice'
+
+const filterOptions = [
   { value: ':', label: 'None' },
   { value: 'isHidden:true', label: 'Profile Hidden' },
   { value: 'isHidden:false', label: 'Profile Visbile' },
@@ -6,10 +9,12 @@ const sortOptions = [
   { value: 'isProfileComplete:false', label: 'Profile Incomplete' },
 ]
 
-const FilterField = ({ searchState, setSearchState }) => {
+const FilterField = () => {
+  const dispatch = useDispatch()
+  const { searchQuery } = useSelector(state => state.admin)
+
   const handleFilterChange = event => {
-    const [fieldName, fieldValue] = event.target.value.split(':')
-    setSearchState({ ...searchState, filter: { fieldName, fieldValue } })
+    dispatch(updateSearchFilter(event.target.value))
   }
 
   return (
@@ -25,9 +30,9 @@ const FilterField = ({ searchState, setSearchState }) => {
           className="select select-bordered w-full
             border-2 border-gray-300 focus:border-transparent focus:ring-2 focus:ring-primary"
           onChange={handleFilterChange}
-          value={`${searchState.filter.fieldName}:${searchState.filter.fieldValue}`}
+          value={`${searchQuery.filter.fieldName}:${searchQuery.filter.fieldValue}`}
         >
-          {sortOptions.map(option => (
+          {filterOptions.map(option => (
             <option key={option.label} value={option.value}>
               {option.label}
             </option>

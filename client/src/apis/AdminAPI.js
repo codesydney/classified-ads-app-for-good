@@ -2,9 +2,9 @@ import { api } from './configs/axiosConfig'
 
 const adminURL = '/admin/users'
 
-const adminSearchUsers = async ({}, token) => {
-  const params = {}
-  console.log('admin api func running')
+const adminSearchUsers = async (searchObj, token) => {
+  const params = searchObj
+  console.log('admin api func running', searchObj)
   try {
     const config = {
       headers: {

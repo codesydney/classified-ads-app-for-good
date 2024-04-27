@@ -1,3 +1,6 @@
+import { useSelector, useDispatch } from 'react-redux'
+import { updateSearchSort } from '../../features/admin/adminSlice'
+
 const sortOptions = [
   { value: ':', label: 'None' },
   { value: 'createdAt:asc', label: 'Created At (asc)' },
@@ -6,10 +9,11 @@ const sortOptions = [
   { value: 'updatedAt:desc', label: 'Updated At (desc)' },
 ]
 
-const SortField = ({ searchState, setSearchState }) => {
+const SortField = () => {
+  const dispatch = useDispatch()
+  const { searchQuery } = useSelector(state => state.admin)
   const handleSortChange = event => {
-    const [sortBy, sortValue] = event.target.value.split(':')
-    setSearchState({ ...searchState, sort: { sortBy, sortValue } })
+    dispatch(updateSearchSort(event.target.value))
   }
 
   return (
@@ -24,7 +28,7 @@ const SortField = ({ searchState, setSearchState }) => {
           className="select select-bordered w-full
             border-2 border-gray-300 focus:border-transparent focus:ring-2 focus:ring-primary"
           onChange={handleSortChange}
-          value={`${searchState.sort.sortBy}:${searchState.sort.sortValue}`}
+          value={`${searchQuery.sort.sortBy}:${searchQuery.sort.sortValue}`}
         >
           {sortOptions.map(option => (
             <option key={option.label} value={option.value}>

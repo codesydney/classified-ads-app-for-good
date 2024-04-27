@@ -8,13 +8,48 @@ const initialState = {
   meta: {
     page: 1,
     totalPages: 1,
+    limit: 10,
+  },
+  searchQuery: {
+    search: {
+      fieldName: '',
+      fieldValue: '',
+    },
+    filter: {
+      fieldName: '',
+      fieldValue: '',
+    },
+    sort: {
+      sortby: '',
+      sortValue: '',
+    },
   },
 }
 
 const adminSlice = createSlice({
   name: 'admin',
   initialState,
-  reducers: {},
+  reducers: {
+    updateSearchInput: (state, action) => {
+      state.searchQuery.search.fieldValue = action.payload
+    },
+    updateSearchField: (state, action) => {
+      state.searchQuery.search.fieldName = action.payload
+    },
+    updateSearchFilter: (state, action) => {
+      const [fieldName, fieldValue] = action.payload.split(':')
+      state.searchQuery.filter.fieldName = fieldName
+      state.searchQuery.filter.fieldValue = fieldValue
+    },
+    updateSearchSort: (state, action) => {
+      const [sortBy, sortValue] = action.payload.split(':')
+      state.searchQuery.sort.sortBy = sortBy
+      state.searchQuery.sort.sortValue = sortValue
+    },
+    resetSearchQuery: state => {
+      state.searchQuery = initialState.searchQuery
+    },
+  },
   extraReducers: builder => {
     // Search Users
     builder.addCase(adminSearchUsers.pending, state => {
@@ -38,4 +73,11 @@ const adminSlice = createSlice({
   },
 })
 
+export const {
+  updateSearchInput,
+  updateSearchField,
+  updateSearchFilter,
+  updateSearchSort,
+  resetSearchQuery,
+} = adminSlice.actions
 export default adminSlice.reducer

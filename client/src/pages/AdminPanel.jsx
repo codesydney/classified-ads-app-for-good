@@ -5,17 +5,17 @@ import AdminSearchBar from '../components/admin/AdminSearchBar.jsx'
 import AdminSearchResults from '../components/admin/AdminSearchResults.jsx'
 
 const AdminPanel = () => {
-  const dispatch = useDispatch()
-  const { users, meta, loading } = useSelector(state => state.admin)
-  const { currentUser } = useSelector(state => state.auth)
-  const fetchUsers = async () => {
-    await dispatch(adminSearchUsers())
-  }
+  // const dispatch = useDispatch()
+  // const { users, meta, loading } = useSelector(state => state.admin)
+  // const { currentUser } = useSelector(state => state.auth)
+  // const fetchUsers = async () => {
+  //   await dispatch(adminSearchUsers())
+  // }
 
-  useEffect(() => {
-    console.log('use effect running')
-    fetchUsers()
-  }, [])
+  // useEffect(() => {
+  //   console.log('use effect running')
+  //   fetchUsers()
+  // }, [])
 
   return (
     <div>

@@ -1,14 +1,15 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { AdminAPI } from '../../apis/AdminAPI.js'
+import { resetSearchQuery } from './adminSlice.js'
 
 const adminSearchUsers = createAsyncThunk(
   'admin/searchUsers',
-  async (_, { rejectWithValue }) => {
-    console.log('admin action running')
+  async (searchObj, { rejectWithValue }) => {
+    console.log('admin action running', searchObj)
     try {
       const token = localStorage.getItem('accessToken')
 
-      const response = await AdminAPI.adminSearchUsers({}, token)
+      const response = await AdminAPI.adminSearchUsers(searchObj, token)
 
       return response
     } catch (error) {
@@ -21,4 +22,16 @@ const adminSearchUsers = createAsyncThunk(
   },
 )
 
-export { adminSearchUsers }
+const adminResetSearch = createAsyncThunk(
+  'admin/resetSearch',
+  async (_, { rejectWithValue, getState, dispatch }) => {
+    console.log('Admin reset search')
+
+    dispatch(resetSearchQuery())
+
+    const updatedSearchQuery = getState().admin.searchQuery
+    return dispatch(adminSearchUsers({ ...updatedSearchQuery, page: 1 }))
+  },
+)
+
+export { adminSearchUsers, adminResetSearch }

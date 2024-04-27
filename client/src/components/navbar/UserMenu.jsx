@@ -50,8 +50,6 @@ const UserMenu = ({ currentUser }) => {
     [navigate],
   )
 
-  console.log('isAdmin', isAdmin)
-
   return (
     <div className="relative" ref={menuRef}>
       <div className="flex flex-row items-center gap-3">
