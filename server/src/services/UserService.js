@@ -71,18 +71,7 @@ const updateAlumniProfile = async (userId, profileUpdates) => {
   const userObject = user.toObject()
 
   // Check for the presence and non-emptiness of specific fields to determine if the profile is complete
-  const requiredFields = [
-    'firstName',
-    'lastName',
-    'email',
-    'state',
-    'postcode',
-    'story',
-    'alumniProfilePicture',
-    'education.college',
-    'education.course',
-    'education.yearGraduated',
-  ]
+  const requiredFields = ['firstName', 'lastName', 'email']
   let isProfileComplete = true
 
   for (const field of requiredFields) {
@@ -149,7 +138,7 @@ const getUsers = async (
   isAuthenticated,
 ) => {
   let matchCriteria = {
-    $and: [{ hideProfile: false } /*{ isProfileComplete: true }*/],
+    $and: [{ hideProfile: false }, { isProfileComplete: true }],
   }
 
   if (searchQuery.length >= 3) {

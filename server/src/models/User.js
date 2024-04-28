@@ -142,7 +142,7 @@ const UserSchema = new Schema(
     },
     isProfileComplete: {
       type: Boolean,
-      default: false,
+      default: true,
     },
   },
   {
