@@ -5,6 +5,11 @@ import UserRow from './UserRow'
 
 const IndividualUserResultContainer = ({ user }) => {
   const [isHovered, setIsHovered] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(false)
+
+  if (user.firstName === 'brodie') {
+    console.log(user)
+  }
   return (
     <div
       className="bg-white p-4 pt-8 m-2 relative"
@@ -16,7 +21,10 @@ const IndividualUserResultContainer = ({ user }) => {
           ${isHovered ? 'md:absolute' : 'md:hidden'}
         `}
       >
-        <button className="border-gray-500 rounded border-[1px] px-2 py-1 hover:ring-gray-300 hover:ring-4">
+        <button
+          className="border-gray-500 rounded border-[1px] px-2 py-1 hover:ring-gray-300 hover:ring-4"
+          onClick={() => setIsExpanded(!isExpanded)}
+        >
           <FaCaretRight />
         </button>
         <button className="border-gray-500 rounded border-[1px] px-2 py-1 hover:ring-gray-300 hover:ring-4 ml-auto">
@@ -29,7 +37,14 @@ const IndividualUserResultContainer = ({ user }) => {
 
       <div className="pt-6 md:pl-10 md:pt-0">
         {Object.entries(user).map(([key, value]) => {
-          return <UserRow key={key} field={key} value={value} />
+          return (
+            <UserRow
+              key={key}
+              isExpanded={isExpanded}
+              field={key}
+              value={value}
+            />
+          )
         })}
       </div>
     </div>

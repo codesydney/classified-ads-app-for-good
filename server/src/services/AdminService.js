@@ -37,6 +37,7 @@ const getUsers = async ({
   limit = parseInt(limit)
 
   const users = await User.find(matchCriteria)
+    .select('-__v -isAutomated -createdAt -updatedAt -fullName -id')
     .sort(sortQuery)
     .skip(skip)
     .limit(limit)
@@ -44,8 +45,15 @@ const getUsers = async ({
   const total = await User.countDocuments(matchCriteria)
   const totalPages = Math.ceil(total / limit)
 
+  const userArrayNoVirtuals = users.map(user => {
+    const userObj = user.toObject()
+    delete userObj.fullName
+    delete userObj._id
+    return userObj
+  })
+
   return {
-    users,
+    users: userArrayNoVirtuals,
     meta: {
       total,
       page: Number(page),

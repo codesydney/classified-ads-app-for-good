@@ -31,16 +31,6 @@ const AdminSearchResults = () => {
       >
         {users.length ? (
           users.map(user => {
-            // return (
-            //   <div className="m-2 p-2 bg-white" key={user.firstName}>
-            //     {Object.entries(user).map(([key, value]) => {
-            //       return (
-            //         <div key={key}>
-            //           {key}: {value.toString()}
-            //         </div>
-            //       )
-            //     })}
-            //   </div>
             return <IndividualUserResultContainer key={user.id} user={user} />
           })
         ) : (
