@@ -6,13 +6,11 @@ import UserRow from './UserRow'
 const IndividualUserResultContainer = ({ user }) => {
   const [isHovered, setIsHovered] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
+  const [editViewOpen, setEditViewOpen] = useState(false)
 
-  if (user.firstName === 'brodie') {
-    console.log(user)
-  }
   return (
     <div
-      className="bg-white p-4 pt-8 m-2 relative"
+      className="bg-white pb-4 pt-8 m-2 relative"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -25,9 +23,12 @@ const IndividualUserResultContainer = ({ user }) => {
           className="border-gray-500 rounded border-[1px] px-2 py-1 hover:ring-gray-300 hover:ring-4"
           onClick={() => setIsExpanded(!isExpanded)}
         >
-          <FaCaretRight />
+          {isExpanded ? <FaCaretDown /> : <FaCaretRight />}
         </button>
-        <button className="border-gray-500 rounded border-[1px] px-2 py-1 hover:ring-gray-300 hover:ring-4 ml-auto">
+        <button
+          className="border-gray-500 rounded border-[1px] px-2 py-1 hover:ring-gray-300 hover:ring-4 ml-auto"
+          onClick={() => setEditViewOpen(!editViewOpen)}
+        >
           <MdModeEditOutline />
         </button>
         <button className="border-gray-500 rounded border-[1px] px-2 py-1 hover:ring-gray-300 hover:ring-4">
@@ -35,10 +36,11 @@ const IndividualUserResultContainer = ({ user }) => {
         </button>
       </div>
 
-      <div className="pt-6 md:pl-10 md:pt-0">
+      <div className="pt-6 md:pt-4">
         {Object.entries(user).map(([key, value]) => {
           return (
             <UserRow
+              editViewOpen={editViewOpen}
               key={key}
               isExpanded={isExpanded}
               field={key}
@@ -47,6 +49,22 @@ const IndividualUserResultContainer = ({ user }) => {
           )
         })}
       </div>
+      {editViewOpen && (
+        <div className="flex justify-end gap-2 p-4 bg-gray-200/50 mt-4">
+          <button
+            className="border-gray-500 bg-white rounded border-[1px] text-xs px-2 py-1 hover:ring-gray-300 hover:ring-4"
+            onClick={() => setEditViewOpen(false)}
+          >
+            Cancel
+          </button>
+          <button
+            className=" bg-primary text-white border-primary rounded border-[1px] text-xs px-2 py-1 hover:ring-gray-300 hover:ring-4"
+            onClick={() => setEditViewOpen(false)}
+          >
+            Update
+          </button>
+        </div>
+      )}
     </div>
   )
 }
