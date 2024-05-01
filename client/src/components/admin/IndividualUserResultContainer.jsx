@@ -1,12 +1,33 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FaCaretRight, FaCaretDown, FaTrashAlt } from 'react-icons/fa'
 import { MdModeEditOutline } from 'react-icons/md'
 import UserRow from './UserRow'
+import { useAppDispatch } from '../../store'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { userSchemaAdmin } from '../../schema'
+import { useForm } from 'react-hook-form'
 
 const IndividualUserResultContainer = ({ user }) => {
   const [isHovered, setIsHovered] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
   const [editViewOpen, setEditViewOpen] = useState(false)
+  const dispatch = useAppDispatch()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isDirty, dirtyFields },
+    setFocus,
+    reset,
+  } = useForm({
+    resolver: yupResolver(userSchemaAdmin),
+  })
+
+  useEffect(() => {
+    if (editViewOpen && user) {
+      const defaultVals = { ...user }
+      reset(defaultVals)
+    }
+  }, [editViewOpen, user])
 
   return (
     <div
@@ -45,6 +66,7 @@ const IndividualUserResultContainer = ({ user }) => {
               isExpanded={isExpanded}
               field={key}
               value={value}
+              register={register}
             />
           )
         })}

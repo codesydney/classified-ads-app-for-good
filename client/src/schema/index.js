@@ -188,7 +188,7 @@ const contactFormSchema = yup
   .object({
     name: yup
       .string()
-      .required('Email is required')
+      .required('Name is required')
       .min(2, 'Name must be at least 2 characters')
       .max(50, 'Name must be at most 50 characters'),
     email: yup.string().required('Email is required').email('Invalid email'),
@@ -200,6 +200,91 @@ const contactFormSchema = yup
   })
   .required()
 
+const userSchemaAdmin = yup.object({
+  firstName: yup
+    .string()
+    .required('First name is required')
+    .min(2, 'First name must be at least 2 characters')
+    .max(50, 'First name must be at most 50 characters'),
+  lastName: yup
+    .string()
+    .required('Last name is required')
+    .min(2, 'Last name must be at least 2 characters')
+    .max(50, 'Last name must be at most 50 characters'),
+  email: yup
+    .string()
+    .required('Email is required')
+    .matches(emailRegex, 'Invalid email'),
+  suburb: yup
+    .string()
+    .nullable()
+    .transform((curr, orig) => (orig === '' ? null : curr))
+    .min(3, 'Suburb must be at least 3 character')
+    .max(50, 'Suburb cannot exceed 50 characters'),
+  state: yup
+    .string()
+    .nullable()
+    .transform((curr, orig) => (orig === '' ? null : curr))
+    .min(2, 'State must be at least 2 characters long')
+    .max(3, 'State must be at most 3 characters long'),
+  postcode: yup
+    .string()
+    .nullable()
+    .transform((curr, orig) => (orig === '' ? null : curr))
+    .matches(postcodeRegex, 'Please enter a valid Australian Postcode'),
+  facebookName: yup
+    .string()
+    .nullable()
+    .transform((curr, orig) => (orig === '' ? null : curr))
+    .min(3, 'Facebook name must be at least 3 character')
+    .max(50, 'Facebook name cannot exceed 50 characters'),
+  story: yup
+    .string()
+    .nullable()
+    .transform((curr, orig) => (orig === '' ? null : curr))
+    .min(3, 'Bio must be at least 3 character')
+    .max(3000, 'Bio cannot exceed 3000 characters'),
+  service: yup.object({
+    serviceName: yup
+      .string()
+      .nullable()
+      .transform((curr, orig) => (orig === '' ? null : curr))
+      .min(3, 'Service name must be at least 3 character'),
+    serviceDescription: yup
+      .string()
+      .nullable()
+      .transform((curr, orig) => (orig === '' ? null : curr))
+      .min(3, 'Service description must be at least 3 character')
+      .max(500, 'Service cannot exceed 500 characters'),
+    serviceUrl: yup
+      .string()
+      .nullable()
+      .transform((curr, orig) => (orig === '' ? null : curr))
+      .matches(urlRegex, 'Please enter a valid URL'),
+  }),
+  education: yup.object({
+    course: yup
+      .string()
+      .nullable()
+      .transform((curr, orig) => (orig === '' ? null : curr))
+      .min(3, 'Course must be at least 3 character'),
+    college: yup
+      .string()
+      .nullable()
+      .transform((curr, orig) => (orig === '' ? null : curr))
+      .min(3, 'College must be at least 3 character'),
+    yearGraduated: yup
+      .string()
+      .nullable()
+      .transform((curr, orig) => (orig === '' ? null : curr))
+      .matches(yearRegex, 'Please enter a valid year (1950 - now)'),
+  }),
+  isOfficer: yup.boolean(),
+  hideProfile: yup.boolean(),
+  isProfileComplete: yup.boolean(),
+  isAdmin: yup.boolean(),
+})
+
 export {
   signUpSchema,
   loginSchema,
@@ -210,4 +295,5 @@ export {
   educationSchema,
   changePasswordSchema,
   contactFormSchema,
+  userSchemaAdmin,
 }

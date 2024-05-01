@@ -3,11 +3,21 @@ import { FaCaretRight, FaCaretDown, FaTrashAlt } from 'react-icons/fa'
 import { CiSquarePlus } from 'react-icons/ci'
 import UserRowInput from './UserRowInput'
 
-const UserRow = ({ field, value, isExpanded, editViewOpen }) => {
+const UserRow = ({
+  field,
+  value,
+  isExpanded,
+  editViewOpen,
+  register,
+  parentField,
+}) => {
   const [isRowExpanded, setIsRowExpanded] = useState(false)
   const [textareaMaxWidth, setTextareaMaxWidth] = useState(null)
   const [isHovered, setIsHovered] = useState(false)
   const textareaParentRef = useRef(null)
+  const nestedFieldValueStructure = parentField
+    ? parentField + '.' + field
+    : field
 
   useEffect(() => {
     setIsRowExpanded(isExpanded)
@@ -40,14 +50,12 @@ const UserRow = ({ field, value, isExpanded, editViewOpen }) => {
             <button
               onClick={() => console.log('clicckity')}
               className="px-1 w-fit"
-              // disabled={valueType !== 'object'}
             >
               <FaTrashAlt className="text-xs" />
             </button>
             <button
               onClick={() => console.log('clicckity')}
               className="px-1 w-fit"
-              // disabled={valueType !== 'object'}
             >
               <CiSquarePlus />
             </button>
@@ -70,7 +78,8 @@ const UserRow = ({ field, value, isExpanded, editViewOpen }) => {
                   <UserRowInput
                     value={value}
                     textareaMaxWidth={textareaMaxWidth}
-                    field={field}
+                    field={nestedFieldValueStructure}
+                    register={register}
                   />
                 ) : (
                   value.toString()
@@ -90,6 +99,7 @@ const UserRow = ({ field, value, isExpanded, editViewOpen }) => {
               key={key}
               field={key}
               value={value}
+              parentField={nestedFieldValueStructure}
             />
           )
         })}
