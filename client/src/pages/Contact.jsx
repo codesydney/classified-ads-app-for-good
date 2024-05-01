@@ -10,14 +10,7 @@ const Contact = () => {
             Contact Us
           </h1>
           <p className="text-center mb-10">
-            Fill out the form to get in touch with us or email us at{' '}
-            <a
-              className="underline hover:text-primary"
-              href="mailto:info@ustaa.org.au"
-            >
-              <b>info@ustaa.org.au</b>
-            </a>
-            .
+            Fill out the form to get in touch with us.
           </p>
           <img
             src={contactIllustration}

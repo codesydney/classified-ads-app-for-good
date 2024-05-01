@@ -1,0 +1,47 @@
+[
+  {
+    "photoSrc": "src/assets/developers/brodiehunt.jpeg",
+    "name": "Brodie Hunt",
+    "role": "Team Lead/Web Developer",
+    "linkedin": "brodie-hunt-8ab1311a4",
+    "github": "brodiehunt",
+    "skills": ["development"],
+    "blurb": "Lorem ipsum dolor sit amet"
+  },
+  {
+    "photoSrc": "src/assets/developers/promieyutasane.jpeg",
+    "name": "Promie Yutasane",
+    "role": "DevOps/Backend Engineer",
+    "linkedin": "promie-yutasane",
+    "github": "promie",
+    "skills": ["development"],
+    "blurb": "Lorem ipsum dolor sit amet"
+  },
+  {
+    "photoSrc": "src/assets/developers/washingtonshoji.jpeg",
+    "name": "Washington Shoji",
+    "role": "Web Developer",
+    "linkedin": "washington-shoji-77171bb5",
+    "github": "washington-shoji",
+    "skills": ["development"],
+    "blurb": "Lorem ipsum dolor sit amet"
+  },
+  {
+    "photoSrc": "src/assets/developers/nathanksou.jpeg",
+    "name": "Nathan Sou",
+    "role": "Web Developer",
+    "linkedin": "nathanksou",
+    "github": "nathanksou",
+    "skills": ["development"],
+    "blurb": "Lorem ipsum dolor sit amet"
+  },
+  {
+    "photoSrc": "src/assets/developers/joannejavillo.jpeg",
+    "name": "Joanne Javillo",
+    "role": "Web Developer",
+    "linkedin": "jo-anne-javillo-b88103206",
+    "github": "joannejavillo",
+    "skills": ["development"],
+    "blurb": "Lorem ipsum dolor sit amet"
+  }
+]
