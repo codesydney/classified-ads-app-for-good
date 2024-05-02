@@ -41,6 +41,7 @@ const UserRow = ({
       >
         <button
           onClick={() => setIsRowExpanded(!isRowExpanded)}
+          type="button"
           className={`${valueType !== 'object' && 'opacity-0 cursor-default'} px-1 relative z-10`}
           disabled={valueType !== 'object'}
         >
@@ -52,12 +53,14 @@ const UserRow = ({
             <button
               onClick={() => handleRowDeletion(nestedFieldValueStructure)}
               className="px-1 w-fit"
+              type="button"
             >
               <FaTrashAlt className="text-xs" />
             </button>
             <button
               onClick={() => console.log('clicckity')}
               className="px-1 w-fit"
+              type="button"
             >
               <CiSquarePlus />
             </button>

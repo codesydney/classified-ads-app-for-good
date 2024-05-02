@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import {
   adminSearchUsers,
   adminResetSearch,
-} from '../../features/admin/adminAction.js'
+} from '../../../features/admin/adminAction.js'
 
 const ButtonGroup = () => {
   const dispatch = useDispatch()

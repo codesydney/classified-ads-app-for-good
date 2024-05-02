@@ -2,7 +2,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   updateSearchField,
   updateSearchInput,
-} from '../../features/admin/adminSlice'
+} from '../../../features/admin/adminSlice'
+import SelectInput from './SelectInput'
+
 const searchOptions = [
   { value: '', label: 'None' },
   { value: 'firstName', label: 'First Name' },
@@ -24,26 +26,12 @@ const SearchField = () => {
 
   return (
     <div className="flex flex-col md:flex-row items-end gap-2 flex-grow">
-      <label className="form-control w-full">
-        <div className="label">
-          <span className="label-text text-[15px] font-semibold">
-            Search By
-          </span>
-        </div>
-        <select
-          name="fieldName"
-          onChange={handleSelectChange}
-          value={searchQuery.search.fieldName}
-          className="select select-bordered w-full
-            border-2 border-gray-300 focus:border-transparent focus:ring-2 focus:ring-primary"
-        >
-          {searchOptions.map(option => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
-      </label>
+      <SelectInput
+        handleChange={handleSelectChange}
+        value={searchQuery.search.fieldName}
+        label="Search By"
+        selectOptions={searchOptions}
+      />
       <label className="form-control w-full">
         {searchQuery.search.fieldName && (
           <div className="label">

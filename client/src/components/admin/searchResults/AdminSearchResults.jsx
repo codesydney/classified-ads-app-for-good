@@ -2,13 +2,13 @@ import { useSelector, useDispatch } from 'react-redux'
 import {
   adminSearchUsers,
   adminResetSearch,
-} from '../../features/admin/adminAction'
+} from '../../../features/admin/adminAction'
 import { useEffect } from 'react'
-
 import NoUserResults from './NoUserResults'
 import ResultsCount from './ResultsCount'
-import PaginationNavigation from '../search/PaginationNavigation'
+import PaginationNavigation from '../../search/PaginationNavigation'
 import IndividualUserResultContainer from './IndividualUserResultContainer'
+
 const AdminSearchResults = () => {
   const dispatch = useDispatch()
   const { users, meta, searchQuery } = useSelector(state => state.admin)

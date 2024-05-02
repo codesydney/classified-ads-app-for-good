@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
-import EditAvatarModal from '../profile/avatar/EditAvatarModal'
+import { useState } from 'react'
+import EditAvatarModal from '../../profile/avatar/EditAvatarModal'
 
 const UserRowInput = ({ value, textareaMaxWidth, field, register }) => {
   const [modalOpen, setModalOpen] = useState(false)
