@@ -16,18 +16,30 @@ const IndividualUserResultContainer = ({ user }) => {
     register,
     handleSubmit,
     formState: { errors, isDirty, dirtyFields },
-    setFocus,
     reset,
+    getValues,
   } = useForm({
     resolver: yupResolver(userSchemaAdmin),
+    defaultValues: user,
   })
 
-  useEffect(() => {
-    if (editViewOpen && user) {
-      const defaultVals = { ...user }
-      reset(defaultVals)
-    }
-  }, [editViewOpen, user])
+  // Reset formState when edit view is toggled
+  const handleToggleEditView = () => {
+    setEditViewOpen(!editViewOpen)
+    reset(user)
+  }
+
+  // Revert changes made in edit mode while staying in edit mode
+  const handleRevertChanges = () => {
+    reset(user)
+  }
+
+  // Handle row deleting
+  const handleRowDeletion = field => {
+    const currentFormState = { ...getValues() }
+    delete currentFormState[field]
+    reset(currentFormState)
+  }
 
   return (
     <div
@@ -48,7 +60,7 @@ const IndividualUserResultContainer = ({ user }) => {
         </button>
         <button
           className="border-gray-500 rounded border-[1px] px-2 py-1 hover:ring-gray-300 hover:ring-4 ml-auto"
-          onClick={() => setEditViewOpen(!editViewOpen)}
+          onClick={handleToggleEditView}
         >
           <MdModeEditOutline />
         </button>
@@ -57,8 +69,8 @@ const IndividualUserResultContainer = ({ user }) => {
         </button>
       </div>
 
-      <div className="pt-6 md:pt-4">
-        {Object.entries(user).map(([key, value]) => {
+      <form className="pt-6 md:pt-4">
+        {Object.entries(getValues()).map(([key, value]) => {
           return (
             <UserRow
               editViewOpen={editViewOpen}
@@ -67,12 +79,19 @@ const IndividualUserResultContainer = ({ user }) => {
               field={key}
               value={value}
               register={register}
+              handleRowDeletion={handleRowDeletion}
             />
           )
         })}
-      </div>
+      </form>
       {editViewOpen && (
         <div className="flex justify-end gap-2 p-4 bg-gray-200/50 mt-4">
+          <button
+            className="border-gray-500 bg-white rounded border-[1px] text-xs px-2 py-1 mr-auto hover:ring-gray-300 hover:ring-4"
+            onClick={handleRevertChanges}
+          >
+            Revert
+          </button>
           <button
             className="border-gray-500 bg-white rounded border-[1px] text-xs px-2 py-1 hover:ring-gray-300 hover:ring-4"
             onClick={() => setEditViewOpen(false)}

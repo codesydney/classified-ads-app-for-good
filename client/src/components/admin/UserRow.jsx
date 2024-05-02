@@ -10,6 +10,7 @@ const UserRow = ({
   editViewOpen,
   register,
   parentField,
+  handleRowDeletion,
 }) => {
   const [isRowExpanded, setIsRowExpanded] = useState(false)
   const [textareaMaxWidth, setTextareaMaxWidth] = useState(null)
@@ -45,10 +46,11 @@ const UserRow = ({
         >
           {isRowExpanded ? <FaCaretDown /> : <FaCaretRight />}
         </button>
-        {isHovered && (
+        {isHovered && editViewOpen && (
           <div className="absolute flex -left-2 gap-0">
+            {/* This is the button i am talking about. */}
             <button
-              onClick={() => console.log('clicckity')}
+              onClick={() => handleRowDeletion(nestedFieldValueStructure)}
               className="px-1 w-fit"
             >
               <FaTrashAlt className="text-xs" />
@@ -100,6 +102,8 @@ const UserRow = ({
               field={key}
               value={value}
               parentField={nestedFieldValueStructure}
+              register={register}
+              handleRowDeletion={handleRowDeletion}
             />
           )
         })}
