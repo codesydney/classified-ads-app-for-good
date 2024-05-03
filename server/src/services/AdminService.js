@@ -37,7 +37,7 @@ const getUsers = async ({
   limit = parseInt(limit)
 
   const users = await User.find(matchCriteria)
-    .select('-__v -isAutomated -createdAt -updatedAt -fullName -id')
+    .select('-__v -isAutomated -createdAt -updatedAt')
     .sort(sortQuery)
     .skip(skip)
     .limit(limit)
@@ -49,6 +49,7 @@ const getUsers = async ({
     const userObj = user.toObject()
     delete userObj.fullName
     delete userObj._id
+    delete userObj.education.yearGraduatedStr
     return userObj
   })
 

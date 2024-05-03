@@ -16,7 +16,7 @@ const HoverButtonBar = ({
       <IconButton handleClick={() => setIsExpanded(!isExpanded)}>
         {isExpanded ? <FaCaretDown /> : <FaCaretRight />}
       </IconButton>
-      <div className="ml-auto">
+      <div className="ml-auto flex gap-2">
         <IconButton handleClick={handleToggleEditView}>
           <MdModeEditOutline />
         </IconButton>

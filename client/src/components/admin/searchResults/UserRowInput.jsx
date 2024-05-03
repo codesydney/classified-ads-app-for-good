@@ -40,11 +40,12 @@ const UserRowInput = ({ value, textareaMaxWidth, field, register }) => {
       <select
         name="fieldName"
         className="select select-bordered rounded border-[1px] border-gray-300 focus:border-transparent focus:ring-[2px] focus:ring-primary w-fit min-h-fit h-fit text-xs"
-        {...register(field)}
+        {...register(field, { setValueAs: value => value === 'true' })}
       >
         <option value={true}>True</option>
         <option value={false}>False</option>
       </select>
+      // <BooleanInputField field={field} register={register} />
     )
   }
   return <></>
