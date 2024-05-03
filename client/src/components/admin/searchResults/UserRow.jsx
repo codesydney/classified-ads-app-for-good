@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { FaCaretRight, FaCaretDown, FaTrashAlt } from 'react-icons/fa'
 import { CiSquarePlus } from 'react-icons/ci'
 import UserRowInput from './UserRowInput'
+import AddRowPopup from './AddRowPopup'
+import { set } from 'react-hook-form'
 
 const UserRow = ({
   field,
@@ -16,6 +18,8 @@ const UserRow = ({
   const [textareaMaxWidth, setTextareaMaxWidth] = useState(null)
   const [isHovered, setIsHovered] = useState(false)
   const textareaParentRef = useRef(null)
+  const [addPopupOpen, setAddPopupOpen] = useState(false)
+
   const nestedFieldValueStructure = parentField
     ? parentField + '.' + field
     : field
@@ -58,13 +62,20 @@ const UserRow = ({
               <FaTrashAlt className="text-xs" />
             </button>
             <button
-              onClick={() => console.log('clicckity')}
+              onClick={() => setAddPopupOpen(!addPopupOpen)}
               className="px-1 w-fit"
               type="button"
             >
               <CiSquarePlus />
             </button>
           </div>
+        )}
+        {addPopupOpen && (
+          <AddRowPopup
+            field={field}
+            value={value}
+            setAddPopupOpen={setAddPopupOpen}
+          />
         )}
         <div className="text-xs w-full flex gap-[2px]">
           {valueType === 'object' ? (
