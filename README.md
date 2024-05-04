@@ -3,8 +3,8 @@
 
 # The Team
 * @brodiehunt | Brodie Hunt | Team Lead/Web Developer
-* @promie | Promie Yutasane | DevOps/Backend Engineer
-* @washington-shoji | Washington Shoji | Web Developer 
+* @promie | Promie Yutasane | DevOps/Web Developer
+* @washington-shoji | Washington Shoji | Web Developer
 * @nathanksou | Nathan Sou | Web Developer
 * @joannejavillo | Joanne Javillo | Web Developer
 * @engramar | Engramar Bollas | Product Manager
@@ -27,7 +27,7 @@
 * [Link to Figma](https://www.figma.com/file/DyT6QcKPcTSnDlm4tKMhWW/USTAA-Directory?type=design&node-id=0-1&mode=design&t=SDr6JpXOMT8gbvj7-0)
 
 # Test Site
-* [Link to test site](https://classifieds.code.sydney/) 
+* [Link to test site](https://classifieds.code.sydney/)
 
 ## Requirements
 - Node 20.11.0 LTS
