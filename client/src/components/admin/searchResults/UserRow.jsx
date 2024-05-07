@@ -3,7 +3,6 @@ import { FaCaretRight, FaCaretDown, FaTrashAlt } from 'react-icons/fa'
 import { CiSquarePlus } from 'react-icons/ci'
 import UserRowInput from './UserRowInput'
 import AddRowPopup from './AddRowPopup'
-import { set } from 'react-hook-form'
 
 const UserRow = ({
   field,
@@ -39,7 +38,7 @@ const UserRow = ({
   return (
     <div className="px-2">
       <div
-        className="relative flex gap-1 items-start py-[2px] hover:bg-gray-200/50 pl-8"
+        className="relative flex gap-1 items-start hover:bg-gray-200/50 pl-8"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -53,7 +52,6 @@ const UserRow = ({
         </button>
         {isHovered && editViewOpen && (
           <div className="absolute flex -left-2 gap-0">
-            {/* This is the button i am talking about. */}
             <button
               onClick={() => handleRowDeletion(nestedFieldValueStructure)}
               className="px-1 w-fit"
@@ -62,7 +60,7 @@ const UserRow = ({
               <FaTrashAlt className="text-xs" />
             </button>
             <button
-              onClick={() => setAddPopupOpen(!addPopupOpen)}
+              onClick={() => setAddPopupOpen(true)}
               className="px-1 w-fit"
               type="button"
             >

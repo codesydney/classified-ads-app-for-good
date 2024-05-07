@@ -5,7 +5,6 @@ import { resetSearchQuery } from './adminSlice.js'
 const adminSearchUsers = createAsyncThunk(
   'admin/searchUsers',
   async (searchObj, { rejectWithValue }) => {
-    console.log('admin action running', searchObj)
     try {
       const token = localStorage.getItem('accessToken')
 
@@ -25,8 +24,6 @@ const adminSearchUsers = createAsyncThunk(
 const adminResetSearch = createAsyncThunk(
   'admin/resetSearch',
   async (_, { rejectWithValue, getState, dispatch }) => {
-    console.log('Admin reset search')
-
     dispatch(resetSearchQuery())
 
     const updatedSearchQuery = getState().admin.searchQuery

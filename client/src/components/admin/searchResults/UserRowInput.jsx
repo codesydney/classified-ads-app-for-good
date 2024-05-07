@@ -9,7 +9,6 @@ const UserRowInput = ({ value, textareaMaxWidth, field, register }) => {
   }
 
   const valueType = typeof value
-
   if (field === 'alumniProfilePicture') {
     return (
       <>
@@ -27,7 +26,7 @@ const UserRowInput = ({ value, textareaMaxWidth, field, register }) => {
   if (valueType === 'string') {
     return (
       <textarea
-        className="border-gray-300 border-[1px] max-h-fit p-[2px] resize focus:outline-primary "
+        className="border-gray-300 max-h-fit px-[2px] resize focus:outline-primary "
         style={{ maxWidth: `${textareaMaxWidth}px` }}
         {...register(field)}
         rows="1"
@@ -45,7 +44,6 @@ const UserRowInput = ({ value, textareaMaxWidth, field, register }) => {
         <option value={true}>True</option>
         <option value={false}>False</option>
       </select>
-      // <BooleanInputField field={field} register={register} />
     )
   }
   return <></>

@@ -40,7 +40,7 @@ const IndividualUserResultContainer = ({ user }) => {
     delete currentFormState[field]
     reset(currentFormState)
   }
-  console.log(getValues())
+
   return (
     <div
       className="bg-white pb-4 pt-8 m-2 relative"

@@ -8,12 +8,12 @@ import AuthProvider from './providers/AuthProvider.jsx'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  <>
     <Provider store={store}>
       <ToasterProvider />
       <AuthProvider>
         <Router />
       </AuthProvider>
     </Provider>
-  </React.StrictMode>,
+  </>,
 )
