@@ -1,7 +1,13 @@
 import { useState } from 'react'
 import EditAvatarModal from '../../profile/avatar/EditAvatarModal'
 
-const UserRowInput = ({ value, textareaMaxWidth, field, handleFieldEdit }) => {
+const UserRowInput = ({
+  value,
+  textareaMaxWidth,
+  field,
+  handleFieldEdit,
+  isImage,
+}) => {
   const [modalOpen, setModalOpen] = useState(false)
 
   const handleModalClose = () => {
@@ -9,7 +15,7 @@ const UserRowInput = ({ value, textareaMaxWidth, field, handleFieldEdit }) => {
   }
 
   const valueType = typeof value
-  if (field === 'alumniProfilePicture') {
+  if (isImage) {
     return (
       <>
         <button

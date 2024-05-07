@@ -52,41 +52,55 @@ const IndividualUserResultContainer = ({ user }) => {
 
   const handleFieldEdit = event => {
     const newFormState = JSON.parse(JSON.stringify(formState))
-    let { name, value, type } = event.target
-    if (type === 'select-one') {
-      value = value === 'true'
-    }
+    const { name, value, type } = event.target
+    console.log(typeof value)
+    const updatedValue = type === 'select-one' ? value === 'true' : value
 
     const nestedKeysArray = name.split('.')
     const lastKeyIndex = nestedKeysArray.length - 1
 
-    let nestedProperty = nestedKeysArray.reduce(
-      (accumulator, currentKey, currentIndex) => {
-        console.log(accumulator, currentKey, currentIndex)
-        if (accumulator && accumulator[currentKey] !== undefined) {
-          if (currentIndex === lastKeyIndex) {
-            return accumulator
-          } else {
-            console.log('return nested field', accumulator[currentKey])
-            return accumulator[currentKey]
-          }
+    nestedKeysArray.reduce((accumulator, currentKey, currentIndex) => {
+      console.log(accumulator, currentKey, currentIndex)
+
+      if (accumulator && accumulator[currentKey] !== undefined) {
+        if (currentIndex === nestedKeysArray.length - 1) {
+          // Check if last iteration
+          accumulator[currentKey] = updatedValue // Update the value directly
         } else {
-          console.log('this is broken man')
+          return accumulator[currentKey]
         }
-      },
-      newFormState,
-    )
-
-    const lastKey = nestedKeysArray[lastKeyIndex]
-    nestedProperty[lastKey] = value
-
+      } else {
+        console.log('error should not enter this block.')
+      }
+    }, newFormState)
     setFormState(newFormState)
   }
 
   // Handle row deleting
   const handleRowDeletion = rowToDelete => {
+    const newFormState = JSON.parse(JSON.stringify(formState))
+
+    const nestedKeysArray = rowToDelete.split('.')
+    const lastKey = parseInt(nestedKeysArray.pop(), 10)
+    const arrayToRemoveRowFrom = nestedKeysArray.reduce(
+      (accumulator, currentKey, currentIndex) => {
+        if (accumulator && accumulator[currentKey] !== undefined) {
+          return accumulator[currentKey]
+        } else {
+          console.log('awee shit man its broken')
+        }
+      },
+      newFormState,
+    )
     console.log(rowToDelete)
+    console.log(lastKey, arrayToRemoveRowFrom)
+    if (arrayToRemoveRowFrom && lastKey !== undefined) {
+      arrayToRemoveRowFrom.splice(lastKey, 1)
+      setFormState(newFormState)
+    }
   }
+
+  const handleAddFieldAfterRow = event => {}
 
   return (
     <div

@@ -70,6 +70,7 @@ const UserRow = ({
           <AddRowPopup
             field={fieldNameState}
             value={fieldValueState}
+            currentRow={currentRow}
             setAddPopupOpen={setAddPopupOpen}
           />
         )}
@@ -116,6 +117,7 @@ const UserRow = ({
                     textareaMaxWidth={textareaMaxWidth}
                     field={fieldValueIdentifier}
                     handleFieldEdit={handleFieldEdit}
+                    isImage={fieldNameState === 'alumniProfilePicture'}
                   />
                 ) : (
                   fieldValueState.toString()
