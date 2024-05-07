@@ -53,7 +53,6 @@ const IndividualUserResultContainer = ({ user }) => {
   const handleFieldEdit = event => {
     const newFormState = JSON.parse(JSON.stringify(formState))
     const { name, value, type } = event.target
-    console.log(typeof value)
     const updatedValue = type === 'select-one' ? value === 'true' : value
 
     const nestedKeysArray = name.split('.')
@@ -92,15 +91,33 @@ const IndividualUserResultContainer = ({ user }) => {
       },
       newFormState,
     )
-    console.log(rowToDelete)
-    console.log(lastKey, arrayToRemoveRowFrom)
     if (arrayToRemoveRowFrom && lastKey !== undefined) {
       arrayToRemoveRowFrom.splice(lastKey, 1)
       setFormState(newFormState)
     }
   }
 
-  const handleAddFieldAfterRow = event => {}
+  const handleAddFieldAfterRow = rowToAddAfter => {
+    const newFormState = JSON.parse(JSON.stringify(formState))
+
+    const nestedKeysArray = rowToAddAfter.split('.')
+    const lastKey = parseInt(nestedKeysArray.pop(), 10) + 1
+    const newRow = { field: '', value: '', id: Math.ceil(Math.random() * 100) }
+
+    const arrayToAddRowTo = nestedKeysArray.reduce(
+      (accumulator, currentKey, currentIndex) => {
+        if (accumulator && accumulator[currentKey] !== undefined) {
+          return accumulator[currentKey]
+        } else {
+          console.log('awee shit man its broken')
+        }
+      },
+      newFormState,
+    )
+
+    arrayToAddRowTo.splice(lastKey, 0, newRow)
+    setFormState(newFormState)
+  }
 
   return (
     <div
@@ -129,6 +146,7 @@ const IndividualUserResultContainer = ({ user }) => {
                 currentRow={`${index}`}
                 handleRowDeletion={handleRowDeletion}
                 handleFieldEdit={handleFieldEdit}
+                handleAddFieldAfterRow={handleAddFieldAfterRow}
               />
             )
           })}

@@ -13,6 +13,7 @@ const UserRow = ({
   fieldValueState,
   handleRowDeletion,
   handleFieldEdit,
+  handleAddFieldAfterRow,
   currentRow,
 }) => {
   const [isRowExpanded, setIsRowExpanded] = useState(false)
@@ -72,6 +73,7 @@ const UserRow = ({
             value={fieldValueState}
             currentRow={currentRow}
             setAddPopupOpen={setAddPopupOpen}
+            handleAddFieldAfterRow={handleAddFieldAfterRow}
           />
         )}
         <div className="text-xs w-full flex gap-[2px]">
@@ -135,13 +137,14 @@ const UserRow = ({
               key={obj.id}
               editViewOpen={editViewOpen}
               isExpanded={isExpanded}
-              fieldNameIdentifier={`${fieldNameIdentifier}.${index}.field`}
+              fieldNameIdentifier={`${fieldValueIdentifier}.${index}.field`}
               fieldNameState={obj.field}
               fieldValueIdentifier={`${fieldValueIdentifier}.${index}.value`}
               fieldValueState={obj.value}
               currentRow={`${fieldValueIdentifier}.${index}`}
               handleRowDeletion={handleRowDeletion}
               handleFieldEdit={handleFieldEdit}
+              handleAddFieldAfterRow={handleAddFieldAfterRow}
             />
           )
         })}
