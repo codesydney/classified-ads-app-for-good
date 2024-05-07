@@ -84,10 +84,8 @@ const IndividualUserResultContainer = ({ user }) => {
   }
 
   // Handle row deleting
-  const handleRowDeletion = field => {
-    const currentFormState = { ...getValues() }
-    delete currentFormState[field]
-    reset(currentFormState)
+  const handleRowDeletion = rowToDelete => {
+    console.log(rowToDelete)
   }
 
   return (
@@ -110,10 +108,11 @@ const IndividualUserResultContainer = ({ user }) => {
                 key={obj.id}
                 editViewOpen={editViewOpen}
                 isExpanded={isExpanded}
-                fieldNameIdentifier={`[${index}.field`}
+                fieldNameIdentifier={`${index}.field`}
                 fieldNameState={obj.field}
-                fieldValueIdentifer={`${index}.value`}
+                fieldValueIdentifier={`${index}.value`}
                 fieldValueState={obj.value}
+                currentRow={`${index}`}
                 handleRowDeletion={handleRowDeletion}
                 handleFieldEdit={handleFieldEdit}
               />

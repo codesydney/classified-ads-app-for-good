@@ -7,12 +7,13 @@ import AddRowPopup from './AddRowPopup'
 const UserRow = ({
   isExpanded,
   editViewOpen,
-  fieldNameIdentifer,
+  fieldNameIdentifier,
   fieldNameState,
-  fieldValueIdentifer,
+  fieldValueIdentifier,
   fieldValueState,
   handleRowDeletion,
   handleFieldEdit,
+  currentRow,
 }) => {
   const [isRowExpanded, setIsRowExpanded] = useState(false)
   const [textareaMaxWidth, setTextareaMaxWidth] = useState(null)
@@ -50,7 +51,7 @@ const UserRow = ({
         {isHovered && editViewOpen && (
           <div className="absolute flex -left-2 gap-0">
             <button
-              onClick={() => console.log('how do I delete a whole record?')}
+              onClick={() => handleRowDeletion(currentRow)}
               className="px-1 w-fit"
               type="button"
             >
@@ -80,7 +81,7 @@ const UserRow = ({
                   <UserRowInput
                     value={fieldNameState}
                     textareaMaxWidth={textareaMaxWidth}
-                    field={fieldNameIdentifer}
+                    field={fieldNameIdentifier}
                     handleFieldEdit={handleFieldEdit}
                   />
                 ) : (
@@ -97,7 +98,7 @@ const UserRow = ({
                   <UserRowInput
                     value={fieldNameState}
                     textareaMaxWidth={textareaMaxWidth}
-                    field={fieldNameIdentifer}
+                    field={fieldNameIdentifier}
                     handleFieldEdit={handleFieldEdit}
                   />
                 ) : (
@@ -113,7 +114,7 @@ const UserRow = ({
                   <UserRowInput
                     value={fieldValueState}
                     textareaMaxWidth={textareaMaxWidth}
-                    field={fieldValueIdentifer}
+                    field={fieldValueIdentifier}
                     handleFieldEdit={handleFieldEdit}
                   />
                 ) : (
@@ -132,10 +133,11 @@ const UserRow = ({
               key={obj.id}
               editViewOpen={editViewOpen}
               isExpanded={isExpanded}
-              fieldNameIdentifer={`${fieldNameIdentifer}.${index}.field`}
+              fieldNameIdentifier={`${fieldNameIdentifier}.${index}.field`}
               fieldNameState={obj.field}
-              fieldValueIdentifer={`${fieldValueIdentifer}.${index}.value`}
+              fieldValueIdentifier={`${fieldValueIdentifier}.${index}.value`}
               fieldValueState={obj.value}
+              currentRow={`${fieldValueIdentifier}.${index}`}
               handleRowDeletion={handleRowDeletion}
               handleFieldEdit={handleFieldEdit}
             />
