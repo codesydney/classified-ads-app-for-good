@@ -5,23 +5,20 @@ import UserRowInput from './UserRowInput'
 import AddRowPopup from './AddRowPopup'
 
 const UserRow = ({
-  field,
-  value,
   isExpanded,
   editViewOpen,
-  register,
-  parentField,
+  fieldNameIdentifer,
+  fieldNameState,
+  fieldValueIdentifer,
+  fieldValueState,
   handleRowDeletion,
+  handleFieldEdit,
 }) => {
   const [isRowExpanded, setIsRowExpanded] = useState(false)
   const [textareaMaxWidth, setTextareaMaxWidth] = useState(null)
   const [isHovered, setIsHovered] = useState(false)
   const textareaParentRef = useRef(null)
   const [addPopupOpen, setAddPopupOpen] = useState(false)
-
-  const nestedFieldValueStructure = parentField
-    ? parentField + '.' + field
-    : field
 
   useEffect(() => {
     setIsRowExpanded(isExpanded)
@@ -34,7 +31,7 @@ const UserRow = ({
     }
   }, [editViewOpen])
 
-  const valueType = typeof value
+  const valueType = typeof fieldValueState
   return (
     <div className="px-2">
       <div
@@ -53,7 +50,7 @@ const UserRow = ({
         {isHovered && editViewOpen && (
           <div className="absolute flex -left-2 gap-0">
             <button
-              onClick={() => handleRowDeletion(nestedFieldValueStructure)}
+              onClick={() => console.log('how do I delete a whole record?')}
               className="px-1 w-fit"
               type="button"
             >
@@ -70,33 +67,57 @@ const UserRow = ({
         )}
         {addPopupOpen && (
           <AddRowPopup
-            field={field}
-            value={value}
+            field={fieldNameState}
+            value={fieldValueState}
             setAddPopupOpen={setAddPopupOpen}
           />
         )}
         <div className="text-xs w-full flex gap-[2px]">
           {valueType === 'object' ? (
             <>
-              <span className="font-bold">{field + ':'}</span>
-              <span className="break-all">Object</span>
+              <div className="font-bold">
+                {editViewOpen && fieldNameState !== 'id' ? (
+                  <UserRowInput
+                    value={fieldNameState}
+                    textareaMaxWidth={textareaMaxWidth}
+                    field={fieldNameIdentifer}
+                    handleFieldEdit={handleFieldEdit}
+                  />
+                ) : (
+                  fieldNameState.toString()
+                )}{' '}
+                :
+              </div>
+              <div className="break-all">Object</div>
             </>
           ) : (
             <>
-              <div className="font-bold whitespace-nowrap">{field} :</div>
+              <div className="font-bold whitespace-nowrap">
+                {editViewOpen && fieldNameState !== 'id' ? (
+                  <UserRowInput
+                    value={fieldNameState}
+                    textareaMaxWidth={textareaMaxWidth}
+                    field={fieldNameIdentifer}
+                    handleFieldEdit={handleFieldEdit}
+                  />
+                ) : (
+                  fieldNameState.toString()
+                )}{' '}
+                :
+              </div>
               <div
                 className="break-all flex-grow max-h-fit"
                 ref={textareaParentRef}
               >
-                {editViewOpen && field !== 'id' ? (
+                {editViewOpen && fieldNameState !== 'id' ? (
                   <UserRowInput
-                    value={value}
+                    value={fieldValueState}
                     textareaMaxWidth={textareaMaxWidth}
-                    field={nestedFieldValueStructure}
-                    register={register}
+                    field={fieldValueIdentifer}
+                    handleFieldEdit={handleFieldEdit}
                   />
                 ) : (
-                  value.toString()
+                  fieldValueState.toString()
                 )}
               </div>
             </>
@@ -105,17 +126,18 @@ const UserRow = ({
       </div>
       {isRowExpanded &&
         valueType === 'object' &&
-        Object.entries(value).map(([key, value]) => {
+        fieldValueState.map((obj, index) => {
           return (
             <UserRow
+              key={obj.id}
               editViewOpen={editViewOpen}
               isExpanded={isExpanded}
-              key={key}
-              field={key}
-              value={value}
-              parentField={nestedFieldValueStructure}
-              register={register}
+              fieldNameIdentifer={`${fieldNameIdentifer}.${index}.field`}
+              fieldNameState={obj.field}
+              fieldValueIdentifer={`${fieldValueIdentifer}.${index}.value`}
+              fieldValueState={obj.value}
               handleRowDeletion={handleRowDeletion}
+              handleFieldEdit={handleFieldEdit}
             />
           )
         })}

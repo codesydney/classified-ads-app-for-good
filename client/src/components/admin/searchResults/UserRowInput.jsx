@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import EditAvatarModal from '../../profile/avatar/EditAvatarModal'
 
-const UserRowInput = ({ value, textareaMaxWidth, field, register }) => {
+const UserRowInput = ({ value, textareaMaxWidth, field, handleFieldEdit }) => {
   const [modalOpen, setModalOpen] = useState(false)
 
   const handleModalClose = () => {
@@ -28,7 +28,10 @@ const UserRowInput = ({ value, textareaMaxWidth, field, register }) => {
       <textarea
         className="border-gray-300 max-h-fit px-[2px] resize focus:outline-primary "
         style={{ maxWidth: `${textareaMaxWidth}px` }}
-        {...register(field)}
+        // {...register(field)}
+        name={field}
+        value={value}
+        onChange={handleFieldEdit}
         rows="1"
       />
     )
@@ -37,9 +40,11 @@ const UserRowInput = ({ value, textareaMaxWidth, field, register }) => {
   if (valueType === 'boolean') {
     return (
       <select
-        name="fieldName"
+        name={field}
         className="select select-bordered rounded border-[1px] border-gray-300 focus:border-transparent focus:ring-[2px] focus:ring-primary w-fit min-h-fit h-fit text-xs"
-        {...register(field, { setValueAs: value => value === 'true' })}
+        // {...register(field, { setValueAs: value => value === 'true' })}
+        value={value}
+        onChange={handleFieldEdit}
       >
         <option value={true}>True</option>
         <option value={false}>False</option>

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import UserRow from './UserRow'
 import EditActiveButtonsGroup from './EditButtonsGroup'
 import { useAppDispatch } from '../../../store'
@@ -7,31 +7,80 @@ import { userSchemaAdmin } from '../../../schema'
 import { useForm } from 'react-hook-form'
 import HoverButtonBar from './HoverButtonBar'
 
+function transformObjToArray(obj) {
+  const result = []
+  for (const [key, value] of Object.entries(obj)) {
+    if (typeof value === 'object' && value !== null) {
+      // Nested object - recurse
+      result.push({
+        field: key,
+        value: transformObjToArray(value),
+        id: Math.ceil(Math.random() * 10000),
+      })
+    } else {
+      result.push({
+        field: key,
+        value,
+        id: Math.ceil(Math.random() * 10000),
+      })
+    }
+  }
+  return result
+}
+
 const IndividualUserResultContainer = ({ user }) => {
   const [isHovered, setIsHovered] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
   const [editViewOpen, setEditViewOpen] = useState(false)
+  const [formState, setFormState] = useState(null)
   const dispatch = useAppDispatch()
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isDirty, dirtyFields },
-    reset,
-    getValues,
-  } = useForm({
-    resolver: yupResolver(userSchemaAdmin),
-    defaultValues: user,
-  })
+
+  useEffect(() => {
+    const transformedObjArray = transformObjToArray(user)
+    setFormState(transformedObjArray)
+  }, [user])
 
   // Reset formState to align with redux state when edit view is toggled
   const handleToggleEditView = () => {
     setEditViewOpen(!editViewOpen)
-    reset(user)
   }
 
   // Revert changes made in edit mode while staying in edit mode (revert to redux state)
   const handleRevertChanges = () => {
-    reset(user)
+    setFormState(transformObjToArray(user))
+  }
+
+  const handleFieldEdit = event => {
+    const newFormState = JSON.parse(JSON.stringify(formState))
+    let { name, value, type } = event.target
+    if (type === 'select-one') {
+      value = value === 'true'
+    }
+
+    const nestedKeysArray = name.split('.')
+    const lastKeyIndex = nestedKeysArray.length - 1
+
+    let nestedProperty = nestedKeysArray.reduce(
+      (accumulator, currentKey, currentIndex) => {
+        console.log(accumulator, currentKey, currentIndex)
+        if (accumulator && accumulator[currentKey] !== undefined) {
+          if (currentIndex === lastKeyIndex) {
+            return accumulator
+          } else {
+            console.log('return nested field', accumulator[currentKey])
+            return accumulator[currentKey]
+          }
+        } else {
+          console.log('this is broken man')
+        }
+      },
+      newFormState,
+    )
+
+    const lastKey = nestedKeysArray[lastKeyIndex]
+    nestedProperty[lastKey] = value
+
+    setFormState(newFormState)
   }
 
   // Handle row deleting
@@ -54,19 +103,22 @@ const IndividualUserResultContainer = ({ user }) => {
         handleToggleEditView={handleToggleEditView}
       />
       <form className="pt-6 md:pt-4">
-        {Object.entries(getValues()).map(([key, value]) => {
-          return (
-            <UserRow
-              editViewOpen={editViewOpen}
-              key={key}
-              isExpanded={isExpanded}
-              field={key}
-              value={value}
-              register={register}
-              handleRowDeletion={handleRowDeletion}
-            />
-          )
-        })}
+        {formState &&
+          formState.map((obj, index) => {
+            return (
+              <UserRow
+                key={obj.id}
+                editViewOpen={editViewOpen}
+                isExpanded={isExpanded}
+                fieldNameIdentifier={`[${index}.field`}
+                fieldNameState={obj.field}
+                fieldValueIdentifer={`${index}.value`}
+                fieldValueState={obj.value}
+                handleRowDeletion={handleRowDeletion}
+                handleFieldEdit={handleFieldEdit}
+              />
+            )
+          })}
         {editViewOpen && (
           <EditActiveButtonsGroup
             handleRevertChanges={handleRevertChanges}
