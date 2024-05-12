@@ -20,7 +20,7 @@ const AdminSearchResults = () => {
   useEffect(() => {
     dispatch(adminResetSearch())
   }, [])
-
+  console.log(users)
   return (
     <div className="p-4 m-auto max-w-[1444px]">
       <div className="mb-2">

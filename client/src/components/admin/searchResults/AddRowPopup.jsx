@@ -9,6 +9,7 @@ const AddRowPopup = ({
   setAddPopupOpen,
   currentRow,
   handleAddFieldAfterRow,
+  handleAddFieldWithinRow,
 }) => {
   const popupContainerRef = useRef(null)
 
@@ -36,7 +37,11 @@ const AddRowPopup = ({
     >
       {typeof value === 'object' ? (
         <>
-          <AddRowPopupButton handleClick={() => console.log('clickery')}>
+          <AddRowPopupButton
+            handleClick={() => {
+              handleAddFieldWithinRow(`${currentRow}.value`)
+            }}
+          >
             <BsListNested className="text-sm text-slate-200" />
             <span>
               Add field within{' '}

@@ -1,0 +1,11 @@
+textarea::-webkit-resizer {
+  all: revert;
+  background-image: url('./resize-right.svg');
+  background-size: 50%;
+  background-position-x: right;
+  background-position-y: bottom;
+  background-repeat: no-repeat;
+  width: 5px;
+  height: 5px;
+  background-color: transparent;
+}

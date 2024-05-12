@@ -42,6 +42,9 @@ const IndividualUserResultContainer = ({ user }) => {
 
   // Reset formState to align with redux state when edit view is toggled
   const handleToggleEditView = () => {
+    if (editViewOpen) {
+      setFormState(transformObjToArray(user))
+    }
     setEditViewOpen(!editViewOpen)
   }
 
@@ -119,6 +122,27 @@ const IndividualUserResultContainer = ({ user }) => {
     setFormState(newFormState)
   }
 
+  const handleAddFieldWithinRow = rowToAddWithin => {
+    const newFormState = JSON.parse(JSON.stringify(formState))
+
+    const nestedKeysArray = rowToAddWithin.split('.')
+    const newRow = { field: '', value: '', id: Math.ceil(Math.random() * 100) }
+
+    nestedKeysArray.reduce((accumulator, currentKey, currentIndex) => {
+      if (accumulator && accumulator[currentKey] !== undefined) {
+        if (currentIndex === nestedKeysArray.length - 1) {
+          console.log(accumulator)
+          return accumulator[currentKey].push(newRow)
+        } else {
+          return accumulator[currentKey]
+        }
+      } else {
+        console.log('really should not be here')
+      }
+    }, newFormState)
+    setFormState(newFormState)
+  }
+
   return (
     <div
       className="bg-white pb-4 pt-8 m-2 relative"
@@ -147,6 +171,7 @@ const IndividualUserResultContainer = ({ user }) => {
                 handleRowDeletion={handleRowDeletion}
                 handleFieldEdit={handleFieldEdit}
                 handleAddFieldAfterRow={handleAddFieldAfterRow}
+                handleAddFieldWithinRow={handleAddFieldWithinRow}
               />
             )
           })}
