@@ -279,10 +279,12 @@ const userSchemaAdmin = yup.object({
       .transform((curr, orig) => (orig === '' ? null : curr))
       .matches(yearRegex, 'Please enter a valid year (1950 - now)'),
   }),
-  isOfficer: yup.boolean(),
-  hideProfile: yup.boolean(),
-  isProfileComplete: yup.boolean(),
-  isAdmin: yup.boolean(),
+  isOfficer: yup.boolean().required('isOfficer Field is required'),
+  hideProfile: yup.boolean().required('hideProfile Field is required'),
+  isProfileComplete: yup
+    .boolean()
+    .required('isProfileComplete field is required'),
+  isAdmin: yup.boolean().required('isAdmin field is required'),
 })
 
 export {

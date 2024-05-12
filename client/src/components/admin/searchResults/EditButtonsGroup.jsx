@@ -23,8 +23,8 @@ const EditActiveButtonsGroup = ({
         Cancel
       </EditActiveButton>
       <EditActiveButton
-        handleClick={() => console.log('updating now')}
-        type="button"
+        // handleClick={() => console.log('updating now')}
+        type="submit"
         primary={true}
       >
         Update

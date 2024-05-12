@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import { FaCaretRight, FaCaretDown, FaTrashAlt } from 'react-icons/fa'
 import { CiSquarePlus } from 'react-icons/ci'
-import UserRowInput from './UserRowInput'
 import AddRowPopup from './AddRowPopup'
 import TextInput from './TextInput'
 import TextareaInput from './TextareaInput'
 import ImageInput from './ImageInput'
 import SelectInput from './SelectInput'
+import NumberInput from './NumberInput'
 
 const UserRow = ({
   isExpanded,
@@ -121,6 +121,15 @@ const UserRow = ({
                 ref={textareaParentRef}
               >
                 {valueType === 'object' && 'Object'}
+                {/* NUMBER INPUT FOR NUMBER VALUES */}
+                {valueType === 'number' && (
+                  <NumberInput
+                    value={fieldValueState}
+                    field={fieldValueIdentifier}
+                    handleFieldEdit={handleFieldEdit}
+                  />
+                )}
+                {/* SELECT INPUT FOR BOOLEAN VALUES */}
                 {valueType === 'boolean' && (
                   <SelectInput
                     value={fieldValueState}

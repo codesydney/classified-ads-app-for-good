@@ -34,8 +34,8 @@ const SearchField = () => {
       />
       <label className="form-control w-full">
         {searchQuery.search.fieldName && (
-          <div className="label">
-            <span className="label-text text-[15px] font-semibold">
+          <div className="label pb-1">
+            <span className="label-text text-s font-semibold">
               {searchQuery.search.fieldName}
             </span>
           </div>
@@ -46,7 +46,7 @@ const SearchField = () => {
           value={searchQuery.search.fieldValue}
           onChange={handleInputChange}
           placeholder={`${searchQuery.search.fieldName ? 'Enter ' + searchQuery.search.fieldName : 'Field unselected'}`}
-          className={`input input-bordered w-full border-2 border-gray-300 focus:border-transparent focus:ring-2 focus:ring-primary focus:outline-primary`}
+          className={`input input-bordered w-full border-2 border-gray-300 focus:border-transparent focus:ring-2 focus:ring-primary focus:outline-none h-fit min-h-fit py-2 text-xs`}
         />
       </label>
     </div>
