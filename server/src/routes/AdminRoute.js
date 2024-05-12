@@ -11,4 +11,11 @@ router.get(
   AdminController.getUsersAdmin,
 )
 
+router.put(
+  '/users/:id',
+  verifyToken,
+  authenticateAdmin,
+  AdminController.updateUser,
+)
+
 module.exports = router

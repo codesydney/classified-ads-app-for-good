@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { adminSearchUsers } from './adminAction'
+import { adminSearchUsers, adminUpdateUser } from './adminAction'
 
 const initialState = {
   users: [],
@@ -67,7 +67,21 @@ const adminSlice = createSlice({
       state.error = action.payload
       state.users = []
     })
-    // Edit User
+    // Update User
+    builder.addCase(adminUpdateUser.pending, state => {
+      state.loading = true
+      state.error = null
+    })
+    builder.addCase(adminUpdateUser.fulfilled, (state, action) => {
+      state.loading = false
+      state.error = null
+      state.users = action.payload.users
+      state.meta = action.payload.meta
+    })
+    builder.addCase(adminUpdateUser.rejected, state => {
+      state.loading = false
+      state.error = true
+    })
     // Delete User
     // Add User
   },

@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react'
 import UserRow from './UserRow'
 import EditActiveButtonsGroup from './EditButtonsGroup'
 import { useAppDispatch } from '../../../store'
-import { yupResolver } from '@hookform/resolvers/yup'
 import { userSchemaAdmin } from '../../../schema'
 import { IoIosClose } from 'react-icons/io'
 import HoverButtonBar from './HoverButtonBar'
 import { v4 as uuidv4 } from 'uuid'
+import { adminUpdateUser } from '../../../features/admin/adminAction'
 
 function transformObjToArray(obj) {
   const result = []
@@ -173,16 +173,17 @@ const IndividualUserResultContainer = ({ user }) => {
       const validateUser = await userSchemaAdmin.validate(newObj, {
         abortEarly: false,
       })
-      console.log(validateUser)
     } catch (error) {
-      console.log(error.inner)
       const newValidationErrors = error.inner.map(err => {
         return err.message
       })
       setValidationErrors(newValidationErrors)
-      error.inner.forEach(err => {
-        console.log(err.message)
-      })
+      return
+    }
+    try {
+      const updatedUser = await dispatch(adminUpdateUser(formState))
+    } catch (error) {
+      console.log('error update user', error)
     }
   }
 

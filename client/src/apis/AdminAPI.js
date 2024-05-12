@@ -20,6 +20,28 @@ const adminSearchUsers = async (searchObj, token) => {
   }
 }
 
+const adminUpdateUser = async (updatedUserObj, token) => {
+  const params = searchObj
+
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+    const response = await api.put(
+      `${adminURL}/${updatedUserObj.id}`,
+      updatedUserObj,
+      ...config,
+    )
+    return response.data
+  } catch (error) {
+    console.error('Error updating users', error)
+    return error
+  }
+}
+
 export const AdminAPI = {
   adminSearchUsers,
+  adminUpdateUser,
 }

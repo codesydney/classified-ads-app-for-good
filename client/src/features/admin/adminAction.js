@@ -31,4 +31,22 @@ const adminResetSearch = createAsyncThunk(
   },
 )
 
-export { adminSearchUsers, adminResetSearch }
+const adminUpdateUser = createAsyncThunk(
+  'admin/updateUser',
+  async (updatedUserObj, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem('accessToken')
+      const response = await AdminAPI.adminUpdateUser(updatedUserObj, token)
+
+      return response
+    } catch (error) {
+      if (error.response && error.response.data.error) {
+        return rejectWithValue(error.response.data.error)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  },
+)
+
+export { adminSearchUsers, adminResetSearch, adminUpdateUser }
