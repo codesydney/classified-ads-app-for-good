@@ -3,7 +3,14 @@ import { BsListNested } from 'react-icons/bs'
 import AddRowPopupButton from './AddRowPopupButton'
 import { useEffect, useRef } from 'react'
 
-const AddRowPopup = ({ field, value, setAddPopupOpen }) => {
+const AddRowPopup = ({
+  field,
+  value,
+  setAddPopupOpen,
+  currentRow,
+  handleAddFieldAfterRow,
+  handleAddFieldWithinRow,
+}) => {
   const popupContainerRef = useRef(null)
 
   const handleOutsideClick = event => {
@@ -30,14 +37,23 @@ const AddRowPopup = ({ field, value, setAddPopupOpen }) => {
     >
       {typeof value === 'object' ? (
         <>
-          <AddRowPopupButton handleClick={() => console.log('clickery')}>
+          <AddRowPopupButton
+            handleClick={() => {
+              handleAddFieldWithinRow(`${currentRow}.value`)
+            }}
+          >
             <BsListNested className="text-sm text-slate-200" />
             <span>
               Add field within{' '}
               <span className="text-white font-bold">{field}</span>
             </span>
           </AddRowPopupButton>
-          <AddRowPopupButton handleClick={() => console.log('clickery')}>
+          <AddRowPopupButton
+            handleClick={() => {
+              handleAddFieldAfterRow(currentRow)
+              setAddPopupOpen(false)
+            }}
+          >
             <FaCirclePlus className="text-sm text-slate-200" />
             <span>
               Add field after{' '}
@@ -46,7 +62,12 @@ const AddRowPopup = ({ field, value, setAddPopupOpen }) => {
           </AddRowPopupButton>
         </>
       ) : (
-        <AddRowPopupButton handleClick={() => console.log('clickery')}>
+        <AddRowPopupButton
+          handleClick={() => {
+            handleAddFieldAfterRow(currentRow)
+            setAddPopupOpen(false)
+          }}
+        >
           <FaCirclePlus className="text-sm text-slate-200" />
           <span>
             Add field after{' '}
