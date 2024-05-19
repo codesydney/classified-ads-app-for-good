@@ -35,7 +35,7 @@ const AdminSearchResults = () => {
           </button>
         </div>
         <div
-          className={`min-h-[300px] bg-gray-50 rounded flex flex-col p-2 ${!users.length && 'justify-center'}`}
+          className={`min-h-[300px] bg-gray-50 rounded flex flex-col items-center  max-sm:scale-50 max-sm:w-[200%] max-sm:origin-top-left max-sm:h-[50%] p-2 ${!users.length && 'justify-center'}`}
         >
           {users.length ? (
             users.map(user => {

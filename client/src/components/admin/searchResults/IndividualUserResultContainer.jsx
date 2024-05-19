@@ -171,7 +171,44 @@ const IndividualUserResultContainer = ({ user, editDefault, isNew }) => {
     setFormState(newFormState)
   }
 
+  // CHANGE THE TYPE OF VALUE IN EDIT MODE
+  const handleFieldTypeChange = event => {
+    const newFormState = JSON.parse(JSON.stringify(formState))
+    const { name, value, type } = event.target
+
+    // NAME WILL ALWAYS TAKE SHAPE LIKE'0.field' OR '1.value.3.field'
+    // THIS IS HOW DEEPLY NESTED VALUES ARE MAPPED AND CHANGED
+    const nestedKeysArray = name.split('.')
+
+    nestedKeysArray.reduce((accumulator, currentKey, currentIndex) => {
+      if (accumulator && accumulator[currentKey] !== undefined) {
+        // CHECK IF LAST ITERATION (IE CURRENTKEY = THE NESTED KEY OF THE VALUE WE ARE TRYING TO CHANGE THE TYPE FOR)
+        if (currentIndex === nestedKeysArray.length - 1) {
+          // Conditional logic for each type
+          if (value === 'string') {
+            accumulator[currentKey] = ''
+          } else if (value === 'number') {
+            accumulator[currentKey] = 1
+          } else if (value === 'boolean') {
+            accumulator[currentKey] = false
+          } else if (value === 'object') {
+            const newNestedRow = { field: '', value: '', id: uuidv4() }
+            accumulator[currentKey] = [newNestedRow]
+          } else {
+            console.log('Should never go here')
+          }
+        } else {
+          return accumulator[currentKey]
+        }
+      } else {
+        console.log('error should not enter this block.')
+      }
+    }, newFormState)
+    setFormState(newFormState)
+  }
+
   // FORM SUBMIT HANDLER FOR UPDATING EXISTING RECORD
+  // CALL API PUT /admin/users/:userId
   const handleSubmitUpdate = async event => {
     console.log('update existing document event')
     event.preventDefault()
@@ -197,6 +234,7 @@ const IndividualUserResultContainer = ({ user, editDefault, isNew }) => {
   }
 
   // FORM SUBMIT HANDLER FOR ADDING NEW RECORD
+  // CALL API POST /admin/users
   const handleSubmitAdd = async event => {
     console.log('add new document event')
     event.preventDefault()
@@ -215,9 +253,12 @@ const IndividualUserResultContainer = ({ user, editDefault, isNew }) => {
     }
   }
 
+  // HANDLE DELETE USER - CALL API DELETE /admin/users/:userId
+  const handleDeleteUser = () => {}
+
   return (
     <div
-      className="bg-white pb-4 pt-8 m-2 relative"
+      className="bg-white pb-4 pt-8 m-2 relative w-[100%]"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -271,6 +312,7 @@ const IndividualUserResultContainer = ({ user, editDefault, isNew }) => {
                 handleFieldEdit={handleFieldEdit}
                 handleAddFieldAfterRow={handleAddFieldAfterRow}
                 handleAddFieldWithinRow={handleAddFieldWithinRow}
+                handleFieldTypeChange={handleFieldTypeChange}
               />
             )
           })}

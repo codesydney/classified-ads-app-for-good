@@ -5,7 +5,7 @@ const getUsers = async ({
   filter = {},
   sort = {},
   page = 1,
-  limit = 1,
+  limit = 10,
 }) => {
   // Build the query here
   const searchQuery =

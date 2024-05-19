@@ -19,6 +19,7 @@ const UserRow = ({
   handleFieldEdit,
   handleAddFieldAfterRow,
   handleAddFieldWithinRow,
+  handleFieldTypeChange,
   currentRow,
 }) => {
   const [isRowExpanded, setIsRowExpanded] = useState(false)
@@ -26,18 +27,29 @@ const UserRow = ({
   const [isHovered, setIsHovered] = useState(false)
   const textareaParentRef = useRef(null)
   const [addPopupOpen, setAddPopupOpen] = useState(false)
+  const valueType = typeof fieldValueState
 
   useEffect(() => {
     setIsRowExpanded(isExpanded)
   }, [isExpanded])
 
   useEffect(() => {
-    if (textareaParentRef.current) {
-      const parentWidth = textareaParentRef.current.offsetWidth
-      setTextareaMaxWidth(parentWidth)
+    console.log('running')
+    function handleResize() {
+      if (textareaParentRef.current && valueType === 'string') {
+        const parentWidth = textareaParentRef.current.offsetWidth
+        setTextareaMaxWidth(parentWidth)
+      }
     }
-  }, [editViewOpen])
-  const valueType = typeof fieldValueState
+
+    handleResize()
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [editViewOpen, isRowExpanded, textareaParentRef.current])
+
   return (
     <div className="px-2">
       <div
@@ -86,7 +98,7 @@ const UserRow = ({
             handleAddFieldWithinRow={handleAddFieldWithinRow}
           />
         )}
-        <div className="text-xs w-full h-fit flex gap-2">
+        <div className="text-xs w-full over h-fit flex gap-2">
           {/* KEY VALUE PAIR RENDERING NO EDIT MODE */}
           {!editViewOpen && (
             <>
@@ -160,9 +172,15 @@ const UserRow = ({
               <div className="">
                 <select
                   name={fieldValueIdentifier}
-                  className="select select-bordered rounded border-none bg-transparent focus:border-none focus:outline-none focus:ring-[2px] focus:ring-primary w-fit min-h-fit h-fit text-xs"
+                  className="select select-bordered rounded border-none bg-transparent focus:border-none focus:outline-none focus:ring-[2px] focus:ring-primary w-fit min-h-fit h-fit text-xs pl-0 pr-4
+                  bg-[position:calc(100%_-_4px)_calc(1px_+_50%),calc(100%_-_0.1px)_calc(1px_+_50%)]"
                   value={valueType}
-                  // onChange={handleFieldEdit}
+                  onChange={event => {
+                    if (event.target.value === 'object') {
+                      setIsRowExpanded(true)
+                    }
+                    handleFieldTypeChange(event)
+                  }}
                 >
                   <option value="boolean">Boolean</option>
                   <option value="object">Object</option>
@@ -193,6 +211,7 @@ const UserRow = ({
               handleFieldEdit={handleFieldEdit}
               handleAddFieldAfterRow={handleAddFieldAfterRow}
               handleAddFieldWithinRow={handleAddFieldWithinRow}
+              handleFieldTypeChange={handleFieldTypeChange}
             />
           )
         })}

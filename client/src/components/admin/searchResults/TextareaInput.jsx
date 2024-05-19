@@ -35,7 +35,7 @@ const TextareaInput = ({
             className=" my-[1px] block text-xs min-w-[10px] px-[2px] resize bg-transparent rounded focus:outline-[0px] focus:border-r-[2px] focus:border-l-[2px] border-primary text-green-700"
             style={{
               width: `${textareaWidth + 24}px`,
-              maxWidth: `${textareaMaxWidth - 24}px`,
+              maxWidth: `${textareaMaxWidth - 40}px`,
             }}
             // {...register(field)}
             name={field}
