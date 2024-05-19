@@ -75,8 +75,6 @@ const adminSlice = createSlice({
     builder.addCase(adminUpdateUser.fulfilled, (state, action) => {
       state.loading = false
       state.error = null
-      state.users = action.payload.users
-      state.meta = action.payload.meta
     })
     builder.addCase(adminUpdateUser.rejected, state => {
       state.loading = false

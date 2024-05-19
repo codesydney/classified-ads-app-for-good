@@ -8,6 +8,7 @@ import HoverButtonBar from './HoverButtonBar'
 import { v4 as uuidv4 } from 'uuid'
 import { adminUpdateUser } from '../../../features/admin/adminAction'
 
+// TRANSFORM USER OBJECT PROVIDED BY API INTO ARRAY USED TO MANAGE FORM STATE AND MANIPULATE BOTH KEYS AND VALUES
 function transformObjToArray(obj) {
   const result = []
   for (const [key, value] of Object.entries(obj)) {
@@ -29,6 +30,7 @@ function transformObjToArray(obj) {
   return result
 }
 
+// CONVERT FORM STATE ARRAY BACK INTO TYPICALLY SHAPED OBJECT.
 function transformArrayToObj(arr) {
   const result = {}
   for (const item of arr) {
@@ -42,10 +44,10 @@ function transformArrayToObj(arr) {
   return result
 }
 
-const IndividualUserResultContainer = ({ user }) => {
+const IndividualUserResultContainer = ({ user, editDefault, isNew }) => {
   const [isHovered, setIsHovered] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
-  const [editViewOpen, setEditViewOpen] = useState(false)
+  const [editViewOpen, setEditViewOpen] = useState(editDefault)
   const [formState, setFormState] = useState(null)
   const [validationErrors, setValidationErrors] = useState(null)
   const dispatch = useAppDispatch()
@@ -70,10 +72,12 @@ const IndividualUserResultContainer = ({ user }) => {
     setFormState(transformObjToArray(user))
   }
 
+  // ONCHANGE HANDLER FOR ALL INPUT EVENTS
   const handleFieldEdit = event => {
     const newFormState = JSON.parse(JSON.stringify(formState))
     const { name, value, type } = event.target
 
+    // TYPE COERCION FOR BOOLEAN AND NUMBER VALUES
     let updatedValue
     if (type === 'select-one') {
       updatedValue = value === 'true'
@@ -83,12 +87,14 @@ const IndividualUserResultContainer = ({ user }) => {
       updatedValue = value
     }
 
+    // NAME WILL ALWAYS TAKE SHAPE LIKE'0.field' OR '1.value.3.field'
+    // THIS IS HOW DEEPLY NESTED VALUES ARE MAPPED AND CHANGED
     const nestedKeysArray = name.split('.')
 
     nestedKeysArray.reduce((accumulator, currentKey, currentIndex) => {
       if (accumulator && accumulator[currentKey] !== undefined) {
+        // CHECK IF LAST ITERATION (IE CURRENTKEY = THE NESTED KEY OF THE VALUE WE ARE TRYING TO UPDATE)
         if (currentIndex === nestedKeysArray.length - 1) {
-          // Check if last iteration
           accumulator[currentKey] = updatedValue // Update the value directly
         } else {
           return accumulator[currentKey]
@@ -100,7 +106,7 @@ const IndividualUserResultContainer = ({ user }) => {
     setFormState(newFormState)
   }
 
-  // Handle row deleting
+  // DELETE A KEY/VAL PAIR (row) OR AN ENTIRE NESTED OBJECT (IF THE VAL IS AN OBJECT)
   const handleRowDeletion = rowToDelete => {
     const newFormState = JSON.parse(JSON.stringify(formState))
 
@@ -122,9 +128,9 @@ const IndividualUserResultContainer = ({ user }) => {
     }
   }
 
+  // ADD A FIELD AFTER THE FIELD THAT WAS CLICKED (SAME LEVEL NESTING)
   const handleAddFieldAfterRow = rowToAddAfter => {
     const newFormState = JSON.parse(JSON.stringify(formState))
-
     const nestedKeysArray = rowToAddAfter.split('.')
     const lastKey = parseInt(nestedKeysArray.pop(), 10) + 1
     const newRow = { field: '', value: '', id: uuidv4() }
@@ -144,9 +150,9 @@ const IndividualUserResultContainer = ({ user }) => {
     setFormState(newFormState)
   }
 
+  // ADD FIELD WITHIN (nested) THE FIELD THAT WAS CLICKED (ONLY AVAILABLE FOR FIELDS WITH TYPE OBJECT)
   const handleAddFieldWithinRow = rowToAddWithin => {
     const newFormState = JSON.parse(JSON.stringify(formState))
-
     const nestedKeysArray = rowToAddWithin.split('.')
     const newRow = { field: '', value: '', id: uuidv4() }
 
@@ -165,7 +171,9 @@ const IndividualUserResultContainer = ({ user }) => {
     setFormState(newFormState)
   }
 
-  const handleSubmit = async event => {
+  // FORM SUBMIT HANDLER FOR UPDATING EXISTING RECORD
+  const handleSubmitUpdate = async event => {
+    console.log('update existing document event')
     event.preventDefault()
     const newObj = transformArrayToObj(formState)
     setValidationErrors(null)
@@ -181,9 +189,29 @@ const IndividualUserResultContainer = ({ user }) => {
       return
     }
     try {
-      const updatedUser = await dispatch(adminUpdateUser(formState))
+      console.log('about to run api call')
+      const updatedUser = await dispatch(adminUpdateUser(newObj))
     } catch (error) {
       console.log('error update user', error)
+    }
+  }
+
+  // FORM SUBMIT HANDLER FOR ADDING NEW RECORD
+  const handleSubmitAdd = async event => {
+    console.log('add new document event')
+    event.preventDefault()
+    const newObj = transformArrayToObj(formState)
+    setValidationErrors(null)
+    try {
+      const validateUser = await userSchemaAdmin.validate(newObj, {
+        abortEarly: false,
+      })
+    } catch (error) {
+      const newValidationErrors = error.inner.map(err => {
+        return err.message
+      })
+      setValidationErrors(newValidationErrors)
+      return
     }
   }
 
@@ -193,6 +221,7 @@ const IndividualUserResultContainer = ({ user }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
+      {/* DISPLAY VALIDATION ERRORS PROVIDED BY YUP SCHEMA VALIDATION */}
       {validationErrors && (
         <ul className="bg-red-50 relative -top-10 px-16 py-2">
           {validationErrors.map(error => {
@@ -203,20 +232,29 @@ const IndividualUserResultContainer = ({ user }) => {
             )
           })}
           <span
-            className="absolute w-6 h-6 rounded-full bg-red-600 left-[calc(98%-theme('spacing.28'))] top-[50%] translate-y-[-50%] cursor-pointer"
+            className="absolute w-6 h-6 rounded-full bg-red-600 left-[calc(98%-theme('spacing.28'))] top-[50%] translate-y-[-50%] cursor-pointer z-20"
             onClick={() => setValidationErrors(null)}
           >
             <IoIosClose className="text-white text-2xl cursor-pointer" />
           </span>
         </ul>
       )}
+      {/* TOP BUTTON BAR (EXPAND, EDIT, DELETE) */}
       <HoverButtonBar
         isHovered={isHovered}
         setIsExpanded={setIsExpanded}
         isExpanded={isExpanded}
         handleToggleEditView={handleToggleEditView}
+        isNew={isNew}
       />
-      <form className="pt-6 md:pt-4" onSubmit={handleSubmit}>
+      {/* RUN CONDITIONAL FORM EVENT HANDLER AND API CALL BASED ON ISNEW BOOLEAN */}
+      <form
+        className="pt-6 md:pt-4"
+        onSubmit={event =>
+          isNew ? handleSubmitAdd(event) : handleSubmitUpdate(event)
+        }
+      >
+        {/* LOOP THROUGH FORM STATE ARRAY TO RENDER EACH 'ROW' */}
         {formState &&
           formState.map((obj, index) => {
             return (
@@ -240,6 +278,7 @@ const IndividualUserResultContainer = ({ user }) => {
           <EditActiveButtonsGroup
             handleRevertChanges={handleRevertChanges}
             handleToggleEditView={handleToggleEditView}
+            isNew={isNew}
           />
         )}
       </form>

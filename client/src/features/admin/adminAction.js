@@ -35,6 +35,7 @@ const adminUpdateUser = createAsyncThunk(
   'admin/updateUser',
   async (updatedUserObj, { rejectWithValue }) => {
     try {
+      console.log('dispatch action', updatedUserObj)
       const token = localStorage.getItem('accessToken')
       const response = await AdminAPI.adminUpdateUser(updatedUserObj, token)
 

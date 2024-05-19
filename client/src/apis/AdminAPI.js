@@ -4,7 +4,6 @@ const adminURL = '/admin/users'
 
 const adminSearchUsers = async (searchObj, token) => {
   const params = searchObj
-  console.log('admin api func running', searchObj)
   try {
     const config = {
       headers: {
@@ -21,8 +20,7 @@ const adminSearchUsers = async (searchObj, token) => {
 }
 
 const adminUpdateUser = async (updatedUserObj, token) => {
-  const params = searchObj
-
+  console.log('woohoo api')
   try {
     const config = {
       headers: {
@@ -32,8 +30,9 @@ const adminUpdateUser = async (updatedUserObj, token) => {
     const response = await api.put(
       `${adminURL}/${updatedUserObj.id}`,
       updatedUserObj,
-      ...config,
+      config,
     )
+    console.log(response)
     return response.data
   } catch (error) {
     console.error('Error updating users', error)

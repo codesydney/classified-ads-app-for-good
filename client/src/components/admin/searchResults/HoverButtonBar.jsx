@@ -6,6 +6,7 @@ const HoverButtonBar = ({
   setIsExpanded,
   isExpanded,
   handleToggleEditView,
+  isNew,
 }) => {
   return (
     <div
@@ -16,14 +17,17 @@ const HoverButtonBar = ({
       <IconButton handleClick={() => setIsExpanded(!isExpanded)}>
         {isExpanded ? <FaCaretDown /> : <FaCaretRight />}
       </IconButton>
-      <div className="ml-auto flex gap-2">
-        <IconButton handleClick={handleToggleEditView}>
-          <MdModeEditOutline />
-        </IconButton>
-        <IconButton handleClick={() => console.log('I will delete mysefl')}>
-          <FaTrashAlt />
-        </IconButton>
-      </div>
+      {/* DONT RENDER EDIT AND DELETE BUTTONS WHEN RENDERED IN ADDDOCUMENTMODAL */}
+      {!isNew && (
+        <div className="ml-auto flex gap-2">
+          <IconButton handleClick={handleToggleEditView}>
+            <MdModeEditOutline />
+          </IconButton>
+          <IconButton handleClick={() => console.log('I will delete mysefl')}>
+            <FaTrashAlt />
+          </IconButton>
+        </div>
+      )}
     </div>
   )
 }

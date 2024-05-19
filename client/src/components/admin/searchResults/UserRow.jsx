@@ -49,7 +49,7 @@ const UserRow = ({
         <button
           onClick={() => setIsRowExpanded(!isRowExpanded)}
           type="button"
-          className={`${valueType !== 'object' && 'opacity-0 cursor-default'} px-1 relative z-10`}
+          className={`${valueType !== 'object' && 'opacity-0 cursor-default'} px-1 relative `}
           disabled={valueType !== 'object'}
         >
           {isRowExpanded ? <FaCaretDown /> : <FaCaretRight />}
@@ -156,6 +156,19 @@ const UserRow = ({
                       isID={fieldNameState === 'id'}
                     />
                   )}
+              </div>
+              <div className="">
+                <select
+                  name={fieldValueIdentifier}
+                  className="select select-bordered rounded border-none bg-transparent focus:border-none focus:outline-none focus:ring-[2px] focus:ring-primary w-fit min-h-fit h-fit text-xs"
+                  value={valueType}
+                  // onChange={handleFieldEdit}
+                >
+                  <option value="boolean">Boolean</option>
+                  <option value="object">Object</option>
+                  <option value="string">String</option>
+                  <option value="number">Number</option>
+                </select>
               </div>
             </>
           )}
