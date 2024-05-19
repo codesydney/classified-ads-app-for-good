@@ -48,8 +48,8 @@ jobs:
             server/package.json
             server/.env
             server/dist
-          retention-days: 2
-          
+          retention-days: 14
+
   prettier-check:
     needs: build
     runs-on: ubuntu-latest
@@ -127,7 +127,7 @@ jobs:
       with:
         name: distfiles
         path: distfiles
-    - name: Deploy client and server to prod 
+    - name: Deploy client and server to prod
       uses: appleboy/scp-action@v0.1.7
       with:
         host: ${{ secrets.CLOUD_HOST }}
@@ -146,5 +146,3 @@ jobs:
         key: ${{ secrets.CLOUD_KEY }}
         port: 22
         script: cd staging && ./deploy
-
-        

@@ -234,15 +234,15 @@ const UserMenu = ({ currentUser }) => {
                   label="Sign Up"
                   onClick={() => handleNavigate('/signup')}
                 />
-                <MenuItem
-                  label="Membership Fee Payment"
-                  onClick={() =>
-                    window.open(
-                      'https://buy.stripe.com/6oEbKo6dzdUoctG147',
-                      '_blank',
-                    )
-                  }
-                />
+                {/*<MenuItem*/}
+                {/*  label="Membership Fee Payment"*/}
+                {/*  onClick={() =>*/}
+                {/*    window.open(*/}
+                {/*      'https://buy.stripe.com/6oEbKo6dzdUoctG147',*/}
+                {/*      '_blank',*/}
+                {/*    )*/}
+                {/*  }*/}
+                {/*/>*/}
               </>
             )}
           </div>

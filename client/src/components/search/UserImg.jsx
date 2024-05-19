@@ -1,12 +1,13 @@
-import defaultUserLogo from '../../assets/serviceImgPlaceholder.svg'
-
 const UserImg = ({ fullName, alumniProfilePicture }) => {
   return (
-    <div>
+    <div className="w-full pb-[100%] relative rounded-t-md overflow-hidden bg-gray-100">
       <img
-        src={alumniProfilePicture || defaultUserLogo}
+        src={
+          alumniProfilePicture ||
+          'https://ustaa.s3.ap-southeast-2.amazonaws.com/images/USTAA-Profile.png'
+        }
         alt={`${fullName} profile picture`}
-        className="w-full aspect-ratio-4/3 object-contain rounded-t-md"
+        className="absolute top-0 left-0 w-full h-full object-cover rounded-t-md"
       />
     </div>
   )

@@ -1,0 +1,47 @@
+[
+  {
+    "photoSrc": "src/assets/developers/brodie.png",
+    "name": "Brodie Hunt",
+    "role": "Team Lead/Web Developer",
+    "linkedin": "brodie-hunt-8ab1311a4",
+    "github": "brodiehunt",
+    "skills": ["development"],
+    "blurb": "Lorem ipsum dolor sit amet"
+  },
+  {
+    "photoSrc": "src/assets/developers/promie.png",
+    "name": "Promie Yutasane",
+    "role": "DevOps/Web Developer",
+    "linkedin": "promie-yutasane",
+    "github": "promie",
+    "skills": ["frontend", "backend", "mobile", "cloud", "devops"],
+    "blurb": "Promie, a Full-stack Software Engineer, specialises in the JavaScript/TypeScript ecosystem, with a Master of IT from UNSW. He has experience as a mobile engineer at UNSW and as a frontend engineer at Apple. At Nine Entertainment's 9Now Identity team, he enhances the Single Sign-On service. Dedicated to the community, he mentors new developers and implements DevOps practices at Code.Sydney."
+  },
+  {
+    "photoSrc": "src/assets/developers/washington.png",
+    "name": "Washington Shoji",
+    "role": "Web Developer",
+    "linkedin": "washington-shoji-77171bb5",
+    "github": "washington-shoji",
+    "skills": ["development"],
+    "blurb": "Lorem ipsum dolor sit amet"
+  },
+  {
+    "photoSrc": "src/assets/developers/nathan.png",
+    "name": "Nathan Sou",
+    "role": "Web Developer",
+    "linkedin": "nathanksou",
+    "github": "nathanksou",
+    "skills": ["development"],
+    "blurb": "Lorem ipsum dolor sit amet"
+  },
+  {
+    "photoSrc": "src/assets/developers/joanne.png",
+    "name": "Joanne Javillo",
+    "role": "Web Developer",
+    "linkedin": "jo-anne-javillo-b88103206",
+    "github": "joannejavillo",
+    "skills": ["development"],
+    "blurb": "Lorem ipsum dolor sit amet"
+  }
+]
