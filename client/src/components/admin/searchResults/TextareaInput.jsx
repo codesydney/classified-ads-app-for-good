@@ -8,8 +8,9 @@ const TextareaInput = ({
   isID,
 }) => {
   const [textareaWidth, setTextareaWidth] = useState(null)
+  const [newTextareaMaxWidth, setNewTextareaMaxWidth] = useState(null)
   const stringLengthRef = useRef(null)
-
+  const parentLengthRef = useRef(null)
   useEffect(() => {
     if (stringLengthRef.current) {
       const textareaCurrentWidth = stringLengthRef.current.offsetWidth
@@ -17,8 +18,23 @@ const TextareaInput = ({
     }
   }, [stringLengthRef.current, value])
 
+  useEffect(() => {
+    function handleResize() {
+      if (parentLengthRef.current) {
+        const parentWidth = parentLengthRef.current.offsetWidth
+        setNewTextareaMaxWidth(parentWidth)
+      }
+    }
+
+    handleResize()
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [parentLengthRef.current, textareaMaxWidth])
   return (
-    <div className="flex text-green-700">
+    <div className="flex flex-grow text-green-700" ref={parentLengthRef}>
       <span
         aria-hidden="true"
         ref={stringLengthRef}
@@ -35,7 +51,7 @@ const TextareaInput = ({
             className=" my-[1px] block text-xs min-w-[10px] px-[2px] resize bg-transparent rounded focus:outline-[0px] focus:border-r-[2px] focus:border-l-[2px] border-primary text-green-700"
             style={{
               width: `${textareaWidth + 24}px`,
-              maxWidth: `${textareaMaxWidth - 40}px`,
+              maxWidth: `${newTextareaMaxWidth - 50}px`,
             }}
             // {...register(field)}
             name={field}

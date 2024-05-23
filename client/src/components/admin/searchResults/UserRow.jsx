@@ -34,7 +34,6 @@ const UserRow = ({
   }, [isExpanded])
 
   useEffect(() => {
-    console.log('running')
     function handleResize() {
       if (textareaParentRef.current && valueType === 'string') {
         const parentWidth = textareaParentRef.current.offsetWidth
@@ -51,9 +50,9 @@ const UserRow = ({
   }, [editViewOpen, isRowExpanded, textareaParentRef.current])
 
   return (
-    <div className="px-2">
+    <div className="pl-2">
       <div
-        className="relative flex gap-1 items-start hover:bg-gray-200/50 pl-8"
+        className="relative flex gap-1 items-start w-[100%] hover:bg-gray-200/50 pl-8"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -98,7 +97,7 @@ const UserRow = ({
             handleAddFieldWithinRow={handleAddFieldWithinRow}
           />
         )}
-        <div className="text-xs w-full over h-fit flex gap-2">
+        <div className="text-xs w-full h-fit flex gap-2">
           {/* KEY VALUE PAIR RENDERING NO EDIT MODE */}
           {!editViewOpen && (
             <>
@@ -169,25 +168,28 @@ const UserRow = ({
                     />
                   )}
               </div>
-              <div className="">
-                <select
-                  name={fieldValueIdentifier}
-                  className="select select-bordered rounded border-none bg-transparent focus:border-none focus:outline-none focus:ring-[2px] focus:ring-primary w-fit min-h-fit h-fit text-xs pl-0 pr-4
+              {fieldNameState !== 'id' &&
+                fieldNameState !== 'alumniProfilePicture' && (
+                  <div className="">
+                    <select
+                      name={fieldValueIdentifier}
+                      className="select select-bordered rounded border-none bg-transparent focus:border-none focus:outline-none focus:ring-[2px] focus:ring-primary w-fit min-h-fit h-fit text-xs pl-0 pr-4
                   bg-[position:calc(100%_-_4px)_calc(1px_+_50%),calc(100%_-_0.1px)_calc(1px_+_50%)]"
-                  value={valueType}
-                  onChange={event => {
-                    if (event.target.value === 'object') {
-                      setIsRowExpanded(true)
-                    }
-                    handleFieldTypeChange(event)
-                  }}
-                >
-                  <option value="boolean">Boolean</option>
-                  <option value="object">Object</option>
-                  <option value="string">String</option>
-                  <option value="number">Number</option>
-                </select>
-              </div>
+                      value={valueType}
+                      onChange={event => {
+                        if (event.target.value === 'object') {
+                          setIsRowExpanded(true)
+                        }
+                        handleFieldTypeChange(event)
+                      }}
+                    >
+                      <option value="boolean">Boolean</option>
+                      <option value="object">Object</option>
+                      <option value="string">String</option>
+                      <option value="number">Number</option>
+                    </select>
+                  </div>
+                )}
             </>
           )}
         </div>

@@ -185,6 +185,7 @@ const IndividualUserResultContainer = ({ user, editDefault, isNew }) => {
         // CHECK IF LAST ITERATION (IE CURRENTKEY = THE NESTED KEY OF THE VALUE WE ARE TRYING TO CHANGE THE TYPE FOR)
         if (currentIndex === nestedKeysArray.length - 1) {
           // Conditional logic for each type
+
           if (value === 'string') {
             accumulator[currentKey] = ''
           } else if (value === 'number') {
@@ -258,7 +259,7 @@ const IndividualUserResultContainer = ({ user, editDefault, isNew }) => {
 
   return (
     <div
-      className="bg-white pb-4 pt-8 m-2 relative w-[100%]"
+      className="bg-white pb-4 pr-2 pt-8 m-2 relative w-[100%]"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >

@@ -40,6 +40,7 @@ const AddRowPopup = ({
           <AddRowPopupButton
             handleClick={() => {
               handleAddFieldWithinRow(`${currentRow}.value`)
+              setAddPopupOpen(false)
             }}
           >
             <BsListNested className="text-sm text-slate-200" />
