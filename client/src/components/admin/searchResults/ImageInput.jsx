@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import EditAvatarModal from '../../profile/avatar/EditAvatarModal'
+import EditAvatarModal from './avatar/EditAvatarModal'
 
 const ImageInput = ({ value, field, handleFieldEdit }) => {
   const [modalOpen, setModalOpen] = useState(false)
