@@ -218,11 +218,28 @@ const IndividualUserResultContainer = ({ user, editDefault, isNew }) => {
     try {
       const validateUser = await userSchemaAdmin.validate(newObj, {
         abortEarly: false,
+        stripUnknown: false,
       })
     } catch (error) {
+      const [
+        {
+          type,
+          message,
+          params: { unknown },
+        },
+      ] = error.inner
+
+      if (type === 'noUnknown') {
+        const errorMessage =
+          'The following fields are not permitted: ' + unknown
+        setValidationErrors([errorMessage])
+        return
+      }
+
       const newValidationErrors = error.inner.map(err => {
         return err.message
       })
+
       setValidationErrors(newValidationErrors)
       return
     }
@@ -244,8 +261,23 @@ const IndividualUserResultContainer = ({ user, editDefault, isNew }) => {
     try {
       const validateUser = await userSchemaAdmin.validate(newObj, {
         abortEarly: false,
+        stripUnknown: false,
       })
     } catch (error) {
+      const [
+        {
+          type,
+          message,
+          params: { unknown },
+        },
+      ] = error.inner
+
+      if (type === 'noUnknown') {
+        const errorMessage =
+          'The following fields are not permitted: ' + unknown
+        setValidationErrors([errorMessage])
+        return
+      }
       const newValidationErrors = error.inner.map(err => {
         return err.message
       })
