@@ -8,7 +8,7 @@ import ModalButton from './ModalButton'
 import { useRef, useState } from 'react'
 import setCanvasPreview from './setCanvasPreview'
 import { useAppDispatch } from '../../../../store'
-import { updateImage } from '../../../../features/auth/authAction'
+import { adminUpdateUserProfilePic } from '../../../../features/admin/adminAction'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-hot-toast'
 import dataURLtoBlob from './dataUrlToBlob'
@@ -16,12 +16,12 @@ import dataURLtoBlob from './dataUrlToBlob'
 const MIN_WIDTH = 150
 const ASPECT_RATIO = 4 / 3
 
-const ImageCrop = ({ src, closeCrop, setCurrentTab, fileName }) => {
+const ImageCrop = ({ src, closeCrop, setCurrentTab, fileName, userId }) => {
   const [crop, setCrop] = useState()
   const imageRef = useRef(null)
   const canvasRef = useRef(null)
   const dispatch = useAppDispatch()
-  const { loading: isLoading } = useSelector(state => state.auth)
+  const { loading: isLoading } = useSelector(state => state.admin)
 
   // When image loads in, set crop in state
   const onImageLoad = event => {
@@ -62,9 +62,11 @@ const ImageCrop = ({ src, closeCrop, setCurrentTab, fileName }) => {
 
     // Send 'form data' to api.
     try {
-      const response = await dispatch(updateImage(formData))
+      const response = await dispatch(
+        adminUpdateUserProfilePic({ formData, userId }),
+      )
       console.log(response)
-      if (response.type === 'auth/updateImage/rejected') {
+      if (response.type === 'admin/updateUserProfilePic/rejected') {
         setCurrentTab('main')
         return toast.error('Could not update image')
       }

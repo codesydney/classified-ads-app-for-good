@@ -21,6 +21,7 @@ const UserRow = ({
   handleAddFieldWithinRow,
   handleFieldTypeChange,
   currentRow,
+  userId,
 }) => {
   const [isRowExpanded, setIsRowExpanded] = useState(false)
   const [textareaMaxWidth, setTextareaMaxWidth] = useState(null)
@@ -154,6 +155,7 @@ const UserRow = ({
                     value={fieldValueState}
                     field={fieldValueIdentifier}
                     handleFieldEdit={handleFieldEdit}
+                    userId={userId}
                   />
                 )}
 

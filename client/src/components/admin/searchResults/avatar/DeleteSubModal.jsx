@@ -5,13 +5,15 @@ import { useSelector } from 'react-redux'
 import { deleteProfileImage } from '../../../../features/auth/authAction'
 import { toast } from 'react-hot-toast'
 
-const DeleteSubModal = ({ setDeleteSubModalOpen }) => {
+const DeleteSubModal = ({ setDeleteSubModalOpen, currentUserInfo }) => {
   const dispatch = useAppDispatch()
-  const { loading: isLoading } = useSelector(state => state.auth)
+  const { loading: isLoading } = useSelector(state => state.admin)
 
   const handleDeleteImage = async () => {
     try {
-      const response = await dispatch(deleteProfileImage())
+      const response = await dispatch(
+        deleteProfileImage(currentUserInfo.userId),
+      )
 
       if (response.type === 'auth/deleteProfileImage/rejected') {
         toast.error('Error! Could not delete profile image')

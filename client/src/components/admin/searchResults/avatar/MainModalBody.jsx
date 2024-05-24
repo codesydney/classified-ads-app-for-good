@@ -9,16 +9,16 @@ const MainModalBody = ({
   setDeleteSubModalOpen,
   handleModalClose,
   setCurrentTab,
-  currentUser,
+  currentUserInfo,
 }) => {
   return (
     <>
       <ModalHeader handleClose={handleModalClose}>Profile photo</ModalHeader>
 
       <div className="px-8 pb-4 flex justify-center items-center min-h-[150px]">
-        {currentUser?.alumniProfilePicture ? (
+        {currentUserInfo?.imgUrl ? (
           <img
-            src={currentUser.alumniProfilePicture}
+            src={currentUserInfo.imgUrl}
             className="max-w-[100%] object-contain"
           />
         ) : (
@@ -44,7 +44,7 @@ const MainModalBody = ({
           <span className="font-bold">Add Photo</span>
         </ModalButtonWithIcon>
 
-        {currentUser?.alumniProfilePicture && (
+        {currentUserInfo?.imgUrl && (
           <div className="ml-auto">
             <ModalButtonWithIcon
               extraClasses={'hover:text-red-500'}

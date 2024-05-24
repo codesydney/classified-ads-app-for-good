@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import EditAvatarModal from './avatar/EditAvatarModal'
 
-const ImageInput = ({ value, field, handleFieldEdit }) => {
+const ImageInput = ({ value, field, handleFieldEdit, userId }) => {
   const [modalOpen, setModalOpen] = useState(false)
 
   return (
@@ -15,7 +15,11 @@ const ImageInput = ({ value, field, handleFieldEdit }) => {
           Upload New
         </button>
         {modalOpen && (
-          <EditAvatarModal handleModalClose={() => setModalOpen(false)} />
+          <EditAvatarModal
+            userId={userId}
+            imgUrl={value}
+            handleModalClose={() => setModalOpen(false)}
+          />
         )}
       </>
     </>

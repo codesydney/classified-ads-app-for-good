@@ -4,7 +4,7 @@ import profileImg from '../../../../assets/placeholder.jpg'
 import { useState } from 'react'
 import ImageCrop from './ImageCrop'
 
-const AddPhotoModalBody = ({ setCurrentTab, currentUser }) => {
+const AddPhotoModalBody = ({ setCurrentTab, currentUserInfo }) => {
   const [imgSrc, setImgSrc] = useState('')
   const [fileName, setFileName] = useState('')
   const [fileUploadError, setFileUploadError] = useState('')
@@ -62,18 +62,19 @@ const AddPhotoModalBody = ({ setCurrentTab, currentUser }) => {
           closeCrop={closeCrop}
           setCurrentTab={setCurrentTab}
           fileName={fileName}
+          currentUserInfo={currentUserInfo}
         />
       ) : (
         <div className="p-6 flex flex-col items-center gap-4">
           <p className="text-center text-lg">
             <span className="capitalize font-bold ">
-              {currentUser?.firstName}
+              {/* {currentUser?.firstName} */}
             </span>
-            , lets get you a profile photo.
+            Hey Admin, are we changing this users profile pic?
           </p>
 
           <img
-            src={currentUser?.alumniProfilePicture || profileImg}
+            src={currentUserInfo?.imgUrl || profileImg}
             className="w-[100px] h-[100px] rounded-full object-cover"
           />
 

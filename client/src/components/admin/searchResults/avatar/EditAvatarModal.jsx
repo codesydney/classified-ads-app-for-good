@@ -5,10 +5,11 @@ import DeleteSubModal from './DeleteSubModal'
 import { useSelector } from 'react-redux'
 import { useState } from 'react'
 
-const EditAvatarModal = ({ handleModalClose }) => {
+const EditAvatarModal = ({ handleModalClose, userId, imgUrl }) => {
   const [deleteSubModalOpen, setDeleteSubModalOpen] = useState(false)
   const [currentTab, setCurrentTab] = useState('main')
-  const { currentUser } = useSelector(state => state.auth)
+  const currentUserInfo = { userId, imgUrl }
+  // const { currentUser } = useSelector(state => state.auth)
 
   return (
     <div
@@ -24,19 +25,19 @@ const EditAvatarModal = ({ handleModalClose }) => {
             setDeleteSubModalOpen={setDeleteSubModalOpen}
             handleModalClose={handleModalClose}
             setCurrentTab={setCurrentTab}
-            currentUser={currentUser}
+            currentUserInfo={currentUserInfo}
           />
         )}
         {currentTab === 'add' && (
           <AddPhotoModalBody
             setCurrentTab={setCurrentTab}
-            currentUser={currentUser}
+            currentUserInfo={currentUserInfo}
           />
         )}
         {currentTab === 'edit' && (
           <EditPhotoModalBody
             setCurrentTab={setCurrentTab}
-            currentUser={currentUser}
+            currentUserInfo={currentUserInfo}
           />
         )}
       </div>
@@ -44,7 +45,7 @@ const EditAvatarModal = ({ handleModalClose }) => {
       {deleteSubModalOpen && (
         <DeleteSubModal
           setDeleteSubModalOpen={setDeleteSubModalOpen}
-          currentUser={currentUser}
+          currentUserInfo={currentUserInfo}
         />
       )}
     </div>

@@ -14,6 +14,7 @@ const EditPhotoModalBody = ({ setCurrentTab, currentUser }) => {
         <ImageCrop
           src={currentUser.alumniProfilePicture}
           closeCrop={() => setCurrentTab('main')}
+          userId={userId}
         />
       )}
     </>

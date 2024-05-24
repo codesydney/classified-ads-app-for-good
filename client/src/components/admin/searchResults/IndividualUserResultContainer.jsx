@@ -346,6 +346,7 @@ const IndividualUserResultContainer = ({ user, editDefault, isNew }) => {
                 handleAddFieldAfterRow={handleAddFieldAfterRow}
                 handleAddFieldWithinRow={handleAddFieldWithinRow}
                 handleFieldTypeChange={handleFieldTypeChange}
+                userId={user.id}
               />
             )
           })}
