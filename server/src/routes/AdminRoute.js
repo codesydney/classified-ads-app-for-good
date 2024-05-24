@@ -21,6 +21,13 @@ router.patch(
   AdminController.updateUserProfilePic,
 )
 
+router.delete(
+  '/users/:id/profilePicture',
+  verifyToken,
+  authenticateAdmin,
+  AdminController.deleteUserProfilePic,
+)
+
 router.put(
   '/users/:id',
   verifyToken,

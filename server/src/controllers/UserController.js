@@ -378,7 +378,7 @@ const deleteProfileImage = catchAsync(async (req, res) => {
     return res.status(200).json({
       status: 'OK',
       message: 'User profile image deleted successfully',
-      user: updatedUser,
+      user: user,
     })
   }
 
