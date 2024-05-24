@@ -3,6 +3,8 @@ const router = express.Router()
 const AdminController = require('../controllers/AdminController.js')
 const { authenticateAdmin } = require('../middleware/authenticateAdmin.js')
 const { verifyToken } = require('../middleware/verifyToken.js')
+const multer = require('multer')
+const upload = multer({ storage: multer.memoryStorage() })
 
 router.get(
   '/users',
@@ -11,18 +13,19 @@ router.get(
   AdminController.getUsersAdmin,
 )
 
+router.patch(
+  '/users/:id/profilePicture',
+  verifyToken,
+  authenticateAdmin,
+  upload.single('image'),
+  AdminController.updateUserProfilePic,
+)
+
 router.put(
   '/users/:id',
   verifyToken,
   authenticateAdmin,
   AdminController.updateUser,
-)
-
-router.patch(
-  '/users/:id/profilePic',
-  verifyToken,
-  authenticateAdmin,
-  AdminController.updateUserProfilePic,
 )
 
 module.exports = router

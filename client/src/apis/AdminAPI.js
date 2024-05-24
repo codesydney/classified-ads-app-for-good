@@ -48,12 +48,13 @@ const adminUpdateUserProfilePic = async (formData, userId, token) => {
       },
     }
 
+    console.log('sending api funct')
     const response = await api.patch(
       `${adminURL}/${userId}/profilePicture`,
       formData,
       config,
     )
-
+    console.log('recieved response', response)
     return response.data
   } catch (error) {
     console.error('Error updating user Profile pic', error)

@@ -16,7 +16,13 @@ import dataURLtoBlob from './dataUrlToBlob'
 const MIN_WIDTH = 150
 const ASPECT_RATIO = 4 / 3
 
-const ImageCrop = ({ src, closeCrop, setCurrentTab, fileName, userId }) => {
+const ImageCrop = ({
+  src,
+  closeCrop,
+  setCurrentTab,
+  fileName,
+  currentUserInfo,
+}) => {
   const [crop, setCrop] = useState()
   const imageRef = useRef(null)
   const canvasRef = useRef(null)
@@ -54,16 +60,16 @@ const ImageCrop = ({ src, closeCrop, setCurrentTab, fileName, userId }) => {
 
     // extract cropped image from canvas as dataUrl
     const dataURL = canvasRef.current.toDataURL()
-
     // Format data for api
     const blob = dataURLtoBlob(dataURL)
     const formData = new FormData()
     formData.append('image', blob, fileName)
 
     // Send 'form data' to api.
+    console.log('userid', currentUserInfo.userId)
     try {
       const response = await dispatch(
-        adminUpdateUserProfilePic({ formData, userId }),
+        adminUpdateUserProfilePic({ formData, userId: currentUserInfo.userId }),
       )
       console.log(response)
       if (response.type === 'admin/updateUserProfilePic/rejected') {

@@ -21,7 +21,7 @@ const AddPhotoModalBody = ({ setCurrentTab, currentUserInfo }) => {
       return setFileUploadError('Image must be under 3Mb in size.')
     }
     setFileName(file.name)
-
+    console.log(file.name)
     const reader = new FileReader()
     reader.addEventListener('load', () => {
       // Create a faux image to check its the right size.
