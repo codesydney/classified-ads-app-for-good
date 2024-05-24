@@ -18,4 +18,11 @@ router.put(
   AdminController.updateUser,
 )
 
+router.patch(
+  '/users/:id/profilePic',
+  verifyToken,
+  authenticateAdmin,
+  AdminController.updateUserProfilePic,
+)
+
 module.exports = router
