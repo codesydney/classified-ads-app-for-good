@@ -66,12 +66,10 @@ const ImageCrop = ({
     formData.append('image', blob, fileName)
 
     // Send 'form data' to api.
-    console.log('userid', currentUserInfo.userId)
     try {
       const response = await dispatch(
         adminUpdateUserProfilePic({ formData, userId: currentUserInfo.userId }),
       )
-      console.log(response)
       if (response.type === 'admin/updateUserProfilePic/rejected') {
         setCurrentTab('main')
         return toast.error('Could not update image')

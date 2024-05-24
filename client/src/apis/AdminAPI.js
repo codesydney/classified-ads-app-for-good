@@ -62,8 +62,28 @@ const adminUpdateUserProfilePic = async (formData, userId, token) => {
   }
 }
 
+const adminDeleteUserProfilePic = async (userId, token) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+
+    const response = await api.delete(
+      `${adminURL}/${userId}/profilePicture`,
+      config,
+    )
+    return response.data
+  } catch (error) {
+    console.error('Error updating user profile')
+    throw error
+  }
+}
+
 export const AdminAPI = {
   adminSearchUsers,
   adminUpdateUser,
   adminUpdateUserProfilePic,
+  adminDeleteUserProfilePic,
 }

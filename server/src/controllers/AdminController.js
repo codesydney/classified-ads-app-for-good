@@ -86,14 +86,13 @@ const deleteUserProfilePic = catchAsync(async (req, res, next) => {
       user: user,
     })
   }
-
+  console.log('user profile image')
   const deleted = await deleteImageFromS3(
     userProfileImage,
     process.env.AWS_BUCKET_NAME,
   )
-
   // Delete alumniProfilePicture property here....
-  delete user.alumniProfilePicture
+  user.alumniProfilePicture = undefined
   await user.save()
 
   const userObject = user.toObject()

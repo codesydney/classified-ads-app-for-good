@@ -3,6 +3,7 @@ import {
   adminSearchUsers,
   adminUpdateUser,
   adminUpdateUserProfilePic,
+  adminDeleteUserProfilePic,
 } from './adminAction'
 
 const initialState = {
@@ -101,6 +102,24 @@ const adminSlice = createSlice({
       }
     })
     builder.addCase(adminUpdateUserProfilePic.rejected, (state, action) => {
+      state.loading = false
+      state.error = action.payload
+    })
+    // Delete User Profile Pic
+    builder.addCase(adminDeleteUserProfilePic.pending, state => {
+      state.loading = true
+      state.error = null
+    })
+    builder.addCase(adminDeleteUserProfilePic.fulfilled, (state, action) => {
+      state.loading = false
+      state.error = false
+      const updatedUser = action.payload
+      const index = state.users.findIndex(user => user.id === updatedUser.id)
+      if (index !== -1) {
+        state.users[index] = updatedUser
+      }
+    })
+    builder.addCase(adminDeleteUserProfilePic.rejected, (state, action) => {
       state.loading = false
       state.error = action.payload
     })

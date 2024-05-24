@@ -72,9 +72,27 @@ const adminUpdateUserProfilePic = createAsyncThunk(
   },
 )
 
+const adminDeleteUserProfilePic = createAsyncThunk(
+  'admin/deleteUserProfilePic',
+  async (userId, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem('accessToken')
+      const response = await AdminAPI.adminDeleteUserProfilePic(userId, token)
+      return response.user
+    } catch (error) {
+      if (error.response && error.response.data.error) {
+        return rejectWithValue(error.response.data.error)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  },
+)
+
 export {
   adminSearchUsers,
   adminResetSearch,
   adminUpdateUser,
   adminUpdateUserProfilePic,
+  adminDeleteUserProfilePic,
 }

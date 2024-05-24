@@ -2,7 +2,7 @@ import { IoIosClose } from 'react-icons/io'
 import ModalButton from './ModalButton'
 import { useAppDispatch } from '../../../../store'
 import { useSelector } from 'react-redux'
-import { deleteProfileImage } from '../../../../features/auth/authAction'
+import { adminDeleteUserProfilePic } from '../../../../features/admin/adminAction'
 import { toast } from 'react-hot-toast'
 
 const DeleteSubModal = ({ setDeleteSubModalOpen, currentUserInfo }) => {
@@ -12,7 +12,7 @@ const DeleteSubModal = ({ setDeleteSubModalOpen, currentUserInfo }) => {
   const handleDeleteImage = async () => {
     try {
       const response = await dispatch(
-        deleteProfileImage(currentUserInfo.userId),
+        adminDeleteUserProfilePic(currentUserInfo.userId),
       )
 
       if (response.type === 'auth/deleteProfileImage/rejected') {
@@ -56,6 +56,7 @@ const DeleteSubModal = ({ setDeleteSubModalOpen, currentUserInfo }) => {
             extraClasses={'border-red-500 text-red-500 hover:bg-red-500'}
             variant="hollow"
             disabled={isLoading}
+            type="button"
           >
             Cancel
           </ModalButton>
@@ -63,6 +64,7 @@ const DeleteSubModal = ({ setDeleteSubModalOpen, currentUserInfo }) => {
             variant="hollow"
             onClick={handleDeleteImage}
             disabled={isLoading}
+            type="button"
           >
             Delete
           </ModalButton>
