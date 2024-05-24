@@ -50,4 +50,31 @@ const adminUpdateUser = createAsyncThunk(
   },
 )
 
-export { adminSearchUsers, adminResetSearch, adminUpdateUser }
+const adminUpdateUserProfilePic = createAsyncThunk(
+  'admin/updateUserProfilePic',
+  async ({ formData, userId }, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem('accessToken')
+      const response = await AdminAPI.adminUpdateUserProfilePic(
+        formData,
+        userId,
+        token,
+      )
+
+      return response.user
+    } catch (error) {
+      if (error.response && error.response.data.error) {
+        return rejectWithValue(error.response.data.error)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  },
+)
+
+export {
+  adminSearchUsers,
+  adminResetSearch,
+  adminUpdateUser,
+  adminUpdateUserProfilePic,
+}

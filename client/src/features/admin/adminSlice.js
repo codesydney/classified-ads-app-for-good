@@ -1,5 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { adminSearchUsers, adminUpdateUser } from './adminAction'
+import {
+  adminSearchUsers,
+  adminUpdateUser,
+  adminUpdateUserProfilePic,
+} from './adminAction'
 
 const initialState = {
   users: [],
@@ -82,6 +86,24 @@ const adminSlice = createSlice({
     })
     // Delete User
     // Add User
+    // Update User Profile Pic
+    builder.addCase(adminUpdateUserProfilePic.pending, state => {
+      state.loading = true
+      state.error = null
+    })
+    builder.addCase(adminUpdateUserProfilePic.fulfilled, (state, action) => {
+      state.loading = false
+      state.error = null
+      const updatedUser = action.payload
+      const index = state.users.findIndex(user => user.id === updatedUser.id)
+      if (index !== -1) {
+        state.users[index] = updatedUser
+      }
+    })
+    builder.addCase(adminUpdateUserProfilePic.rejected, (state, action) => {
+      state.loading = false
+      state.error = action.payload
+    })
   },
 })
 

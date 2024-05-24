@@ -40,7 +40,29 @@ const adminUpdateUser = async (updatedUserObj, token) => {
   }
 }
 
+const adminUpdateUserProfilePic = async (formData, userId, token) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+
+    const response = await api.patch(
+      `${adminURL}/${userId}/profilePicture`,
+      formData,
+      config,
+    )
+
+    return response.data
+  } catch (error) {
+    console.error('Error updating user Profile pic', error)
+    throw error
+  }
+}
+
 export const AdminAPI = {
   adminSearchUsers,
   adminUpdateUser,
+  adminUpdateUserProfilePic,
 }
