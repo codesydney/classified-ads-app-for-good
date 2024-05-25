@@ -65,6 +65,28 @@ const updateUser = catchAsync(async (req, res, next) => {
   })
 })
 
+// DELETE A SINGLE USER DOCUMENT
+const deleteUser = catchAsync(async (req, res, next) => {
+  const {
+    params: { id },
+  } = req
+
+  const deletedUser = await UserService.deleteUserProfile(id)
+
+  if (!deletedUser) {
+    return res.status(404).json({
+      status: 'Error',
+      message: 'User not found',
+    })
+  }
+
+  return res.status(204).json({
+    status: 'OK',
+    message: 'User Deleted Successfully',
+    user: deletedUser,
+  })
+})
+
 // UPDATE A SINGLE USER PROFILE PICTURE
 const updateUserProfilePic = catchAsync(async (req, res, next) => {
   const {
@@ -154,6 +176,7 @@ const deleteUserProfilePic = catchAsync(async (req, res, next) => {
 module.exports = {
   getUsersAdmin,
   updateUser,
+  deleteUser,
   updateUserProfilePic,
   deleteUserProfilePic,
 }
