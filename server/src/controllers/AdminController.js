@@ -80,10 +80,14 @@ const deleteUser = catchAsync(async (req, res, next) => {
     })
   }
 
+  const userObject = user.toObject()
+  userObject.id = userObject._id
+  delete userObject._id
+
   return res.status(204).json({
     status: 'OK',
     message: 'User Deleted Successfully',
-    user: deletedUser,
+    user: userObject,
   })
 })
 
