@@ -40,6 +40,23 @@ const adminUpdateUser = async (updatedUserObj, token) => {
   }
 }
 
+const adminDeleteUser = async (deleteUserId, token) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+
+    const response = await api.delete(`${adminURL}/${deleteUserId}`, config)
+
+    return response.data
+  } catch (error) {
+    console.error('Error deleting user', error)
+    return error
+  }
+}
+
 const adminUpdateUserProfilePic = async (formData, userId, token) => {
   try {
     const config = {
@@ -84,6 +101,7 @@ const adminDeleteUserProfilePic = async (userId, token) => {
 export const AdminAPI = {
   adminSearchUsers,
   adminUpdateUser,
+  adminDeleteUser,
   adminUpdateUserProfilePic,
   adminDeleteUserProfilePic,
 }
