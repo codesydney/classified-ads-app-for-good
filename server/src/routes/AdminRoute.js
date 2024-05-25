@@ -35,4 +35,11 @@ router.patch(
   AdminController.updateUser,
 )
 
+router.delete(
+  '/users/:id',
+  verifyToken,
+  authenticateAdmin,
+  AdminController.deleteUser,
+)
+
 module.exports = router
