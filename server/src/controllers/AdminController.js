@@ -3,6 +3,7 @@ const catchAsync = require('../utils/catchAsync')
 const UserService = require('../services/UserService')
 const { deleteImageFromS3 } = require('../services/ImageUploadService')
 
+// FETCH USERS BASED ON SEARCH QUERY
 const getUsersAdmin = catchAsync(async (req, res, next) => {
   // Goes into body in from postman, will it be the same with axios?
   const { query, body, params } = req
@@ -16,18 +17,55 @@ const getUsersAdmin = catchAsync(async (req, res, next) => {
   })
 })
 
+// UPDATE A SINGLE USER DOCUMENT
 const updateUser = catchAsync(async (req, res, next) => {
-  const { query, body, params } = req
-  console.log('the query', query)
-  console.log('the body', body)
-  console.log('the params', params)
+  const {
+    query,
+    body: updatedUserObj,
+    params: { id },
+  } = req
+
+  const user = await UserService.getUserByIdMongooseDoc(id)
+
+  if (!user) {
+    return res.status(404).json({
+      status: 'Error',
+      message: 'User not found',
+    })
+  }
+
+  const updatedUser = await AdminService.updateUser(
+    user.toObject(),
+    updatedUserObj,
+    id,
+  )
+
+  if (!updatedUser) {
+    return res.status(404).json({
+      status: 'Error',
+      message: 'User not found',
+    })
+  }
+
+  // FORMAT USER OBJECT BEFORE RETURNING
+  const userObject = updatedUser.toObject()
+  userObject.id = userObject._id
+  delete userObject._id
+  delete userObject.fullName
+  delete userObject.education?.yearGraduatedStr
+  delete userObject.createdAt
+  delete userObject.updatedAt
+  delete userObject.__v
+  delete userObject.isAutomated
 
   res.status(200).json({
-    message: 'Went through',
+    message: 'User updated successfully',
     status: 'OK',
+    user: userObject,
   })
 })
 
+// UPDATE A SINGLE USER PROFILE PICTURE
 const updateUserProfilePic = catchAsync(async (req, res, next) => {
   const {
     file,
@@ -63,6 +101,7 @@ const updateUserProfilePic = catchAsync(async (req, res, next) => {
   })
 })
 
+// DELETE A SINGLE USER PROFILE PICTURE
 const deleteUserProfilePic = catchAsync(async (req, res, next) => {
   const {
     params: { id },

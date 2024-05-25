@@ -7,6 +7,8 @@ import { IoIosClose } from 'react-icons/io'
 import HoverButtonBar from './HoverButtonBar'
 import { v4 as uuidv4 } from 'uuid'
 import { adminUpdateUser } from '../../../features/admin/adminAction'
+import { useSelector } from 'react-redux'
+import { toast } from 'react-hot-toast'
 
 // TRANSFORM USER OBJECT PROVIDED BY API INTO ARRAY USED TO MANAGE FORM STATE AND MANIPULATE BOTH KEYS AND VALUES
 function transformObjToArray(obj) {
@@ -51,6 +53,7 @@ const IndividualUserResultContainer = ({ user, editDefault, isNew }) => {
   const [formState, setFormState] = useState(null)
   const [validationErrors, setValidationErrors] = useState(null)
   const dispatch = useAppDispatch()
+  const { loading: isLoading } = useSelector(state => state.admin)
 
   useEffect(() => {
     const transformedObjArray = transformObjToArray(user)
@@ -211,7 +214,6 @@ const IndividualUserResultContainer = ({ user, editDefault, isNew }) => {
   // FORM SUBMIT HANDLER FOR UPDATING EXISTING RECORD
   // CALL API PUT /admin/users/:userId
   const handleSubmitUpdate = async event => {
-    console.log('update existing document event')
     event.preventDefault()
     const newObj = transformArrayToObj(formState)
     setValidationErrors(null)
@@ -244,10 +246,12 @@ const IndividualUserResultContainer = ({ user, editDefault, isNew }) => {
       return
     }
     try {
-      console.log('about to run api call')
       const updatedUser = await dispatch(adminUpdateUser(newObj))
+      setEditViewOpen(false)
+      toast.success('User updated Successfully')
     } catch (error) {
       console.log('error update user', error)
+      toast.error('Error occured updating the user')
     }
   }
 

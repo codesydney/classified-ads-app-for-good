@@ -39,7 +39,7 @@ const adminUpdateUser = createAsyncThunk(
       const token = localStorage.getItem('accessToken')
       const response = await AdminAPI.adminUpdateUser(updatedUserObj, token)
 
-      return response
+      return response.user
     } catch (error) {
       if (error.response && error.response.data.error) {
         return rejectWithValue(error.response.data.error)

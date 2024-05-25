@@ -28,7 +28,7 @@ router.delete(
   AdminController.deleteUserProfilePic,
 )
 
-router.put(
+router.patch(
   '/users/:id',
   verifyToken,
   authenticateAdmin,

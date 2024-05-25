@@ -27,7 +27,7 @@ const adminUpdateUser = async (updatedUserObj, token) => {
         Authorization: `Bearer ${token}`,
       },
     }
-    const response = await api.put(
+    const response = await api.patch(
       `${adminURL}/${updatedUserObj.id}`,
       updatedUserObj,
       config,

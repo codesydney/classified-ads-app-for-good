@@ -80,10 +80,15 @@ const adminSlice = createSlice({
     builder.addCase(adminUpdateUser.fulfilled, (state, action) => {
       state.loading = false
       state.error = null
+      const updatedUser = action.payload
+      const index = state.users.findIndex(user => user.id === updatedUser.id)
+      if (index !== -1) {
+        state.users[index] = updatedUser
+      }
     })
-    builder.addCase(adminUpdateUser.rejected, state => {
+    builder.addCase(adminUpdateUser.rejected, (state, action) => {
       state.loading = false
-      state.error = true
+      state.error = action.payload
     })
     // Delete User
     // Add User
