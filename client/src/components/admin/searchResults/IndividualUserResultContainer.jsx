@@ -6,7 +6,10 @@ import { userSchemaAdmin } from '../../../schema'
 import { IoIosClose } from 'react-icons/io'
 import HoverButtonBar from './HoverButtonBar'
 import { v4 as uuidv4 } from 'uuid'
-import { adminUpdateUser } from '../../../features/admin/adminAction'
+import {
+  adminUpdateUser,
+  adminDeleteUser,
+} from '../../../features/admin/adminAction'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-hot-toast'
 
@@ -162,7 +165,6 @@ const IndividualUserResultContainer = ({ user, editDefault, isNew }) => {
     nestedKeysArray.reduce((accumulator, currentKey, currentIndex) => {
       if (accumulator && accumulator[currentKey] !== undefined) {
         if (currentIndex === nestedKeysArray.length - 1) {
-          console.log(accumulator)
           return accumulator[currentKey].push(newRow)
         } else {
           return accumulator[currentKey]
@@ -258,7 +260,6 @@ const IndividualUserResultContainer = ({ user, editDefault, isNew }) => {
   // FORM SUBMIT HANDLER FOR ADDING NEW RECORD
   // CALL API POST /admin/users
   const handleSubmitAdd = async event => {
-    console.log('add new document event')
     event.preventDefault()
     const newObj = transformArrayToObj(formState)
     setValidationErrors(null)
@@ -291,7 +292,21 @@ const IndividualUserResultContainer = ({ user, editDefault, isNew }) => {
   }
 
   // HANDLE DELETE USER - CALL API DELETE /admin/users/:userId
-  const handleDeleteUser = () => {}
+  const handleDeleteUser = async () => {
+    const { id } = user
+
+    if (!id) {
+      toast.error('Something went wrong, try later')
+      return
+    }
+    try {
+      await dispatch(adminDeleteUser(id))
+      toast.success('User Deleted Successfully')
+    } catch (error) {
+      console.error('Error deleting user', error)
+      toast.error('Error: Cannot delete user')
+    }
+  }
 
   return (
     <div
@@ -324,6 +339,7 @@ const IndividualUserResultContainer = ({ user, editDefault, isNew }) => {
         isExpanded={isExpanded}
         handleToggleEditView={handleToggleEditView}
         isNew={isNew}
+        handleDeleteUser={handleDeleteUser}
       />
       {/* RUN CONDITIONAL FORM EVENT HANDLER AND API CALL BASED ON ISNEW BOOLEAN */}
       <form

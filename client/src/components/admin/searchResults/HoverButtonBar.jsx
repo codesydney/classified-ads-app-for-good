@@ -7,6 +7,7 @@ const HoverButtonBar = ({
   isExpanded,
   handleToggleEditView,
   isNew,
+  handleDeleteUser,
 }) => {
   return (
     <div
@@ -23,7 +24,7 @@ const HoverButtonBar = ({
           <IconButton handleClick={handleToggleEditView}>
             <MdModeEditOutline />
           </IconButton>
-          <IconButton handleClick={() => console.log('I will delete mysefl')}>
+          <IconButton handleClick={handleDeleteUser}>
             <FaTrashAlt />
           </IconButton>
         </div>

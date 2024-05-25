@@ -7,7 +7,6 @@ const { deleteImageFromS3 } = require('../services/ImageUploadService')
 const getUsersAdmin = catchAsync(async (req, res, next) => {
   // Goes into body in from postman, will it be the same with axios?
   const { query, body, params } = req
-  console.log('the query', query)
   const result = await AdminService.getUsers(query || {})
 
   res.status(200).json({
@@ -80,11 +79,10 @@ const deleteUser = catchAsync(async (req, res, next) => {
     })
   }
 
-  const userObject = user.toObject()
-  userObject.id = userObject._id
+  const userObject = deletedUser.toObject()
   delete userObject._id
 
-  return res.status(204).json({
+  return res.status(200).json({
     status: 'OK',
     message: 'User Deleted Successfully',
     user: userObject,
@@ -151,7 +149,7 @@ const deleteUserProfilePic = catchAsync(async (req, res, next) => {
       user: user,
     })
   }
-  console.log('user profile image')
+
   const deleted = await deleteImageFromS3(
     userProfileImage,
     process.env.AWS_BUCKET_NAME,
