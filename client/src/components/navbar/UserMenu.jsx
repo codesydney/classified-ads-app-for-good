@@ -19,6 +19,8 @@ const UserMenu = ({ currentUser }) => {
 
   const { isAuthenticated } = useSelector(state => state.auth)
 
+  const isAdmin = currentUser?.isAdmin
+
   const toggleOpen = useCallback(() => {
     setIsOpen(value => !value)
   }, [])
@@ -161,7 +163,11 @@ const UserMenu = ({ currentUser }) => {
                 <div className="md:hidden">
                   <MenuItem label="Home" onClick={() => handleNavigate('/')} />
                   <MenuItem
-                    label="Account"
+                    label="Contact"
+                    onClick={() => handleNavigate('/contact')}
+                  />
+                  <MenuItem
+                    label="My Profile"
                     onClick={() => handleNavigate('/profile')}
                   />
                   {/*<MenuItem*/}
@@ -173,6 +179,25 @@ const UserMenu = ({ currentUser }) => {
                   {/*  onClick={() => handleNavigate('/developers')}*/}
                   {/*/>*/}
                 </div>
+
+                <>
+                  {isAdmin && (
+                    <MenuItem
+                      label="Admin Panel"
+                      onClick={() => handleNavigate('/admin')}
+                    />
+                  )}
+                  <MenuItem
+                    label="Membership Fee Payment"
+                    onClick={() =>
+                      window.open(
+                        'https://buy.stripe.com/6oEbKo6dzdUoctG147',
+                        '_blank',
+                      )
+                    }
+                  />
+                </>
+
                 <hr />
                 <MenuItem
                   label="Logout"

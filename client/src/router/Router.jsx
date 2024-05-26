@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import App from '../App'
-import ProtectedRoute from './ProtectedRoute.jsx'
+import ProtectedRoute, { ProtectedRouteAdmin } from './ProtectedRoute.jsx'
 import Home from '../pages/Home'
 import Officers from '../pages/Officers.jsx'
 import Developers from '../pages/Developers.jsx'
@@ -16,6 +16,7 @@ import ProfileEducation from '../components/profile/education/ProfileEducation.j
 import ProfileSettings from '../components/profile/settings/ProfileSettings.jsx'
 import UserProfile from '../pages/UserProfile.jsx'
 import Contact from '../pages/Contact.jsx'
+import AdminPanel from '../pages/AdminPanel.jsx'
 
 const Router = () => {
   // const error = useRouteError()
@@ -86,6 +87,16 @@ const Router = () => {
               element: <ProfileSettings />,
             },
           ],
+        },
+        {
+          path: '/admin',
+          element: (
+            <ProtectedRoute>
+              <ProtectedRouteAdmin>
+                <AdminPanel />
+              </ProtectedRouteAdmin>
+            </ProtectedRoute>
+          ),
         },
       ],
     },

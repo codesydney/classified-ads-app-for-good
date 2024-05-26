@@ -144,6 +144,10 @@ const UserSchema = new Schema(
       type: Boolean,
       default: true,
     },
+    isAdmin: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
@@ -157,6 +161,7 @@ UserSchema.virtual('fullName').get(function () {
   return `${this.firstName} ${this.lastName}`
 })
 
+// This adds education obj + with education.yearGraduatedStr nested field even if no education obj defined in user record in DB??
 UserSchema.virtual('education.yearGraduatedStr').get(function () {
   return this.education.yearGraduated
     ? this.education.yearGraduated.toString()

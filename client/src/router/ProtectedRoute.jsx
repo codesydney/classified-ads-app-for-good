@@ -15,4 +15,18 @@ const ProtectedRouteReplacement = ({ children }) => {
   return children
 }
 
+export const ProtectedRouteAdmin = ({ children }) => {
+  const { currentUser } = useSelector(state => state.auth)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (currentUser) {
+      if (!currentUser.isAdmin) {
+        navigate('/')
+      }
+    }
+  }, [navigate, currentUser])
+
+  return children
+}
 export default ProtectedRouteReplacement

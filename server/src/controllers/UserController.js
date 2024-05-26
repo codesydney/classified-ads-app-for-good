@@ -35,6 +35,7 @@ const signup = catchAsync(async (req, res, next) => {
     firstName: newUser.firstName,
     lastName: newUser.lastName,
     isOfficer: newUser.isOfficer,
+    isAdmin: newUser.isAdmin,
   })
 
   // return 201 response with token
@@ -69,6 +70,7 @@ const login = catchAsync(async (req, res, next) => {
     firstName: user.firstName,
     lastName: user.lastName,
     isOfficer: user.isOfficer,
+    isAdmin: user.isAdmin,
   })
 
   // return token
@@ -376,7 +378,7 @@ const deleteProfileImage = catchAsync(async (req, res) => {
     return res.status(200).json({
       status: 'OK',
       message: 'User profile image deleted successfully',
-      user: updatedUser,
+      user: user,
     })
   }
 

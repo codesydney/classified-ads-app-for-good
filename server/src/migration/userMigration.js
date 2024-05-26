@@ -94,6 +94,7 @@ const generateUser = async () => ({
   isOfficer: false,
   hideProfile: false,
   isProfileComplete: true,
+  isAdmin: false,
 })
 
 // Function to insert a batch of users into the database
