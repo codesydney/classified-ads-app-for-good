@@ -289,6 +289,8 @@ const IndividualUserResultContainer = ({ user, editDefault, isNew }) => {
       setValidationErrors(newValidationErrors)
       return
     }
+
+    toast.error('Functionality not set up yet...')
   }
 
   // HANDLE DELETE USER - CALL API DELETE /admin/users/:userId

@@ -24,7 +24,7 @@ const AdminSearchResults = () => {
   }, [])
   return (
     <>
-      <div className="p-4 m-auto max-w-[1444px]">
+      <div className="p-4 xl:px-20 md:px-10 sm:px-2 px-4 m-auto max-w-[1444px]">
         <div className="mb-2 flex justify-between">
           <ResultsCount meta={meta} usersLength={users.length} />
           <button
