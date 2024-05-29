@@ -187,7 +187,7 @@ const UserMenu = ({ currentUser }) => {
                       onClick={() => handleNavigate('/admin')}
                     />
                   )}
-                  <MenuItem
+                  {/* <MenuItem
                     label="Membership Fee Payment"
                     onClick={() =>
                       window.open(
@@ -195,7 +195,7 @@ const UserMenu = ({ currentUser }) => {
                         '_blank',
                       )
                     }
-                  />
+                  /> */}
                 </>
 
                 <hr />
